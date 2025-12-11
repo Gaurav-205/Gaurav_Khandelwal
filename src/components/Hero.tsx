@@ -1,10 +1,17 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import InfiniteGallery from './ui/3d-gallery-photography';
 import { SAMPLE_IMAGES, GALLERY_CONFIG, Z_INDEX } from '@/lib/constants';
 
 const Hero = memo(() => {
+  const router = useRouter();
+
+  const handleImageClick = useCallback((slug: string) => {
+    router.push(`/project/${slug}`);
+  }, [router]);
+
   return (
     <main className="min-h-screen h-full w-full">
       <InfiniteGallery
@@ -15,6 +22,7 @@ const Hero = memo(() => {
         falloff={GALLERY_CONFIG.FALLOFF}
         fadeSettings={GALLERY_CONFIG.FADE_SETTINGS}
         blurSettings={GALLERY_CONFIG.BLUR_SETTINGS}
+        onImageClick={handleImageClick}
         className="h-screen w-full rounded-lg overflow-hidden"
       />
       
@@ -32,9 +40,11 @@ const Hero = memo(() => {
       <div 
         className="text-center fixed bottom-10 left-0 right-0 font-mono uppercase text-[11px] font-semibold text-white px-4"
         style={{ zIndex: Z_INDEX.GALLERY_OVERLAY }}
+        role="status"
+        aria-live="polite"
       >
-        <p className="hidden md:block">Use mouse wheel, arrow keys, or touch to navigate</p>
-        <p className="block md:hidden">Swipe or pinch to zoom in/out to navigate</p>
+        <p className="hidden md:block">Use mouse wheel, arrow keys to navigate • Click images or press Enter/Space to view projects</p>
+        <p className="block md:hidden">Swipe, pinch to zoom, or tap images to navigate</p>
         <p className="opacity-60">Auto-play resumes after 3 seconds of inactivity</p>
       </div>
     </main>

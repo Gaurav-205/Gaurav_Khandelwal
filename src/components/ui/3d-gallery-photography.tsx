@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import { checkWebGLSupport } from '@/lib/utils';
 import { ANIMATION_DELAYS } from '@/lib/constants';
 
-type ImageItem = string | { src: string; alt?: string };
+type ImageItem = string | { src: string; alt?: string; slug?: string };
 
 interface FadeSettings {
   fadeIn: {
@@ -43,6 +43,7 @@ interface InfiniteGalleryProps {
   blurSettings?: BlurSettings;
   className?: string;
   style?: React.CSSProperties;
+  onImageClick?: (slug: string) => void;
 }
 
 interface PlaneData {
@@ -148,11 +149,13 @@ const ImagePlane = memo(({
   position,
   scale,
   material,
+  onClick,
 }: {
   texture: THREE.Texture;
   position: [number, number, number];
   scale: [number, number, number];
   material: THREE.ShaderMaterial;
+  onClick?: () => void;
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -171,6 +174,10 @@ const ImagePlane = memo(({
 
   const handlePointerEnter = useCallback(() => setIsHovered(true), []);
   const handlePointerLeave = useCallback(() => setIsHovered(false), []);
+  const handleClick = useCallback((event: any) => {
+    event.stopPropagation();
+    onClick?.();
+  }, [onClick]);
 
   return (
     <mesh
@@ -181,6 +188,7 @@ const ImagePlane = memo(({
       geometry={planeGeometry}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
+      onClick={handleClick}
     />
   );
 });
@@ -200,6 +208,7 @@ const GalleryScene = memo(({
     blurOut: { start: 0.9, end: 1.0 },
     maxBlur: 3.0,
   },
+  onImageClick,
 }: Omit<InfiniteGalleryProps, 'className' | 'style'>) => {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
@@ -216,7 +225,7 @@ const GalleryScene = memo(({
   const normalizedImages = useMemo(
     () =>
       images.map((img) =>
-        typeof img === 'string' ? { src: img, alt: '' } : img
+        typeof img === 'string' ? { src: img, alt: '', slug: '' } : img
       ),
     [images]
   );
@@ -286,16 +295,31 @@ const GalleryScene = memo(({
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+        event.preventDefault();
         setScrollVelocity((prev) => prev - 2 * speed);
         setAutoPlay(false);
         lastInteraction.current = Date.now();
       } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+        event.preventDefault();
         setScrollVelocity((prev) => prev + 2 * speed);
         setAutoPlay(false);
         lastInteraction.current = Date.now();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        // Find the most centered/visible image and trigger click
+        const centerPlane = planesData.current.find(plane => {
+          const normalizedPosition = plane.z / depthRange;
+          return normalizedPosition >= 0.4 && normalizedPosition <= 0.6;
+        });
+        if (centerPlane && onImageClick) {
+          const currentImage = normalizedImages[centerPlane.imageIndex];
+          if (currentImage?.slug) {
+            event.preventDefault();
+            onImageClick(currentImage.slug);
+          }
+        }
       }
     },
-    [speed]
+    [speed, onImageClick, normalizedImages, depthRange]
   );
 
   // Calculate distance between two touches
@@ -417,7 +441,6 @@ const GalleryScene = memo(({
     // Update plane positions
     const imageAdvance = totalImages > 0 ? visibleCount % totalImages || totalImages : 0;
     const totalRange = depthRange;
-    const halfRange = totalRange / 2;
 
     planesData.current.forEach((plane, i) => {
       let newZ = plane.z + scrollVelocity * delta * 10;
@@ -511,6 +534,13 @@ const GalleryScene = memo(({
           : 1;
         const scale: [number, number, number] = aspect > 1 ? [2 * aspect, 2, 1] : [2, 2 / aspect, 1];
 
+        const currentImage = normalizedImages[plane.imageIndex];
+        const handleImageClick = () => {
+          if (currentImage?.slug && onImageClick) {
+            onImageClick(currentImage.slug);
+          }
+        };
+
         return (
           <ImagePlane
             key={plane.index}
@@ -518,6 +548,7 @@ const GalleryScene = memo(({
             position={[plane.x, plane.y, worldZ]}
             scale={scale}
             material={material}
+            onClick={handleImageClick}
           />
         );
       })}
@@ -570,6 +601,7 @@ const InfiniteGallery = memo(({
     blurOut: { start: 0.4, end: 0.43 },
     maxBlur: 8.0,
   },
+  onImageClick,
   ...props
 }: InfiniteGalleryProps) => {
   const [webglSupported, setWebglSupported] = useState(true);
@@ -604,6 +636,7 @@ const InfiniteGallery = memo(({
           images={images}
           fadeSettings={fadeSettings}
           blurSettings={blurSettings}
+          onImageClick={onImageClick}
           {...props}
         />
       </Canvas>

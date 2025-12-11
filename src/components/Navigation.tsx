@@ -55,16 +55,17 @@ const Navigation = memo(() => {
         Independent UI/UX Designer
       </motion.div>
 
-      {/* Top right About link - responsive positioning */}
+      {/* Top right navigation links - responsive positioning */}
       <motion.div
-        className={`${baseClasses} top-4 right-4 md:right-6 text-sm md:text-base ${linkClasses}`}
+        className={`${baseClasses} top-4 right-4 md:right-6 text-sm md:text-base flex space-x-4 md:space-x-6`}
         style={{ zIndex: Z_INDEX.NAVIGATION }}
         variants={slideFromRight}
         initial="hidden"
         animate="visible"
         transition={transitionConfig}
       >
-        <Link href="/about">About</Link>
+        <Link href="/projects" className={linkClasses}>Projects</Link>
+        <Link href="/about" className={linkClasses}>About</Link>
       </motion.div>
 
       {/* Bottom right social links - hidden on mobile */}
@@ -77,14 +78,14 @@ const Navigation = memo(() => {
         transition={transitionConfig}
       >
         <a 
-          href="mailto:piyusha@example.com" 
+          href="mailto:piyusha.bhalerao@example.com" 
           className={linkClasses}
           aria-label="Send email to Piyusha"
         >
           E-mail
         </a>
         <a 
-          href="https://behance.net" 
+          href="https://behance.net/piyushabhalerao" 
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
@@ -93,7 +94,7 @@ const Navigation = memo(() => {
           Behance
         </a>
         <a 
-          href="https://instagram.com" 
+          href="https://instagram.com/piyusha.design" 
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
