@@ -31,9 +31,9 @@ const linkClasses = `cursor-pointer hover:text-white/70`;
 const Navigation = memo(() => {
   return (
     <>
-      {/* Top left logo */}
+      {/* Top left logo - responsive positioning */}
       <motion.div
-        className={`${baseClasses} top-4 left-6 text-lg tracking-[0.2em] ${linkClasses} hover:text-white/80`}
+        className={`${baseClasses} top-4 left-4 md:left-6 text-base md:text-lg tracking-[0.2em] ${linkClasses} hover:text-white/80`}
         style={{ zIndex: Z_INDEX.NAVIGATION }}
         variants={slideFromLeft}
         initial="hidden"
@@ -43,9 +43,9 @@ const Navigation = memo(() => {
         <Link href="/">PB</Link>
       </motion.div>
 
-      {/* Top center profession */}
+      {/* Top center profession - responsive positioning */}
       <motion.div
-        className={`${baseClasses} top-4 left-1/2 -translate-x-1/2 text-sm`}
+        className={`${baseClasses} top-4 left-1/2 -translate-x-1/2 text-xs md:text-sm`}
         style={{ zIndex: Z_INDEX.NAVIGATION }}
         variants={slideFromTop}
         initial="hidden"
@@ -55,9 +55,9 @@ const Navigation = memo(() => {
         Independent UI/UX Designer
       </motion.div>
 
-      {/* Top right About link */}
+      {/* Top right About link - responsive positioning */}
       <motion.div
-        className={`${baseClasses} top-4 right-6 text-sm ${linkClasses}`}
+        className={`${baseClasses} top-4 right-4 md:right-6 text-xs md:text-sm ${linkClasses}`}
         style={{ zIndex: Z_INDEX.NAVIGATION }}
         variants={slideFromRight}
         initial="hidden"
@@ -67,9 +67,9 @@ const Navigation = memo(() => {
         <Link href="/about">About</Link>
       </motion.div>
 
-      {/* Bottom right social links */}
+      {/* Bottom right social links - hidden on mobile */}
       <motion.div
-        className={`${baseClasses} bottom-6 right-6 flex flex-col items-end space-y-0.5 text-sm`}
+        className={`${baseClasses} bottom-6 right-6 hidden md:flex flex-col items-end space-y-0.5 text-sm`}
         style={{ zIndex: Z_INDEX.NAVIGATION }}
         variants={slideFromRight}
         initial="hidden"

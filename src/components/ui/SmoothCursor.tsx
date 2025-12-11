@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
 import { CURSOR_SPRING_CONFIG, Z_INDEX, ANIMATION_DURATIONS } from '@/lib/constants';
 
@@ -80,6 +80,7 @@ export const SmoothCursor = memo(({
   cursor = <DefaultCursorSVG />,
   springConfig = CURSOR_SPRING_CONFIG,
 }: SmoothCursorProps) => {
+  const [isMobile, setIsMobile] = useState(false);
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -158,8 +159,20 @@ export const SmoothCursor = memo(({
   }, [cursorX, cursorY, rotation, scale, updateVelocity]);
 
   useEffect(() => {
-    document.body.style.cursor = 'none';
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    // Check if device is mobile/touch device
+    const checkIsMobile = () => {
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth < 768;
+      return isTouchDevice || isSmallScreen;
+    };
+
+    setIsMobile(checkIsMobile());
+
+    // Only set up cursor on desktop devices
+    if (!checkIsMobile()) {
+      document.body.style.cursor = 'none';
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -172,6 +185,11 @@ export const SmoothCursor = memo(({
       }
     };
   }, [handleMouseMove]);
+
+  // Don't render cursor on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <motion.div

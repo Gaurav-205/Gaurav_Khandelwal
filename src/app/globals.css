@@ -20,18 +20,24 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     background: black;
     color: white;
-    cursor: none;
   }
 
-  /* Ensure all interactive elements use custom cursor */
-  *, *::before, *::after {
-    cursor: none !important;
-  }
+  /* Only apply custom cursor on desktop devices (768px and up) */
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+    body {
+      cursor: none;
+    }
 
-  /* Override specific cursor styles */
-  a, button, [role="button"], input, textarea, select, 
-  [onclick], [onmousedown], [onmouseup], [onmouseover] {
-    cursor: none !important;
+    /* Ensure all interactive elements use custom cursor on desktop */
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+
+    /* Override specific cursor styles on desktop */
+    a, button, [role="button"], input, textarea, select, 
+    [onclick], [onmousedown], [onmouseup], [onmouseover] {
+      cursor: none !important;
+    }
   }
 
   a {

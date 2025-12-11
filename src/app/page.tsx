@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <FadeTransition>
-      <div className="min-h-screen bg-black cursor-none overflow-hidden">
+      <div className="min-h-screen bg-black md:cursor-none overflow-hidden">
         <Navigation />
         <Hero />
       </div>

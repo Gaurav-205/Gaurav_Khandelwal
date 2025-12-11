@@ -80,7 +80,7 @@ export default function AboutPage() {
   };
   return (
     <FadeTransition>
-      <div className="min-h-screen bg-black text-white cursor-none hide-scrollbar" style={{ scrollbarWidth: 'none' } as React.CSSProperties}>
+      <div className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar" style={{ scrollbarWidth: 'none' } as React.CSSProperties}>
       
       {/* Back button - responsive positioning */}
       <motion.div
