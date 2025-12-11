@@ -82,9 +82,9 @@ export default function AboutPage() {
     <FadeTransition>
       <div className="min-h-screen bg-black text-white cursor-none hide-scrollbar" style={{ scrollbarWidth: 'none' } as React.CSSProperties}>
       
-      {/* Back button - top right */}
+      {/* Back button - responsive positioning */}
       <motion.div
-        className="fixed top-4 right-6 z-50"
+        className="fixed top-4 right-4 md:right-6 z-50"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
@@ -97,21 +97,21 @@ export default function AboutPage() {
         </Link>
       </motion.div>
 
-      {/* Dynamic Left sidebar menu */}
+      {/* Dynamic Left sidebar menu - responsive */}
       <motion.div
-        className="fixed top-4 left-6 z-50"
+        className="fixed top-4 left-4 md:left-6 z-50 hidden md:block"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
       >
         <div className="flex flex-col space-y-4 font-montserrat">
-          <h2 className="text-white font-normal text-lg tracking-wide">
+          <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">
             {activeSection === 'informations' && 'Informations'}
             {activeSection === 'fields' && 'Fields of Practice'}
             {activeSection === 'socials' && 'Socials'}
             {activeSection === 'contact' && 'Contact'}
           </h2>
-          <div className="flex flex-col space-y-2 text-sm">
+          <div className="flex flex-col space-y-2 text-xs lg:text-sm">
             <button 
               onClick={() => scrollToSection('informations')}
               className={`text-left transition-colors cursor-pointer ${
@@ -149,10 +149,10 @@ export default function AboutPage() {
         </div>
       </motion.div>
 
-      {/* Main content area - scrollable moved right */}
-      <div className="pt-20 pb-20 ml-24">
+      {/* Main content area - responsive layout */}
+      <div className="pt-16 pb-16 md:pt-20 md:pb-20 px-4 md:px-0 md:ml-24">
         {/* Section 1: Informations */}
-        <section id="informations" className="flex items-center justify-center min-h-[70vh] px-6">
+        <section id="informations" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
           <motion.div
             className="max-w-4xl w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -161,7 +161,7 @@ export default function AboutPage() {
           >
             {/* Small label */}
             <motion.p
-              className="text-white/60 font-montserrat text-sm mb-12 tracking-wide"
+              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
@@ -171,7 +171,7 @@ export default function AboutPage() {
 
             {/* Main heading - Information section bigger */}
             <motion.h1
-              className="text-white font-montserrat font-normal text-4xl md:text-5xl lg:text-6xl leading-tight mb-12"
+              className="text-white font-montserrat font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-8 md:mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
@@ -181,7 +181,7 @@ export default function AboutPage() {
 
             {/* Description */}
             <motion.p
-              className="text-white font-montserrat font-light text-lg md:text-xl leading-relaxed max-w-3xl"
+              className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.6 }}
@@ -195,7 +195,7 @@ export default function AboutPage() {
         </section>
 
         {/* Section 2: Fields of Practice */}
-        <section id="fields" className="flex items-center justify-center min-h-[70vh] px-6">
+        <section id="fields" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
           <motion.div
             className="max-w-4xl w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -204,7 +204,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <motion.p
-              className="text-white/60 font-montserrat text-sm mb-12 tracking-wide"
+              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -214,25 +214,25 @@ export default function AboutPage() {
             </motion.p>
 
             <motion.div
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 UI/UX Design & Research
               </h2>
-              <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 Mobile App Design
               </h2>
-              <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 Web Design & Development
               </h2>
-              <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 Brand Identity Design
               </h2>
-              <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight">
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 Design Systems
               </h2>
             </motion.div>
@@ -240,7 +240,7 @@ export default function AboutPage() {
         </section>
 
         {/* Section 3: Socials */}
-        <section id="socials" className="flex items-center justify-center min-h-[70vh] px-6">
+        <section id="socials" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
           <motion.div
             className="max-w-4xl w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -249,7 +249,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <motion.p
-              className="text-white/60 font-montserrat text-sm mb-12 tracking-wide"
+              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -259,25 +259,25 @@ export default function AboutPage() {
             </motion.p>
 
             <motion.div
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 Instagram
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 Twitter (X)
               </a>
-              <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 Behance
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 LinkedIn
               </a>
-              <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 Dribbble
               </a>
             </motion.div>
@@ -285,7 +285,7 @@ export default function AboutPage() {
         </section>
 
         {/* Section 4: Contact */}
-        <section id="contact" className="flex items-center justify-center min-h-[70vh] px-6">
+        <section id="contact" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
           <motion.div
             className="max-w-4xl w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -294,7 +294,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
           >
             <motion.p
-              className="text-white/60 font-montserrat text-sm mb-12 tracking-wide"
+              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -304,16 +304,16 @@ export default function AboutPage() {
             </motion.p>
 
             <motion.div
-              className="space-y-8"
+              className="space-y-6 md:space-y-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="mailto:piyusha@example.com" className="block text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="mailto:piyusha@example.com" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 piyusha@example.com
               </a>
-              <p className="text-white font-montserrat font-light text-lg md:text-xl leading-relaxed max-w-3xl">
+              <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
                 Available for freelance projects and collaborations. 
                 Let's create something amazing together.
               </p>
@@ -322,14 +322,14 @@ export default function AboutPage() {
         </section>
       </div>
 
-      {/* Bottom left info - aligned with sidebar */}
+      {/* Bottom left info - responsive positioning */}
       <motion.div
-        className="fixed bottom-6 left-6 z-50"
+        className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1.8 }}
       >
-        <div className="flex items-center space-x-4 font-montserrat text-sm text-white/60">
+        <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4 font-montserrat text-xs md:text-sm text-white/60">
           <div>
             <p>GMT+5:30</p>
             <p>Available</p>
