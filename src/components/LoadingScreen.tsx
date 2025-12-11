@@ -32,7 +32,7 @@ const LoadingScreen = memo(({ onComplete }: LoadingScreenProps) => {
         <CountUp
           from={0}
           to={100}
-          duration={ANIMATION_DURATIONS.LOADING_COUNT}
+          duration={ANIMATION_DURATIONS.LOADING_COUNT + 1}
           className="text-2xl md:text-4xl font-light text-white tracking-wider"
           onEnd={handleCountComplete}
         />

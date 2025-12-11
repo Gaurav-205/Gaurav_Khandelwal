@@ -32,8 +32,9 @@ const CountUp = memo(({
   const ref = useRef<HTMLSpanElement>(null);
   
   const springConfig = useMemo(() => ({
-    damping: 20 + 40 * (1 / duration),
-    stiffness: 100 * (1 / duration)
+    damping: 25 + 15 * (1 / duration), // Reduced damping for smoother motion
+    stiffness: 60 * (1 / duration),    // Reduced stiffness for more fluid animation
+    mass: 0.8                          // Lower mass for quicker response
   }), [duration]);
 
   const motionValue = useMotionValue(direction === 'down' ? to : from);
