@@ -7,6 +7,7 @@ import { useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { PROJECT_DATA } from '@/lib/constants/projects';
 import Image from 'next/image';
+import { trackPageView, trackExternalLink } from '@/lib/analytics';
 
 interface ProjectClientProps {
   params: Promise<{
@@ -20,6 +21,11 @@ export default function ProjectClient({ params }: ProjectClientProps) {
   const project = PROJECT_DATA.find(p => p.slug === resolvedParams.slug);
 
   useEffect(() => {
+    // Track page view
+    if (project) {
+      trackPageView(`/project/${project.slug}`);
+    }
+
     // Allow scrolling for this page but hide scrollbar completely
     document.documentElement.classList.add('hide-scrollbar');
     document.body.classList.add('hide-scrollbar');
@@ -42,7 +48,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
       document.documentElement.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [router]);
+  }, [router, project]);
 
   if (!project) {
     return (
@@ -179,6 +185,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackExternalLink(project.liveUrl!, `${project.title} - Live Site`)}
                       className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
                     >
                       View Live Site →
@@ -189,6 +196,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackExternalLink(project.githubUrl!, `${project.title} - GitHub`)}
                       className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
                     >
                       View on GitHub

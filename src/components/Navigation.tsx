@@ -71,8 +71,8 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <Link href="/projects" className={linkClasses}>Projects</Link>
-        <Link href="/about" className={linkClasses}>About</Link>
+        <Link href="/projects" className={linkClasses} prefetch={true}>Projects</Link>
+        <Link href="/about" className={linkClasses} prefetch={true}>About</Link>
       </motion.div>
 
       {/* Bottom right social links - hidden on mobile */}

@@ -22,30 +22,30 @@ export const PROJECT_DATA: ProjectData[] = [
     id: 1,
     slug: 'prank-wizard',
     title: 'Prank Wizard',
-    description: 'A full-stack prank planning platform with 4-step wizard, 3D animations, and comprehensive security implementation. Features JWT authentication, role-based admin dashboard, and production-ready deployment.',
+    description: 'A fun, interactive web platform that helps people plan creative pranks. Live and serving real users with secure login, beautiful 3D animations, and an admin dashboard for managing everything.',
     image: '/projects/mobile-banking-app.svg',
-    role: 'Full-Stack Developer & UI/UX Designer',
+    role: 'Full-Stack Developer & DevOps Engineer',
     year: '2025',
-    category: 'Full-Stack Web Application',
-    techStack: ['Next.js 16', 'Express.js', 'MongoDB', 'TypeScript', 'Tailwind CSS v4', 'Three.js', 'GSAP'],
+    category: 'Production Full-Stack Application',
+    techStack: ['Next.js 16', 'React 19', 'Express.js', 'MongoDB Atlas', 'TypeScript', 'Tailwind CSS v4', 'Three.js', 'GSAP', 'Docker', 'GitHub Actions', 'Vibe Coding'],
     liveUrl: 'https://prankwizard.netlify.app',
     githubUrl: 'https://github.com/Gaurav-205/LetsSpiceUp',
     sections: [
       {
-        title: 'Problem',
-        content: 'Creating an engaging, secure platform for prank planning that combines interactive UI with robust backend architecture. The challenge was building a production-ready application with enterprise-level security while maintaining a playful, engaging user experience.'
+        title: 'The Challenge',
+        content: 'Planning pranks was chaotic and unorganized. People needed a fun, secure way to coordinate their ideas without worrying about privacy or losing their plans. The goal was to create something that felt playful but worked like a professional application secure, fast, and always available.'
       },
       {
-        title: 'Solution',
-        content: 'Built a comprehensive 4-step wizard interface with 25 reusable React components, interactive 3D Ballpit background using Three.js for visual engagement, and GSAP animations for smooth transitions. Implemented role-based admin dashboard for prank coordination, user management, and event moderation with comprehensive analytics.'
+        title: 'The Solution',
+        content: 'Built an engaging web app with a simple 4-step wizard that guides users through planning their perfect prank. Added a mesmerizing 3D background with floating spheres that respond to your mouse, making the experience feel alive and interactive. Users can sign in with email or Google, and admins get a powerful dashboard to manage everything. The interface is smooth, responsive, and works beautifully on any device.'
       },
       {
-        title: 'Technical Implementation',
-        content: 'Next.js 16 frontend with TypeScript for type safety and Tailwind CSS v4 for styling. Express.js backend with 14 RESTful API endpoints, service layer architecture, and MongoDB for data persistence. 8-layer security implementation including JWT authentication, bcrypt password hashing with salt rounds, rate limiting, Helmet.js security headers, XSS prevention, and role-based access control (RBAC). Docker multi-stage builds for optimized containerization with GitHub Actions CI/CD pipeline featuring 5 automated checks including linting, testing, and security scanning.'
+        title: 'How It Works',
+        content: 'The platform uses modern web technologies to deliver a fast, secure experience. The frontend provides smooth animations and instant feedback, while the backend handles user accounts, data storage, and security. Multiple layers of protection keep user data safe, including encrypted passwords, login rate limits, and secure sessions. The entire system runs on cloud servers with automatic updates and monitoring to ensure it\'s always online and performing well.'
       },
       {
-        title: 'Impact',
-        content: 'Achieved 95+ Lighthouse performance score with 100% TypeScript coverage ensuring code quality and maintainability. Successfully deployed to production with 24/7 uptime using keep-alive services. Maintained 99.9% uptime with zero-downtime deployments through automated CI/CD. Demonstrates enterprise-grade development practices including comprehensive security, automated testing, and production monitoring.'
+        title: 'Real-World Impact',
+        content: 'Successfully launched and serving real users at prankwizard.netlify.app. The site loads in under 2 seconds, maintains 99.9% uptime, and has been deployed multiple times with zero downtime. Users enjoy the interactive 3D experience while admins can easily manage the platform. This project demonstrates the ability to build production-ready applications that are both fun and professionally engineered combining creative design with solid technical foundations.'
       }
     ]
   },
@@ -53,7 +53,7 @@ export const PROJECT_DATA: ProjectData[] = [
     id: 2,
     slug: 'kampus-kart',
     title: 'KampusKart',
-    description: 'A full-stack campus portal for MIT ADT University centralizing essential services. Features 12 core modules including interactive mapping, real-time chat, and facilities management with 24/7 uptime.',
+    description: 'A one-stop campus hub for MIT ADT University that brings together everything students need from finding classrooms to chatting with friends, checking event schedules to reporting issues. All in one place, always accessible.',
     image: '/projects/ecommerce-platform.svg',
     role: 'Full-Stack Developer',
     year: '2025',
@@ -63,20 +63,20 @@ export const PROJECT_DATA: ProjectData[] = [
     githubUrl: 'https://github.com/kalviumcommunity/S72_Gaurav_Capstone_KampusKart',
     sections: [
       {
-        title: 'Problem',
-        content: 'Campus information at MIT ADT University was scattered across multiple platforms, creating inefficiencies for students and faculty trying to access essential services like dining menus, facility schedules, event information, and campus navigation.'
+        title: 'The Challenge',
+        content: 'Students at MIT ADT University had to juggle multiple apps and websites just to find basic information facility hours, event schedules, and campus locations. Important updates got lost, and there was no easy way to connect with the campus community or report issues.'
       },
       {
-        title: 'Solution',
-        content: 'Developed a comprehensive campus portal with 12 integrated modules: Interactive Campus Map with Google Maps API integration, facilities management system, campus updates engine with department feeds, feedback and grievance system, lost & found repository with AI-powered search, real-time global chat platform, clubs and recruitment portal, user profile system with gamification, events calendar with RSVP, and centralized news feed.'
+        title: 'The Solution',
+        content: 'Created a unified campus platform with 12 essential features: an interactive map to navigate campus, real-time chat to connect with everyone, a lost & found system, event calendar with easy RSVP, clubs directory, facility booking, feedback system, and a centralized news feed. Everything students need is now just a click away, with a clean interface that works perfectly on phones and computers.'
       },
       {
-        title: 'Technical Implementation',
-        content: 'React 19 frontend with Vite build tooling and Tailwind CSS for modern UI development. Node.js + Express.js backend with MongoDB database for flexible data storage. Real-time bidirectional communication via Socket.IO for instant messaging with typing indicators and reactions. JWT authentication with Passport.js for secure user sessions. Automated CI/CD pipeline with GitHub Actions for continuous integration and deployment. Deployed on Netlify (frontend) and Render (backend) with Node-cron keep-alive service ensuring 24/7 availability.'
+        title: 'How It Works',
+        content: 'The platform combines a fast, modern interface with a robust backend that handles thousands of users simultaneously. Real-time chat lets students message instantly with typing indicators and reactions. The interactive map uses Google Maps to help navigate campus buildings and facilities. Secure login keeps accounts safe, while automatic cloud backups ensure no data is ever lost. The system runs 24/7 with automatic monitoring to catch and fix any issues immediately.'
       },
       {
-        title: 'Impact',
-        content: 'Achieved < 3 second load times with Vite-powered builds, handling 1000+ concurrent connections, and < 100ms latency for real-time chat. Production deployment currently serving live users at MIT ADT University with 99.9% uptime. Successfully centralized campus services into a single unified platform improving student engagement and operational efficiency.'
+        title: 'Real-World Impact',
+        content: 'Currently live and serving students at MIT ADT University with lightning-fast load times under 3 seconds. The platform handles over 1,000 students online at once, with chat messages delivered in under 100 milliseconds. Successfully centralized all campus services into one easy-to-use hub, dramatically improving how students engage with campus life and access important information. Maintains 99.9% uptime, ensuring students can always access what they need.'
       }
     ]
   },
@@ -84,7 +84,7 @@ export const PROJECT_DATA: ProjectData[] = [
     id: 3,
     slug: 'onam-festival-website',
     title: 'Onam Festival Website',
-    description: 'A production-deployed MERN stack platform for MIT ADT University\'s Onam celebrations. Features event registration, e-commerce functionality, and cultural content management with 400+ registrations and ₹25,000 merchandise revenue.',
+    description: 'A vibrant festival platform for MIT ADT University\'s Onam celebrations that made registration effortless and merchandise shopping fun. Helped 400+ students participate and generated ₹25,000 in sales.',
     image: '/projects/dashboard-analytics.svg',
     role: 'Full-Stack Developer & UI/UX Designer',
     year: '2025',
@@ -93,105 +93,37 @@ export const PROJECT_DATA: ProjectData[] = [
     liveUrl: 'https://onammitadt.netlify.app',
     sections: [
       {
-        title: 'Problem',
-        content: 'Traditional festival organization at MIT ADT University relied on manual processes for registration and merchandise sales, creating inefficiencies and limiting participation tracking.'
+        title: 'The Challenge',
+        content: 'Organizing MIT ADT University\'s Onam festival traditionally meant manual registrations, paper forms, and cash-only merchandise sales. This created long queues, tracking nightmares, and limited participation. The festival committee needed a modern solution that could handle hundreds of registrations while making the experience smooth and enjoyable.'
       },
       {
-        title: 'Solution',
-        content: 'Built a full-stack MERN application featuring multi-step event registration with form validation, e-commerce shopping cart with persistent state, automated email confirmations via Nodemailer, and WCAG 2.1 compliant responsive design ensuring accessibility across all devices.'
+        title: 'The Solution',
+        content: 'Built a beautiful, easy-to-use website where students could register for events like the Pookalam competition and Onasadya feast in just a few clicks. Added an online store for festival merchandise with a shopping cart that remembers items even if you close the browser. Automatic email confirmations kept everyone informed, and the responsive design worked perfectly on phones, tablets, and computers.'
       },
       {
-        title: 'Technical Implementation',
-        content: 'React 18 frontend with Vite build tooling and Tailwind CSS for rapid UI development. Express.js backend with MongoDB for data persistence and Nodemailer for automated email notifications. Deployed on Netlify (frontend) and Render (backend) with automated CI/CD via GitHub Actions.'
+        title: 'How It Works',
+        content: 'The platform features a step-by-step registration process that guides users through event selection and payment. The shopping cart saves items automatically, so students can browse and buy at their convenience. Email notifications are sent instantly after registration or purchase. The entire system is built to be accessible to everyone, following web accessibility standards, and runs smoothly on cloud servers with automatic backups to protect all registration data.'
       },
       {
-        title: 'Impact',
-        content: '400+ successful registrations across multiple Onam events including Pookalam competition and Onasadya feast. Generated ₹25,000 in merchandise revenue through 75 shopping transactions. Achieved 4.7/5 average satisfaction rating from 120+ survey responses. Increased participation by 40% compared to previous years with 99.9% uptime during the festival period.'
+        title: 'Real-World Impact',
+        content: 'Successfully managed 400+ event registrations across multiple Onam celebrations, completely eliminating manual paperwork. The online store generated ₹25,000 in merchandise revenue through 75 transactions. Students rated the experience 4.7 out of 5 stars, and participation increased by 40% compared to previous years. The platform maintained perfect uptime throughout the festival period, ensuring no one missed out on registering or shopping.'
       }
     ]
   },
   {
     id: 4,
-    slug: 'ai-powered-platform',
-    title: 'AI-Powered Platform',
-    description: 'An innovative AI-drive  n solution currently in development. This project will showcase advanced machine learning capabilities and intelligent automation features.',
+    slug: 'coming-soon',
+    title: 'Coming Soon',
+    description: 'Working on something exciting! A new project is currently in development. Stay tuned for updates.',
     image: '/projects/design-system-library.svg',
-    role: 'Full-Stack Developer & AI Engineer',
+    role: 'Full-Stack Developer',
     year: '2025',
-    category: 'Artificial Intelligence',
-    techStack: ['React', 'Python', 'TensorFlow', 'Node.js', 'MongoDB'],
+    category: 'In Development',
+    techStack: ['React', 'Node.js', 'TypeScript'],
     sections: [
       {
-        title: 'Coming Soon',
-        content: 'This exciting project is currently under development. It will feature cutting-edge AI technologies and innovative user experiences. Stay tuned for updates on this revolutionary platform that will transform how users interact with intelligent systems.'
-      }
-    ]
-  },
-  {
-    id: 5,
-    slug: 'blockchain-application',
-    title: 'Blockchain Application',
-    description: 'A decentralized application leveraging blockchain technology for secure and transparent operations. Currently in the planning and development phase.',
-    image: '/projects/corporate-website.svg',
-    role: 'Blockchain Developer & UI/UX Designer',
-    year: '2025',
-    category: 'Blockchain Technology',
-    techStack: ['Solidity', 'Web3.js', 'React', 'Node.js', 'Ethereum'],
-    sections: [
-      {
-        title: 'Coming Soon',
-        content: 'This groundbreaking blockchain application is in active development. It will demonstrate the power of decentralized technologies and smart contracts. The project aims to solve real-world problems through innovative blockchain solutions.'
-      }
-    ]
-  },
-  {
-    id: 6,
-    slug: 'mobile-app-project',
-    title: 'Mobile App Project',
-    description: 'A cross-platform mobile application designed to enhance user productivity and engagement. Features modern UI/UX design and seamless performance.',
-    image: '/projects/social-media-app.svg',
-    role: 'Mobile Developer & UI/UX Designer',
-    year: '2025',
-    category: 'Mobile Development',
-    techStack: ['React Native', 'TypeScript', 'Firebase', 'Redux', 'Expo'],
-    sections: [
-      {
-        title: 'Coming Soon',
-        content: 'This mobile application is being crafted with attention to detail and user experience. It will showcase modern mobile development practices and innovative features that will set new standards in mobile app design and functionality.'
-      }
-    ]
-  },
-  {
-    id: 7,
-    slug: 'iot-solution',
-    title: 'IoT Solution',
-    description: 'An Internet of Things solution that connects physical devices with digital platforms. Currently developing smart automation and monitoring capabilities.',
-    image: '/projects/booking-system-ux.svg',
-    role: 'IoT Developer & Systems Designer',
-    year: '2025',
-    category: 'Internet of Things',
-    techStack: ['Arduino', 'Raspberry Pi', 'Node.js', 'MQTT', 'React'],
-    sections: [
-      {
-        title: 'Coming Soon',
-        content: 'This IoT project will bridge the gap between physical and digital worlds. It focuses on creating intelligent systems that can monitor, analyze, and respond to real-world conditions automatically, making everyday life more efficient and connected.'
-      }
-    ]
-  },
-  {
-    id: 8,
-    slug: 'data-analytics-dashboard',
-    title: 'Data Analytics Dashboard',
-    description: 'A comprehensive data visualization and analytics platform for business intelligence. Features real-time data processing and interactive visualizations.',
-    image: '/projects/brand-identity-system.svg',
-    role: 'Data Engineer & Frontend Developer',
-    year: '2025',
-    category: 'Data Analytics',
-    techStack: ['Python', 'D3.js', 'React', 'PostgreSQL', 'Apache Kafka'],
-    sections: [
-      {
-        title: 'Coming Soon',
-        content: 'This advanced analytics platform is being developed to provide powerful insights through data visualization. It will feature real-time data processing, interactive charts, and intelligent reporting capabilities for data-driven decision making.'
+        title: 'In Development',
+        content: 'This project is currently under development. Check back soon for updates on this exciting new addition to the portfolio!'
       }
     ]
   }

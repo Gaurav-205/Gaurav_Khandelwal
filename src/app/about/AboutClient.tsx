@@ -5,12 +5,16 @@ import FadeTransition from '@/components/ui/FadeTransition';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { trackPageView, trackExternalLink, trackCTAClick } from '@/lib/analytics';
 
 export default function AboutClient() {
   const [activeSection, setActiveSection] = useState('informations');
   const router = useRouter();
 
   useEffect(() => {
+    // Track page view
+    trackPageView('/about');
+
     // Allow scrolling for this page but hide scrollbar completely
     document.documentElement.classList.add('hide-scrollbar');
     document.body.classList.add('hide-scrollbar');
@@ -319,21 +323,25 @@ export default function AboutClient() {
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="https://github.com/Gaurav-205" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a 
+                href="https://github.com/Gaurav-205" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => trackExternalLink('https://github.com/Gaurav-205', 'GitHub')}
+                className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors"
+              >
                 <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
                 GitHub
               </a>
-              <a href="https://linkedin.com/in/gaurav-khandelwal-17a127358" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a 
+                href="https://linkedin.com/in/gaurav-khandelwal-17a127358" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={() => trackExternalLink('https://linkedin.com/in/gaurav-khandelwal-17a127358', 'LinkedIn')}
+                className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors"
+              >
                 <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
                 LinkedIn
-              </a>
-              <a href="https://twitter.com/gaurav_dev" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
-                Twitter (X)
-              </a>
-              <a href="https://instagram.com/gaurav.codes" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
-                Instagram
               </a>
             </motion.div>
           </motion.div>
@@ -388,6 +396,7 @@ export default function AboutClient() {
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href="mailto:gauravkhandelwal205@gmail.com"
+                  onClick={() => trackCTAClick('Send Email', 'About Contact Section')}
                   className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
                 >
                   Send Email →
@@ -396,6 +405,7 @@ export default function AboutClient() {
                   href="https://linkedin.com/in/gaurav-khandelwal-17a127358"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackCTAClick('Connect on LinkedIn', 'About Contact Section')}
                   className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
                 >
                   Connect on LinkedIn

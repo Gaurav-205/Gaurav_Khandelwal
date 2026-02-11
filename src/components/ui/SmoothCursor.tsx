@@ -82,7 +82,14 @@ export const SmoothCursor = memo(({
   cursor = <DefaultCursorSVG />,
   springConfig = CURSOR_SPRING_CONFIG,
 }: SmoothCursorProps) => {
-  const [isMobile, setIsMobile] = useState(false);
+  // Initialize with mobile check to prevent flash
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return true; // SSR default
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth < 768;
+    return isTouchDevice || isSmallScreen;
+  });
+  
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -161,17 +168,19 @@ export const SmoothCursor = memo(({
   }, [cursorX, cursorY, rotation, scale, updateVelocity]);
 
   useEffect(() => {
-    // Check if device is mobile/touch device
+    // Double-check mobile detection on mount
     const checkIsMobile = () => {
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       const isSmallScreen = window.innerWidth < 768;
-      return isTouchDevice || isSmallScreen;
+      const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      return isTouchDevice || isSmallScreen || hasCoarsePointer;
     };
 
-    setIsMobile(checkIsMobile());
+    const isMobileDevice = checkIsMobile();
+    setIsMobile(isMobileDevice);
 
     // Only set up cursor on desktop devices
-    if (!checkIsMobile()) {
+    if (!isMobileDevice) {
       document.body.style.cursor = 'none';
       window.addEventListener('mousemove', handleMouseMove, { passive: true });
     }

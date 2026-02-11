@@ -7,11 +7,15 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PROJECT_DATA } from '@/lib/constants/projects';
 import Image from 'next/image';
+import { trackPageView, trackProjectClick, trackCTAClick } from '@/lib/analytics';
 
 export default function ProjectsClient() {
   const router = useRouter();
 
   useEffect(() => {
+    // Track page view
+    trackPageView('/projects');
+
     // Allow scrolling for this page but hide scrollbar completely
     document.documentElement.classList.add('hide-scrollbar');
     document.body.classList.add('hide-scrollbar');
@@ -35,6 +39,10 @@ export default function ProjectsClient() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [router]);
+
+  const handleProjectClick = (slug: string, title: string) => {
+    trackProjectClick(slug, title);
+  };
 
   return (
     <FadeTransition>
@@ -129,7 +137,10 @@ export default function ProjectsClient() {
                   className="group"
                 >
                   <Link href={`/project/${project.slug}`}>
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg mb-6 bg-gray-900 border border-white/10">
+                    <div 
+                      className="relative aspect-[4/3] w-full overflow-hidden rounded-lg mb-6 bg-gray-900 border border-white/10"
+                      onClick={() => handleProjectClick(project.slug, project.title)}
+                    >
                       <Image
                         src={project.image}
                         alt={project.title}
@@ -219,12 +230,14 @@ export default function ProjectsClient() {
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link
                   href="/about#contact"
+                  onClick={() => trackCTAClick('Get in touch', 'Projects Page')}
                   className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
                 >
                   Get in touch →
                 </Link>
                 <a
                   href="mailto:gauravkhandelwal205@gmail.com"
+                  onClick={() => trackCTAClick('Send Email', 'Projects Page')}
                   className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
                 >
                   Send Email
