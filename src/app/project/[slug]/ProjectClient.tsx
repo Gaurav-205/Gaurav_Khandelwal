@@ -5,7 +5,7 @@ import FadeTransition from '@/components/ui/FadeTransition';
 import Link from 'next/link';
 import { useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { PROJECT_DATA } from '@/lib/constants';
+import { PROJECT_DATA } from '@/lib/constants/projects';
 import Image from 'next/image';
 
 interface ProjectClientProps {

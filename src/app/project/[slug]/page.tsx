@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PROJECT_DATA } from '@/lib/constants';
+import { PROJECT_DATA } from '@/lib/constants/projects';
 import ProjectClient from './ProjectClient';
 
 interface ProjectPageProps {
@@ -14,15 +14,15 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   
   if (!project) {
     return {
-      title: 'Project Not Found - Piyusha Bhalerao',
+      title: 'Project Not Found - Gaurav Khandelwal',
       description: 'The requested project could not be found.',
     };
   }
 
   return {
-    title: `${project.title} - Piyusha Bhalerao`,
+    title: `${project.title} - Gaurav Khandelwal`,
     description: project.description,
-    keywords: [project.category, 'UI/UX Design', 'Portfolio', project.title, 'Piyusha Bhalerao'],
+    keywords: [project.category, 'Full-Stack Development', 'Portfolio', project.title, 'Gaurav Khandelwal'],
   };
 }
 

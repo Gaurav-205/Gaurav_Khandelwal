@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
 import Link from 'next/link';
-import { ANIMATION_DELAYS, ANIMATION_DURATIONS, Z_INDEX } from '@/lib/constants';
+import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
+import { Z_INDEX } from '@/lib/constants/zIndex';
 
 const transitionConfig = {
   duration: ANIMATION_DURATIONS.NAVIGATION_SLIDE,
@@ -41,11 +42,11 @@ const Navigation = memo(() => {
         transition={transitionConfig}
       >
         <Link href="/" className={`text-lg md:text-xl tracking-[0.2em] ${linkClasses} hover:text-white/80 block`}>
-          PB
+          GK
         </Link>
         {/* Profession line - visible on mobile below name, hidden on desktop */}
         <div className="block md:hidden text-xs text-white/80 mt-1">
-          Independent UI/UX Designer
+          Full-Stack Developer & Designer
         </div>
       </motion.div>
 
@@ -58,7 +59,7 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        Independent UI/UX Designer
+        Full-Stack Developer & Designer
       </motion.div>
 
       {/* Top right navigation links - responsive positioning */}
@@ -84,29 +85,29 @@ const Navigation = memo(() => {
         transition={transitionConfig}
       >
         <a 
-          href="mailto:piyusha.bhalerao@example.com" 
+          href="mailto:gauravkhandelwal205@gmail.com" 
           className={linkClasses}
-          aria-label="Send email to Piyusha"
+          aria-label="Send email to Gaurav Khandelwal"
         >
           E-mail
         </a>
         <a 
-          href="https://behance.net/piyushabhalerao" 
+          href="https://github.com/Gaurav-205" 
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
-          aria-label="Visit Behance profile"
+          aria-label="Visit Gaurav&apos;s GitHub profile (opens in new tab)"
         >
-          Behance
+          GitHub
         </a>
         <a 
-          href="https://instagram.com/piyusha.design" 
+          href="https://linkedin.com/in/gaurav-khandelwal-17a127358" 
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
-          aria-label="Visit Instagram profile"
+          aria-label="Visit Gaurav&apos;s LinkedIn profile (opens in new tab)"
         >
-          Instagram
+          LinkedIn
         </a>
       </motion.div>
     </>

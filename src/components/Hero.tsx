@@ -3,7 +3,9 @@
 import { memo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import InfiniteGallery from './ui/3d-gallery-photography';
-import { SAMPLE_IMAGES, GALLERY_CONFIG, Z_INDEX } from '@/lib/constants';
+import { SAMPLE_IMAGES } from '@/lib/constants/projects';
+import { GALLERY_CONFIG } from '@/lib/constants/gallery';
+import { Z_INDEX } from '@/lib/constants/zIndex';
 
 const Hero = memo(() => {
   const router = useRouter();
@@ -32,7 +34,7 @@ const Hero = memo(() => {
         style={{ zIndex: Z_INDEX.GALLERY_OVERLAY }}
       >
         <h1 className="font-serif text-4xl md:text-7xl tracking-tight text-center">
-          <span className="italic">Piyusha Bhalerao</span>
+          <span className="italic">Gaurav Khandelwal</span>
         </h1>
       </div>
       

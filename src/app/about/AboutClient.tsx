@@ -176,7 +176,7 @@ export default function AboutClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
             >
-              Piyusha Bhalerao is a UI/UX designer.
+              Gaurav Khandelwal is a Full-Stack Developer & UI/UX Designer.
             </motion.h1>
 
             {/* Description */}
@@ -186,10 +186,10 @@ export default function AboutClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.6 }}
             >
-              I'm a designer who believes that design has the power to make a difference. 
-              I'm a lifelong learner who is always looking for new ways to expand my knowledge and skills. 
-              My ultimate goal as a designer is to create designs that spark conversations, 
-              and inspire positive change.
+              I&apos;m a developer and designer who believes that technology has the power to make a difference. 
+              I&apos;m passionate about creating innovative solutions that solve real-world problems. 
+              My ultimate goal is to build products that not only function flawlessly but also 
+              inspire positive change and improve people&apos;s lives.
             </motion.p>
           </motion.div>
         </section>
@@ -221,19 +221,19 @@ export default function AboutClient() {
               viewport={{ once: true }}
             >
               <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
+                Full-Stack Web Development
+              </h2>
+              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
                 UI/UX Design & Research
               </h2>
               <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Mobile App Design
+                Mobile & Web App Development
               </h2>
               <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Web Design & Development
+                Database Design & Architecture
               </h2>
               <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Brand Identity Design
-              </h2>
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Design Systems
+                API Development & Integration
               </h2>
             </motion.div>
           </motion.div>
@@ -265,20 +265,17 @@ export default function AboutClient() {
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="https://instagram.com/piyusha.design" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Instagram
+              <a href="https://github.com/Gaurav-205" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                GitHub
               </a>
-              <a href="https://twitter.com/piyushabhalerao" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Twitter (X)
-              </a>
-              <a href="https://behance.net/piyushabhalerao" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Behance
-              </a>
-              <a href="https://linkedin.com/in/piyusha-bhalerao" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a href="https://linkedin.com/in/gaurav-khandelwal-17a127358" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 LinkedIn
               </a>
-              <a href="https://dribbble.com/piyushabhalerao" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Dribbble
+              <a href="https://twitter.com/gaurav_dev" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                Twitter (X)
+              </a>
+              <a href="https://instagram.com/gaurav.codes" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                Instagram
               </a>
             </motion.div>
           </motion.div>
@@ -310,12 +307,12 @@ export default function AboutClient() {
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="mailto:piyusha.bhalerao@example.com" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                piyusha.bhalerao@example.com
+              <a href="mailto:gauravkhandelwal205@gmail.com" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                gauravkhandelwal205@gmail.com
               </a>
               <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
-                Available for freelance projects and collaborations. 
-                Let's create something amazing together.
+                Available for freelance projects and full-time opportunities. 
+                Let&apos;s build something amazing together.
               </p>
             </motion.div>
           </motion.div>
@@ -335,8 +332,8 @@ export default function AboutClient() {
             <p>Available</p>
           </div>
           <div>
-            <p>Mumbai, India</p>
-            <p>Dec. 2024</p>
+            <p>Pune, India</p>
+            <p>Feb. 2025</p>
           </div>
         </div>
       </motion.div>

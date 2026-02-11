@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { memo, useCallback, useState } from 'react';
 import CountUp from './ui/CountUp';
-import { ANIMATION_DELAYS, ANIMATION_DURATIONS, Z_INDEX } from '@/lib/constants';
+import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
+import { Z_INDEX } from '@/lib/constants/zIndex';
 
 interface LoadingScreenProps {
   onComplete: () => void;

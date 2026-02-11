@@ -2,7 +2,9 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
-import { CURSOR_SPRING_CONFIG, Z_INDEX, ANIMATION_DURATIONS } from '@/lib/constants';
+import { CURSOR_SPRING_CONFIG } from '@/lib/constants/gallery';
+import { Z_INDEX } from '@/lib/constants/zIndex';
+import { ANIMATION_DURATIONS } from '@/lib/constants/animations';
 
 interface Position {
   x: number;

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/_next/'],
     },
-    sitemap: 'https://piyushabhalerao.com/sitemap.xml', // Replace with your actual domain
+    sitemap: 'https://gauravkhandelwal.com/sitemap.xml', // Replace with your actual domain when deployed
   }
 }

@@ -1,14 +1,13 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ReactNode, useState, useEffect } from 'react';
 
 interface FadeTransitionProps {
   children: ReactNode;
-  trigger?: boolean;
 }
 
-export default function FadeTransition({ children, trigger = false }: FadeTransitionProps) {
+export default function FadeTransition({ children }: FadeTransitionProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

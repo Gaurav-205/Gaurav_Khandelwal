@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { PROJECT_DATA } from '@/lib/constants'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://piyushabhalerao.com' // Replace with your actual domain
+  const baseUrl = 'https://gauravkhandelwal.com' // Replace with your actual domain when deployed
 
   // Static pages
   const staticPages = [

@@ -6,7 +6,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { checkWebGLSupport } from '@/lib/utils';
-import { ANIMATION_DELAYS } from '@/lib/constants';
+import { ANIMATION_DELAYS } from '@/lib/constants/animations';
 
 type ImageItem = string | { src: string; alt?: string; slug?: string };
 
