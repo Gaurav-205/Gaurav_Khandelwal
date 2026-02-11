@@ -73,15 +73,26 @@ export default function ProjectsClient() {
         {/* Main content */}
         <div className="pt-20 pb-16 px-4 md:px-6">
           {/* Title section */}
-          <section className="flex items-center justify-center min-h-[40vh]">
+          <section className="flex items-center justify-center min-h-[50vh] py-20 md:py-32">
             <motion.div
               className="max-w-6xl w-full text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1 }}
             >
+              <motion.div
+                className="mb-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.1 }}
+              >
+                <span className="text-white/40 font-montserrat text-sm tracking-widest">
+                  PORTFOLIO
+                </span>
+              </motion.div>
+
               <motion.h1
-                className="text-white font-montserrat font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6"
+                className="text-white font-montserrat font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1.2 }}
@@ -100,9 +111,14 @@ export default function ProjectsClient() {
             </motion.div>
           </section>
 
+          {/* Divider */}
+          <div className="max-w-7xl mx-auto mb-20">
+            <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </div>
+
           {/* Projects grid */}
-          <section className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <section className="max-w-7xl mx-auto py-20 md:py-32">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
               {PROJECT_DATA.map((project, index) => (
                 <motion.div
                   key={project.id}
@@ -113,7 +129,7 @@ export default function ProjectsClient() {
                   className="group"
                 >
                   <Link href={`/project/${project.slug}`}>
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg mb-6 bg-gray-900">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg mb-6 bg-gray-900 border border-white/10">
                       <Image
                         src={project.image}
                         alt={project.title}
@@ -123,16 +139,43 @@ export default function ProjectsClient() {
                       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                     
-                    <div className="space-y-2">
-                      <h3 className="text-white font-montserrat font-normal text-xl md:text-2xl group-hover:text-white/80 transition-colors">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-white/40 font-montserrat text-xs tracking-widest">
+                          {String(project.id).padStart(2, '0')}
+                        </span>
+                        <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+                      </div>
+                      
+                      <h3 className="text-white font-montserrat font-normal text-xl md:text-2xl group-hover:text-white/70 transition-colors">
                         {project.title}
                       </h3>
+                      
                       <p className="text-white/60 font-montserrat text-sm tracking-wide">
                         {project.category} • {project.year}
                       </p>
-                      <p className="text-white/70 font-montserrat font-light text-base leading-relaxed">
+                      
+                      <p className="text-white/70 font-montserrat font-light text-base leading-relaxed line-clamp-3">
                         {project.description}
                       </p>
+
+                      {project.techStack && project.techStack.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {project.techStack.slice(0, 3).map((tech, techIndex) => (
+                            <span
+                              key={techIndex}
+                              className="px-3 py-1 bg-white/5 border border-white/10 text-white/70 font-montserrat text-xs rounded-full"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {project.techStack.length > 3 && (
+                            <span className="px-3 py-1 text-white/50 font-montserrat text-xs">
+                              +{project.techStack.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </Link>
                 </motion.div>
@@ -140,8 +183,13 @@ export default function ProjectsClient() {
             </div>
           </section>
 
+          {/* Divider */}
+          <div className="max-w-7xl mx-auto">
+            <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </div>
+
           {/* Call to action */}
-          <section className="mt-20">
+          <section className="py-20 md:py-32">
             <motion.div
               className="max-w-4xl mx-auto text-center"
               initial={{ opacity: 0, y: 20 }}
@@ -149,6 +197,18 @@ export default function ProjectsClient() {
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
+              <motion.div
+                className="mb-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <span className="text-white/40 font-montserrat text-sm tracking-widest">
+                  LET'S CONNECT
+                </span>
+              </motion.div>
+
               <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl mb-6">
                 Let's work together
               </h2>
@@ -156,12 +216,20 @@ export default function ProjectsClient() {
                 I'm always interested in new opportunities and collaborations. 
                 Let's create something amazing together.
               </p>
-              <Link
-                href="/about#contact"
-                className="inline-block text-white font-montserrat font-normal text-base tracking-wide border border-white/30 px-8 py-3 rounded-full hover:bg-white hover:text-black transition-all duration-300"
-              >
-                Get in touch
-              </Link>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link
+                  href="/about#contact"
+                  className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
+                >
+                  Get in touch →
+                </Link>
+                <a
+                  href="mailto:gauravkhandelwal205@gmail.com"
+                  className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
+                >
+                  Send Email
+                </a>
+              </div>
             </motion.div>
           </section>
         </div>

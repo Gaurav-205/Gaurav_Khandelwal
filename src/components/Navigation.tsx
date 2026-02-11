@@ -41,7 +41,7 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <Link href="/" className={`text-lg md:text-xl tracking-[0.2em] ${linkClasses} hover:text-white/80 block`}>
+        <Link href="/" className={`text-lg md:text-xl tracking-[0.2em] ${linkClasses} hover:text-white/70 block`}>
           GK
         </Link>
         {/* Profession line - visible on mobile below name, hidden on desktop */}

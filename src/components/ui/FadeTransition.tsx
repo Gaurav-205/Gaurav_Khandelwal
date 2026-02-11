@@ -27,10 +27,10 @@ export default function FadeTransition({ children }: FadeTransitionProps) {
           opacity: 0
         }}
         transition={{
-          duration: 1.2,
+          duration: 1,
           ease: [0.4, 0, 0.2, 1],
-          clipPath: { duration: 1.2 },
-          opacity: { duration: 0.8, delay: 0.4 }
+          clipPath: { duration: 1 },
+          opacity: { duration: 0.8, delay: 0.2 }
         }}
         className="fixed inset-0 bg-black z-50 pointer-events-none"
       />

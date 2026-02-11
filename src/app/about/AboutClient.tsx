@@ -152,22 +152,28 @@ export default function AboutClient() {
       {/* Main content area - responsive layout */}
       <div className="pt-16 pb-16 md:pt-20 md:pb-20 px-4 md:px-0 md:ml-24">
         {/* Section 1: Informations */}
-        <section id="informations" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
+        <section id="informations" className="py-20 md:py-32 px-4 md:px-6">
           <motion.div
-            className="max-w-4xl w-full"
+            className="max-w-4xl w-full mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
           >
-            {/* Small label */}
-            <motion.p
-              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
+            {/* Small label with divider */}
+            <motion.div
+              className="mb-8 md:mb-12 flex items-center gap-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
             >
-              Informations
-            </motion.p>
+              <span className="text-white/40 font-montserrat text-xs tracking-widest">
+                01
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+              <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">
+                Informations
+              </p>
+            </motion.div>
 
             {/* Main heading - Information section bigger */}
             <motion.h1
@@ -176,129 +182,135 @@ export default function AboutClient() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
             >
-              Gaurav Khandelwal is a Full-Stack Developer & UI/UX Designer.
+              Gaurav Khandelwal is a Full-Stack Developer & Designer.
             </motion.h1>
 
             {/* Description */}
-            <motion.p
-              className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl"
+            <motion.div
+              className="space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.6 }}
             >
-              I&apos;m a developer and designer who believes that technology has the power to make a difference. 
-              I&apos;m passionate about creating innovative solutions that solve real-world problems. 
-              My ultimate goal is to build products that not only function flawlessly but also 
-              inspire positive change and improve people&apos;s lives.
-            </motion.p>
+              <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
+                I&apos;m a developer and designer from Kota, Rajasthan, who believes that technology has the power 
+                to make a difference. I embody the &quot;jack of all trades&quot; mindset, cultivating broad skills 
+                across multiple domains while maintaining depth in key areas.
+              </p>
+              
+              <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
+                Currently pursuing B.Tech in Computer Science & Engineering at MIT ADT University, Pune. 
+                My approach combines theoretical learning with practical application through projects and community engagement.
+              </p>
+            </motion.div>
           </motion.div>
         </section>
+
+        {/* Divider */}
+        <div className="max-w-4xl mx-auto px-4 md:px-6">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
 
         {/* Section 2: Fields of Practice */}
-        <section id="fields" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
+        <section id="fields" className="py-20 md:py-32 px-4 md:px-6">
           <motion.div
-            className="max-w-4xl w-full"
+            className="max-w-4xl w-full mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <motion.p
-              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
+            <motion.div
+              className="mb-8 md:mb-12 flex items-center gap-4"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Fields of Practice
-            </motion.p>
+              <span className="text-white/40 font-montserrat text-xs tracking-widest">
+                02
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+              <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">
+                Fields of Practice
+              </p>
+            </motion.div>
 
             <motion.div
-              className="space-y-4 md:space-y-6"
+              className="space-y-8 md:space-y-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Full-Stack Web Development
-              </h2>
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                UI/UX Design & Research
-              </h2>
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Mobile & Web App Development
-              </h2>
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                Database Design & Architecture
-              </h2>
-              <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                API Development & Integration
-              </h2>
+              <div className="border-l-2 border-white/10 pl-6">
+                <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight mb-3">
+                  Full-Stack Development
+                </h2>
+                <p className="text-white/60 font-montserrat font-light text-sm md:text-base">
+                  MERN Stack (MongoDB, Express.js, React, Node.js) • Vite • Tailwind CSS • Progressive Web Apps
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-white/10 pl-6">
+                <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight mb-3">
+                  UI/UX Design & Research
+                </h2>
+                <p className="text-white/60 font-montserrat font-light text-sm md:text-base">
+                  Figma • Wireframing & Prototyping • Design Systems • Design Thinking Facilitation
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-white/10 pl-6">
+                <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight mb-3">
+                  API Development & Automation
+                </h2>
+                <p className="text-white/60 font-montserrat font-light text-sm md:text-base">
+                  Postman API Student Expert (Certified) • RESTful API Design • n8n Workflow Automation
+                </p>
+              </div>
+              
+              <div className="border-l-2 border-white/10 pl-6">
+                <h2 className="text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight mb-3">
+                  Database & Server Architecture
+                </h2>
+                <p className="text-white/60 font-montserrat font-light text-sm md:text-base">
+                  MongoDB • Database Management • Server-Side Logic • Platform Integration
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         </section>
+
+        {/* Divider */}
+        <div className="max-w-4xl mx-auto px-4 md:px-6">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
 
         {/* Section 3: Socials */}
-        <section id="socials" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
+        <section id="socials" className="py-20 md:py-32 px-4 md:px-6">
           <motion.div
-            className="max-w-4xl w-full"
+            className="max-w-4xl w-full mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <motion.p
-              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              Socials
-            </motion.p>
-
             <motion.div
-              className="space-y-4 md:space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <a href="https://github.com/Gaurav-205" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                GitHub
-              </a>
-              <a href="https://linkedin.com/in/gaurav-khandelwal-17a127358" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                LinkedIn
-              </a>
-              <a href="https://twitter.com/gaurav_dev" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Twitter (X)
-              </a>
-              <a href="https://instagram.com/gaurav.codes" target="_blank" rel="noopener noreferrer" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
-                Instagram
-              </a>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Section 4: Contact */}
-        <section id="contact" className="flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 md:px-6">
-          <motion.div
-            className="max-w-4xl w-full"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-          >
-            <motion.p
-              className="text-white/60 font-montserrat text-xs md:text-sm mb-8 md:mb-12 tracking-wide"
+              className="mb-8 md:mb-12 flex items-center gap-4"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Contact
-            </motion.p>
+              <span className="text-white/40 font-montserrat text-xs tracking-widest">
+                03
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+              <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">
+                Socials
+              </p>
+            </motion.div>
 
             <motion.div
               className="space-y-6 md:space-y-8"
@@ -307,13 +319,88 @@ export default function AboutClient() {
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
+              <a href="https://github.com/Gaurav-205" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
+                GitHub
+              </a>
+              <a href="https://linkedin.com/in/gaurav-khandelwal-17a127358" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
+                LinkedIn
+              </a>
+              <a href="https://twitter.com/gaurav_dev" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
+                Twitter (X)
+              </a>
+              <a href="https://instagram.com/gaurav.codes" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+                <span className="text-white/40 text-sm group-hover:translate-x-2 transition-transform duration-300">→</span>
+                Instagram
+              </a>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-4xl mx-auto px-4 md:px-6">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
+
+        {/* Section 4: Contact */}
+        <section id="contact" className="py-20 md:py-32 px-4 md:px-6">
+          <motion.div
+            className="max-w-4xl w-full mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              className="mb-8 md:mb-12 flex items-center gap-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <span className="text-white/40 font-montserrat text-xs tracking-widest">
+                04
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+              <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">
+                Contact
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="space-y-8 md:space-y-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
               <a href="mailto:gauravkhandelwal205@gmail.com" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
                 gauravkhandelwal205@gmail.com
               </a>
+              
               <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
-                Available for freelance projects and full-time opportunities. 
-                Let&apos;s build something amazing together.
+                B.Tech Student at MIT School of Computing, Pune. Available for freelance projects, 
+                internships, and collaborative opportunities.
               </p>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a
+                  href="mailto:gauravkhandelwal205@gmail.com"
+                  className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
+                >
+                  Send Email →
+                </a>
+                <a
+                  href="https://linkedin.com/in/gaurav-khandelwal-17a127358"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
+                >
+                  Connect on LinkedIn
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         </section>
@@ -332,8 +419,8 @@ export default function AboutClient() {
             <p>Available</p>
           </div>
           <div>
-            <p>Pune, India</p>
-            <p>Feb. 2025</p>
+            <p>Kota, Rajasthan</p>
+            <p>MIT ADT Pune</p>
           </div>
         </div>
       </motion.div>

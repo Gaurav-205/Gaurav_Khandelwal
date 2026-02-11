@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function Error({
   error,
@@ -15,27 +16,65 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <div className="text-center max-w-md mx-auto px-4">
-        <h1 className="text-4xl font-montserrat font-normal mb-4">Something went wrong</h1>
-        <p className="text-white/70 font-montserrat font-light mb-8">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <motion.div
+        className="text-center max-w-2xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Error label */}
+        <motion.div
+          className="mb-8 flex items-center justify-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/20" />
+          <span className="text-white/40 font-montserrat text-xs tracking-widest">
+            ERROR
+          </span>
+          <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/20" />
+        </motion.div>
+
+        <motion.h1
+          className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-normal mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          Something went wrong
+        </motion.h1>
+
+        <motion.p
+          className="text-white/70 font-montserrat font-light text-base md:text-lg leading-relaxed mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
           We encountered an unexpected error. Please try again or return to the homepage.
-        </p>
-        <div className="space-x-4">
+        </motion.p>
+
+        <motion.div
+          className="flex flex-wrap gap-4 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
           <button
             onClick={reset}
-            className="inline-block text-white font-montserrat font-normal text-sm tracking-wide border border-white/30 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+            className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="inline-block text-white font-montserrat font-normal text-sm tracking-wide border border-white/30 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+            className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
           >
             Go home
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

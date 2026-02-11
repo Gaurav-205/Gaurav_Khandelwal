@@ -115,7 +115,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
 
               {/* Project description */}
               <motion.p
-                className="text-white/80 font-montserrat font-light text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mb-8"
+                className="text-white/80 font-montserrat font-light text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1.4 }}
@@ -143,18 +143,71 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                   <p className="text-white font-montserrat text-base">{project.category}</p>
                 </div>
               </motion.div>
+
+              {/* Tech Stack */}
+              {project.techStack && project.techStack.length > 0 && (
+                <motion.div
+                  className="mb-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 1.8 }}
+                >
+                  <h3 className="text-white/60 font-montserrat text-sm mb-4 tracking-wide">TECH STACK</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {project.techStack.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-4 py-2 bg-white/5 border border-white/10 text-white/90 font-montserrat text-sm rounded-full hover:bg-white/10 transition-colors duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* CTAs */}
+              {(project.liveUrl || project.githubUrl) && (
+                <motion.div
+                  className="flex flex-wrap gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 2 }}
+                >
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
+                    >
+                      View Live Site →
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
+                    >
+                      View on GitHub
+                    </a>
+                  )}
+                </motion.div>
+              )}
             </motion.div>
           </section>
 
           {/* Project image */}
-          <section className="mb-16">
+          <section className="py-20 md:py-32">
             <motion.div
               className="max-w-6xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.8 }}
+              transition={{ duration: 1, delay: 2.2 }}
             >
-              <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-white/10">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -168,7 +221,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
 
           {/* Project content sections */}
           {project.sections?.map((section, index) => (
-            <section key={index} className="mb-16">
+            <section key={index} className="py-20 md:py-32">
               <motion.div
                 className="max-w-4xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
@@ -176,6 +229,12 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                 transition={{ duration: 1 }}
                 viewport={{ once: true }}
               >
+                <div className="mb-6 flex items-center gap-4">
+                  <span className="text-white/40 font-montserrat text-sm tracking-widest">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+                </div>
                 <h2 className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl mb-6">
                   {section.title}
                 </h2>
@@ -186,32 +245,51 @@ export default function ProjectClient({ params }: ProjectClientProps) {
             </section>
           ))}
 
+          {/* Divider */}
+          <div className="max-w-6xl mx-auto">
+            <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </div>
+
           {/* Navigation to next/previous project */}
-          <section className="mt-20">
+          <section className="py-20 md:py-32">
             <motion.div
-              className="max-w-6xl mx-auto flex justify-between items-center"
+              className="max-w-6xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              {project.id > 1 && (
-                <Link
-                  href={`/project/${PROJECT_DATA[project.id - 2].slug}`}
-                  className="text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide"
-                >
-                  ← Previous Project
-                </Link>
-              )}
-              <div className="flex-1" />
-              {project.id < PROJECT_DATA.length && (
-                <Link
-                  href={`/project/${PROJECT_DATA[project.id].slug}`}
-                  className="text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide"
-                >
-                  Next Project →
-                </Link>
-              )}
+              <div className="flex justify-between items-center">
+                {project.id > 1 ? (
+                  <Link
+                    href={`/project/${PROJECT_DATA[project.id - 2].slug}`}
+                    className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide"
+                  >
+                    <span className="text-2xl group-hover:-translate-x-1 transition-transform duration-300">←</span>
+                    <div>
+                      <div className="text-white/40 text-xs mb-1">PREVIOUS</div>
+                      <div>{PROJECT_DATA[project.id - 2].title}</div>
+                    </div>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+                
+                {project.id < PROJECT_DATA.length ? (
+                  <Link
+                    href={`/project/${PROJECT_DATA[project.id].slug}`}
+                    className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide text-right"
+                  >
+                    <div>
+                      <div className="text-white/40 text-xs mb-1">NEXT</div>
+                      <div>{PROJECT_DATA[project.id].title}</div>
+                    </div>
+                    <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+              </div>
             </motion.div>
           </section>
         </div>

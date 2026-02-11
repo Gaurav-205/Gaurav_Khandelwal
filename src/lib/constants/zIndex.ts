@@ -4,4 +4,5 @@ export const Z_INDEX = {
   NAVIGATION: 60,
   LOADING: 50,
   GALLERY_OVERLAY: 10,
+  BASE: 1,
 } as const;
