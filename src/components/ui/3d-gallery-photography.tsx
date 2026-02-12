@@ -2,7 +2,7 @@
 
 import type React from 'react';
 import { useRef, useMemo, useCallback, useState, useEffect, memo } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { checkWebGLSupport } from '@/lib/utils';
 import { ANIMATION_DELAYS } from '@/lib/constants/animations';
@@ -631,7 +631,7 @@ const FallbackGallery = memo(({ images }: { images: ImageItem[] }) => {
           <img
             key={i}
             src={img.src || '/placeholder.svg'}
-            alt={img.alt}
+            alt={img.alt || `Gallery image ${i + 1}`}
             className="w-full h-32 object-cover rounded"
             loading="lazy"
           />

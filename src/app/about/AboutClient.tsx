@@ -21,7 +21,7 @@ export default function AboutClient() {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
     
-    // Additional Windows-specific scrollbar hiding using setProperty
+    // Additional scrollbar hiding using setProperty
     document.documentElement.style.setProperty('scrollbar-width', 'none');
     document.documentElement.style.setProperty('-ms-overflow-style', 'none');
     document.body.style.setProperty('scrollbar-width', 'none');
@@ -63,6 +63,8 @@ export default function AboutClient() {
     handleScroll(); // Initial check
     
     return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyDown);
       document.documentElement.classList.remove('hide-scrollbar');
       document.body.classList.remove('hide-scrollbar');
       document.body.style.overflow = 'unset';
@@ -71,8 +73,6 @@ export default function AboutClient() {
       document.documentElement.style.removeProperty('-ms-overflow-style');
       document.body.style.removeProperty('scrollbar-width');
       document.body.style.removeProperty('-ms-overflow-style');
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [router]);
 

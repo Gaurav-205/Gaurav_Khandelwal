@@ -18,7 +18,7 @@ interface ProjectClientProps {
 export default function ProjectClient({ params }: ProjectClientProps) {
   const router = useRouter();
   const resolvedParams = use(params);
-  const project = PROJECT_DATA.find(p => p.slug === resolvedParams.slug);
+  const project = PROJECT_DATA.find(p => p.slug === resolvedParams?.slug);
 
   useEffect(() => {
     // Track page view

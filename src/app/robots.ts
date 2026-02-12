@@ -1,12 +1,14 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://gauravkhandelwal.com'
+  
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/api/', '/_next/'],
     },
-    sitemap: 'https://gauravkhandelwal.com/sitemap.xml', // Replace with your actual domain when deployed
+    sitemap: `${baseUrl}/sitemap.xml`,
   }
 }
