@@ -90,6 +90,8 @@ export const SmoothCursor = memo(({
     return isTouchDevice || isSmallScreen;
   });
   
+  const [isClient, setIsClient] = useState(false);
+  
   const lastMousePos = useRef<Position>({ x: 0, y: 0 });
   const velocity = useRef<Position>({ x: 0, y: 0 });
   const lastUpdateTime = useRef(Date.now());
@@ -168,6 +170,9 @@ export const SmoothCursor = memo(({
   }, [cursorX, cursorY, rotation, scale, updateVelocity]);
 
   useEffect(() => {
+    // Mark as client-side rendered
+    setIsClient(true);
+    
     // Double-check mobile detection on mount
     const checkIsMobile = () => {
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -197,8 +202,8 @@ export const SmoothCursor = memo(({
     };
   }, [handleMouseMove]);
 
-  // Don't render cursor on mobile devices
-  if (isMobile) {
+  // Don't render anything during SSR or on mobile devices
+  if (!isClient || isMobile) {
     return null;
   }
 
