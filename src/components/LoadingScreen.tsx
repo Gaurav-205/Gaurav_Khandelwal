@@ -15,6 +15,7 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
   const [count, setCount] = useState(0);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const startTimeRef = useRef<number | undefined>(undefined);
+  const currentCountRef = useRef(0);
 
   useEffect(() => {
     startTimeRef.current = Date.now();
@@ -30,8 +31,8 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
       let targetCount = baseProgress;
       if (imagesLoaded) {
         // Smoothly transition from current to 100
-        const remainingDistance = 100 - count;
-        targetCount = count + remainingDistance * 0.15; // Fast catch-up
+        const remainingDistance = 100 - currentCountRef.current;
+        targetCount = currentCountRef.current + remainingDistance * 0.15; // Fast catch-up
         
         if (targetCount >= 99.5) {
           targetCount = 100;
@@ -42,6 +43,7 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
         targetCount = Math.min(slowProgress, 95); // Cap at 95 until loaded
       }
       
+      currentCountRef.current = targetCount;
       setCount(targetCount);
       
       // Complete when we reach 100
@@ -61,7 +63,7 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [imagesLoaded, count, onComplete]);
+  }, [imagesLoaded, onComplete]);
 
   return (
     <motion.div
