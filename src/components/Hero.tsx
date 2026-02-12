@@ -7,7 +7,7 @@ import { SAMPLE_IMAGES } from '@/lib/constants/projects';
 import { GALLERY_CONFIG } from '@/lib/constants/gallery';
 import { Z_INDEX } from '@/lib/constants/zIndex';
 
-const Hero = memo(() => {
+const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
   const router = useRouter();
 
   const handleImageClick = useCallback((slug: string) => {
@@ -25,6 +25,7 @@ const Hero = memo(() => {
         fadeSettings={GALLERY_CONFIG.FADE_SETTINGS}
         blurSettings={GALLERY_CONFIG.BLUR_SETTINGS}
         onImageClick={handleImageClick}
+        onImagesLoaded={onImagesLoaded}
         className="h-screen w-full rounded-lg overflow-hidden"
       />
       

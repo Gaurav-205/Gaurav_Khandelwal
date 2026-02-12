@@ -26,10 +26,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
         transformOrigin: 'center center'
       }}
       transition={{
-        duration: 0.6,
+        duration: 0.4, // Reduced from 0.6s
         ease: [0.4, 0, 0.2, 1], // Custom easing for smooth feel
-        opacity: { duration: 0.4 },
-        scale: { duration: 0.6 }
+        opacity: { duration: 0.3 }, // Reduced from 0.4s
+        scale: { duration: 0.4 } // Reduced from 0.6s
       }}
       className="w-full h-full"
     >

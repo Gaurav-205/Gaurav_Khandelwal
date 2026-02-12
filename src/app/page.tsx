@@ -9,6 +9,7 @@ import FadeTransition from '@/components/ui/FadeTransition';
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
@@ -16,6 +17,10 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('hasSeenLoading', 'true');
     }
+  }, []);
+
+  const handleImagesLoaded = useCallback(() => {
+    setImagesLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -38,14 +43,22 @@ export default function Home() {
 
   // If loading, show loading screen without fade transition
   if (showLoading && isLoading) {
-    return <LoadingScreen onComplete={handleLoadingComplete} />;
+    return (
+      <>
+        <LoadingScreen onComplete={handleLoadingComplete} imagesLoaded={imagesLoaded} />
+        {/* Preload Hero in background so images start loading */}
+        <div style={{ position: 'fixed', opacity: 0, pointerEvents: 'none' }}>
+          <Hero onImagesLoaded={handleImagesLoaded} />
+        </div>
+      </>
+    );
   }
 
   return (
     <FadeTransition>
       <div className="min-h-screen bg-black md:cursor-none overflow-hidden">
         <Navigation />
-        <Hero />
+        <Hero onImagesLoaded={handleImagesLoaded} />
       </div>
     </FadeTransition>
   );

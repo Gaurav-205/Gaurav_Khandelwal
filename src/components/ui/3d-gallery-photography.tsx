@@ -43,6 +43,7 @@ interface InfiniteGalleryProps {
   className?: string;
   style?: React.CSSProperties;
   onImageClick?: (slug: string) => void;
+  onImagesLoaded?: () => void; // New callback for when images are loaded
 }
 
 interface PlaneData {
@@ -208,6 +209,7 @@ const GalleryScene = memo(({
     maxBlur: 3.0,
   },
   onImageClick,
+  onImagesLoaded,
 }: Omit<InfiniteGalleryProps, 'className' | 'style'>) => {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
@@ -280,10 +282,15 @@ const GalleryScene = memo(({
 
       const textures = await Promise.all(texturePromises);
       setLoadedTextures(textures);
+      
+      // Notify parent that images are loaded
+      if (onImagesLoaded) {
+        onImagesLoaded();
+      }
     };
 
     loadImages();
-  }, [normalizedImages]);
+  }, [normalizedImages, onImagesLoaded]);
 
   const textures = loadedTextures.length > 0 ? loadedTextures : [];
 
@@ -541,6 +548,21 @@ const GalleryScene = memo(({
 
       opacity = Math.max(0, Math.min(1, opacity));
 
+      // Additional fade out when image is near center (behind the text)
+      // Center is at normalizedPosition ~0.5 (middle of depth range)
+      const textCenterPosition = 0.5;
+      const textCenterFadeRange = 0.15; // Fade out within 15% of center on each side
+      const textDistanceFromCenter = Math.abs(normalizedPosition - textCenterPosition);
+      
+      if (textDistanceFromCenter < textCenterFadeRange) {
+        // Calculate center fade: 1 at edge of range, 0 at exact center
+        const centerFade = textDistanceFromCenter / textCenterFadeRange;
+        // Apply center fade to existing opacity
+        opacity *= centerFade;
+      }
+
+      opacity = Math.max(0, Math.min(1, opacity));
+
       // Calculate blur based on blur settings
       let blur = 0;
 
@@ -554,6 +576,17 @@ const GalleryScene = memo(({
         blur = blurSettings.maxBlur * blurOutProgress;
       } else if (normalizedPosition > blurSettings.blurOut.end) {
         blur = blurSettings.maxBlur;
+      }
+
+      // Additional blur when near center (behind text) for smoother fade
+      const blurCenterPosition = 0.5;
+      const blurCenterRange = 0.15;
+      const blurDistanceFromCenter = Math.abs(normalizedPosition - blurCenterPosition);
+      
+      if (blurDistanceFromCenter < blurCenterRange) {
+        // Add extra blur near center, maximum at exact center
+        const centerBlurAmount = (1 - blurDistanceFromCenter / blurCenterRange) * 4; // Max 4 units of blur
+        blur = Math.max(blur, centerBlurAmount);
       }
 
       blur = Math.max(0, Math.min(blurSettings.maxBlur, blur));
@@ -657,6 +690,7 @@ const InfiniteGallery = memo(({
     maxBlur: 8.0,
   },
   onImageClick,
+  onImagesLoaded,
   ...props
 }: InfiniteGalleryProps) => {
   const [webglSupported, setWebglSupported] = useState(true);
@@ -692,6 +726,7 @@ const InfiniteGallery = memo(({
           fadeSettings={fadeSettings}
           blurSettings={blurSettings}
           onImageClick={onImageClick}
+          onImagesLoaded={onImagesLoaded}
           {...props}
         />
       </Canvas>

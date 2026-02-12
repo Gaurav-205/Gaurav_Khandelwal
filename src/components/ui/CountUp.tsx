@@ -15,6 +15,7 @@ interface CountUpProps {
   separator?: string;
   onStart?: () => void;
   onEnd?: () => void;
+  pauseAtEnd?: boolean; // New prop to pause at end until condition is met
 }
 
 const CountUp = memo(({
@@ -27,7 +28,8 @@ const CountUp = memo(({
   startWhen = true,
   separator = '',
   onStart,
-  onEnd
+  onEnd,
+  pauseAtEnd = false
 }: CountUpProps) => {
   const ref = useRef<HTMLSpanElement>(null);
   
@@ -68,14 +70,28 @@ const CountUp = memo(({
     }, delay * 1000);
 
     const endTimeout = setTimeout(() => {
-      onEnd?.();
+      // Only call onEnd if not pausing at end, or if pauseAtEnd is false
+      if (!pauseAtEnd) {
+        onEnd?.();
+      }
     }, (delay + duration) * 1000);
 
     return () => {
       clearTimeout(startTimeout);
       clearTimeout(endTimeout);
     };
-  }, [isInView, startWhen, motionValue, direction, from, to, delay, duration, onStart, onEnd]);
+  }, [isInView, startWhen, motionValue, direction, from, to, delay, duration, onStart, onEnd, pauseAtEnd]);
+
+  // Handle calling onEnd when pauseAtEnd becomes false
+  useEffect(() => {
+    if (!pauseAtEnd && isInView && startWhen) {
+      const checkTimeout = setTimeout(() => {
+        onEnd?.();
+      }, (delay + duration) * 1000);
+      
+      return () => clearTimeout(checkTimeout);
+    }
+  }, [pauseAtEnd, isInView, startWhen, delay, duration, onEnd]);
 
   // Handle value changes
   useEffect(() => {

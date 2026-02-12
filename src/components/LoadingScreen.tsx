@@ -1,22 +1,34 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import CountUp from './ui/CountUp';
 import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
 
 interface LoadingScreenProps {
   onComplete: () => void;
+  imagesLoaded: boolean;
 }
 
-const LoadingScreen = memo(({ onComplete }: LoadingScreenProps) => {
+const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) => {
   const [isComplete, setIsComplete] = useState(false);
+  const [canComplete, setCanComplete] = useState(false);
+
+  // Allow completion only when images are loaded
+  useEffect(() => {
+    if (imagesLoaded) {
+      setCanComplete(true);
+    }
+  }, [imagesLoaded]);
 
   const handleCountComplete = useCallback(() => {
-    setIsComplete(true);
-    setTimeout(onComplete, ANIMATION_DELAYS.LOADING_COMPLETE);
-  }, [onComplete]);
+    // Only complete if images are loaded
+    if (canComplete) {
+      setIsComplete(true);
+      setTimeout(onComplete, ANIMATION_DELAYS.LOADING_COMPLETE);
+    }
+  }, [onComplete, canComplete]);
 
   return (
     <motion.div
@@ -36,6 +48,7 @@ const LoadingScreen = memo(({ onComplete }: LoadingScreenProps) => {
           duration={ANIMATION_DURATIONS.LOADING_COUNT + 1}
           className="text-2xl md:text-4xl font-light text-white tracking-wider"
           onEnd={handleCountComplete}
+          pauseAtEnd={!canComplete}
         />
       </div>
     </motion.div>
