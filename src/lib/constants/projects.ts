@@ -91,6 +91,7 @@ export const PROJECT_DATA: ProjectData[] = [
     category: 'Event Management Platform',
     techStack: ['React 18', 'Express.js', 'MongoDB', 'Node.js', 'Tailwind CSS 3', 'Vite 7', 'Nodemailer'],
     liveUrl: 'https://onammitadt.netlify.app',
+    githubUrl: 'https://github.com/Gaurav-205/Onam',
     sections: [
       {
         title: 'The Challenge',
