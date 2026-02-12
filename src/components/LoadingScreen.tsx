@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useSpring, useTransform } from 'framer-motion';
 import { memo, useState, useEffect, useRef } from 'react';
 import { ANIMATION_DELAYS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
@@ -12,10 +12,19 @@ interface LoadingScreenProps {
 
 const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) => {
   const [isComplete, setIsComplete] = useState(false);
-  const [count, setCount] = useState(0);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const startTimeRef = useRef<number | undefined>(undefined);
-  const currentCountRef = useRef(0);
+  const targetCountRef = useRef(0);
+  
+  // Use Framer Motion's spring for smooth animation
+  const springCount = useSpring(0, {
+    stiffness: 50,
+    damping: 20,
+    mass: 0.5
+  });
+  
+  // Transform to integer for display
+  const displayCount = useTransform(springCount, (value) => Math.floor(value));
 
   useEffect(() => {
     startTimeRef.current = Date.now();
@@ -31,8 +40,8 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
       let targetCount = baseProgress;
       if (imagesLoaded) {
         // Smoothly transition from current to 100
-        const remainingDistance = 100 - currentCountRef.current;
-        targetCount = currentCountRef.current + remainingDistance * 0.15; // Fast catch-up
+        const remainingDistance = 100 - targetCountRef.current;
+        targetCount = targetCountRef.current + remainingDistance * 0.15; // Fast catch-up
         
         if (targetCount >= 99.5) {
           targetCount = 100;
@@ -43,8 +52,8 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
         targetCount = Math.min(slowProgress, 95); // Cap at 95 until loaded
       }
       
-      currentCountRef.current = targetCount;
-      setCount(targetCount);
+      targetCountRef.current = targetCount;
+      springCount.set(targetCount);
       
       // Complete when we reach 100
       if (targetCount >= 100) {
@@ -63,7 +72,7 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [imagesLoaded, onComplete]);
+  }, [imagesLoaded, onComplete, springCount]);
 
   return (
     <motion.div
@@ -77,9 +86,9 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
       }}
     >
       <div className="text-center">
-        <span className="text-2xl md:text-4xl font-light text-white tracking-wider">
-          {Math.floor(count)}
-        </span>
+        <motion.span className="text-2xl md:text-4xl font-light text-white tracking-wider">
+          {displayCount}
+        </motion.span>
       </div>
     </motion.div>
   );
