@@ -53,7 +53,7 @@ export default function ProjectsClient() {
           className="fixed top-4 right-4 md:right-6 z-50"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <Link 
             href="/"
@@ -68,7 +68,7 @@ export default function ProjectsClient() {
           className="fixed top-4 left-4 md:left-6 z-50"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <div className="font-montserrat">
             <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">
@@ -86,13 +86,13 @@ export default function ProjectsClient() {
               className="max-w-6xl w-full text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
               <motion.div
                 className="mb-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
               >
                 <span className="text-white/40 font-montserrat text-sm tracking-widest">
                   PORTFOLIO
@@ -103,7 +103,7 @@ export default function ProjectsClient() {
                 className="text-white font-montserrat font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.2 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
               >
                 Selected Works
               </motion.h1>
@@ -112,7 +112,7 @@ export default function ProjectsClient() {
                 className="text-white/80 font-montserrat font-light text-lg md:text-xl leading-relaxed max-w-3xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.4 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
               >
                 A collection of projects showcasing my approach to user-centered design and creative problem-solving.
               </motion.p>

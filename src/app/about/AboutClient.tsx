@@ -91,7 +91,7 @@ export default function AboutClient() {
         className="fixed top-4 right-4 md:right-6 z-50"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
       >
         <Link 
           href="/"
@@ -106,7 +106,7 @@ export default function AboutClient() {
         className="fixed top-4 left-4 md:left-6 z-50 hidden md:block"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
       >
         <div className="flex flex-col space-y-4 font-montserrat">
           <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">
@@ -161,14 +161,14 @@ export default function AboutClient() {
             className="max-w-4xl w-full mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
           >
             {/* Small label with divider */}
             <motion.div
               className="mb-8 md:mb-12 flex items-center gap-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
               <span className="text-white/40 font-montserrat text-xs tracking-widest">
                 01
@@ -184,7 +184,7 @@ export default function AboutClient() {
               className="text-white font-montserrat font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight mb-8 md:mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.4 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
             >
               Gaurav Khandelwal is a Full-Stack Developer & Designer.
             </motion.h1>
@@ -194,7 +194,7 @@ export default function AboutClient() {
               className="space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.6 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
             >
               <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
                 I&apos;m a developer and designer from Kota, Rajasthan, who believes that technology has the power 
@@ -421,7 +421,7 @@ export default function AboutClient() {
         className="fixed bottom-6 left-6 z-50 hidden md:block"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 1.8 }}
+        transition={{ duration: 0.6, delay: 0.9 }}
       >
         <div className="flex items-center space-x-4 font-montserrat text-sm text-white/60">
           <div>

@@ -74,7 +74,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
           className="fixed top-4 right-4 md:right-6 z-50"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <Link 
             href="/"
@@ -89,7 +89,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
           className="fixed top-4 left-4 md:left-6 z-50"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           <div className="font-montserrat">
             <p className="text-white/60 text-xs mb-1">Project {project.id} of {PROJECT_DATA.length}</p>
@@ -107,14 +107,14 @@ export default function ProjectClient({ params }: ProjectClientProps) {
               className="max-w-6xl w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
               {/* Project title */}
               <motion.h1
                 className="text-white font-montserrat font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.2 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
               >
                 {project.title}
               </motion.h1>
@@ -124,7 +124,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                 className="text-white/80 font-montserrat font-light text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.4 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
               >
                 {project.description}
               </motion.p>
@@ -134,7 +134,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                 className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.6 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
               >
                 <div>
                   <h3 className="text-white/60 font-montserrat text-sm mb-2 tracking-wide">ROLE</h3>
@@ -156,7 +156,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                   className="mb-12"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 1.8 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
                 >
                   <h3 className="text-white/60 font-montserrat text-sm mb-4 tracking-wide">TECH STACK</h3>
                   <div className="flex flex-wrap gap-3">
@@ -178,7 +178,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
                   className="flex flex-wrap gap-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, delay: 2 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
                 >
                   {project.liveUrl && (
                     <a
@@ -213,7 +213,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
               className="max-w-6xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 2.2 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
             >
               <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-white/10">
                 <Image

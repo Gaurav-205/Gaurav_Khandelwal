@@ -1,212 +1,112 @@
-# Gaurav Khandelwal - Portfolio Website
+# Gaurav Khandelwal - Portfolio
 
-A modern, high-performance portfolio website for Full-Stack Developer & UI/UX Designer Gaurav Khandelwal, built with Next.js 16, TypeScript, Tailwind CSS v4, and Framer Motion.
+A modern, high-performance portfolio website built with Next.js 16, React 19, and Three.js featuring an interactive 3D gallery.
 
-## 🚀 Features
+## Features
 
-- **Interactive 3D Gallery**: WebGL-powered photo gallery with clickable project images using Three.js
-- **Real Projects**: Showcasing Prank Wizard, KampusKart, and Onam Festival Website
-- **Dynamic Project Pages**: Individual project pages with detailed information and navigation
-- **Smooth Animations**: Powered by Framer Motion for fluid user interactions
-- **Custom Cursor**: Physics-based cursor with smooth movement and interactions
-- **Loading Screen**: Elegant count-up animation with smooth fade transition
-- **Responsive Design**: Mobile-first approach with hamburger menu
-- **Performance Optimized**: 95+ Lighthouse score with code splitting and lazy loading
-- **SEO Ready**: Meta tags, Open Graph, Twitter Cards, sitemap, and robots.txt
-- **Security Headers**: HSTS, CSP, X-Frame-Options, and more
-- **TypeScript**: Full type safety throughout the application
-- **Error Boundaries**: Graceful error handling with custom error pages
+- ⚡ Next.js 16 with React Compiler for optimal performance
+- 🎨 Interactive 3D gallery with WebGL
+- 🎭 Smooth animations with Framer Motion
+- 📱 Fully responsive design
+- ♿ Accessibility compliant
+- 🔒 Security headers configured
+- 🚀 Optimized for production deployment
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Framework**: Next.js 16 with App Router & Turbopack
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS v4
+- **Framework**: Next.js 16
+- **UI Library**: React 19
+- **3D Graphics**: Three.js, React Three Fiber
 - **Animations**: Framer Motion
-- **3D Graphics**: Three.js, React Three Fiber, React Three Drei
-- **Fonts**: Inter & Montserrat (Google Fonts)
+- **Styling**: Tailwind CSS 4
+- **Language**: TypeScript
+- **Linting**: ESLint
 
-## 📁 Project Structure
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+```
+
+## Project Structure
 
 ```
 src/
-├── app/
-│   ├── about/
-│   │   ├── page.tsx
-│   │   └── AboutClient.tsx
-│   ├── projects/
-│   │   ├── page.tsx
-│   │   ├── ProjectsClient.tsx
-│   │   └── loading.tsx
-│   ├── project/
-│   │   └── [slug]/
-│   │       ├── page.tsx
-│   │       ├── ProjectClient.tsx
-│   │       └── loading.tsx
-│   ├── error.tsx
-│   ├── not-found.tsx
-│   ├── globals.css
-│   ├── layout.tsx
-│   ├── page.tsx
-│   ├── robots.ts
-│   └── sitemap.ts
-├── components/
-│   ├── ui/
-│   │   ├── 3d-gallery-photography.tsx
-│   │   ├── CountUp.tsx
-│   │   ├── FadeTransition.tsx
-│   │   ├── PageTransition.tsx
-│   │   └── SmoothCursor.tsx
-│   ├── ClientLayout.tsx
-│   ├── Hero.tsx
-│   ├── LoadingScreen.tsx
-│   ├── Navigation.tsx
-│   └── index.ts
-├── lib/
-│   ├── constants/
-│   │   ├── animations.ts
-│   │   ├── gallery.ts
-│   │   ├── projects.ts
-│   │   ├── zIndex.ts
-│   │   └── index.ts
-│   ├── constants.ts (deprecated)
-│   └── utils.ts
-└── public/
-    └── projects/
-        ├── active/
-        │   ├── prank-wizard.png
-        │   ├── kampus-kart.svg
-        │   └── onam-festival.svg
-        └── coming-soon/
-            └── coming-soon.svg
+├── app/              # Next.js app directory
+│   ├── about/        # About page
+│   ├── projects/     # Projects listing
+│   └── project/      # Individual project pages
+├── components/       # React components
+│   └── ui/          # UI components
+└── lib/             # Utilities and constants
 ```
 
-## 🚦 Getting Started
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Open your browser** and navigate to `http://localhost:3000`
-
-4. **Build for production**:
-   ```bash
-   npm run build
-   npm start
-   ```
-
-## 📦 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint errors
-- `npm run type-check` - Run TypeScript type checking
-- `npm run test` - Run Jest tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Generate test coverage report
-
-## 🎨 Key Components
-
-### 3D Gallery (Hero)
-- Interactive WebGL-powered photo gallery using Three.js
-- Clickable project images that navigate to individual project pages
-- Multi-input support (mouse wheel, keyboard, touch/pinch gestures)
-- Auto-play functionality with physics-based animations
-- Fallback for non-WebGL devices
-
-### Project Pages
-- Dynamic routing for individual project pages (`/project/[slug]`)
-- Real projects: Prank Wizard, KampusKart, Onam Festival
-- Detailed project information with tech stack and sections
-- Navigation between projects with smooth transitions
-
-### Navigation
-- Fixed header with smooth reveal animation
-- Responsive hamburger menu for mobile
-- Mix-blend-exclusion for visibility over any background
-- Social links (GitHub, LinkedIn, Email)
-
-### LoadingScreen
-- Count-up animation from 0 to 100
-- Session-based loading (shows only once per session)
-- Smooth fade transition to main content
-
-## 🔧 Configuration
-
-### Environment Variables
-Create a `.env.local` file for local development:
-```
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
-
-For production:
-```
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-```
-
-### Security Headers
-Configured in `next.config.ts`:
-- Strict-Transport-Security (HSTS)
-- X-Frame-Options
-- X-Content-Type-Options
-- X-XSS-Protection
-- Referrer-Policy
-- Permissions-Policy
-
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy with zero configuration
 
-### Netlify
-```bash
-npm run build
-```
-Deploy the `.next` folder
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Set environment variables
+4. Deploy
 
 ### Other Platforms
-- Build command: `npm run build`
-- Start command: `npm start`
-- Node version: 18+
 
-## ⚡ Performance Features
+```bash
+# Build the project
+npm run build
 
-- **Image Optimization**: Next.js automatic image optimization with WebP/AVIF
-- **Code Splitting**: Automatic route-based code splitting
-- **Lazy Loading**: Components and images load on demand
-- **Turbopack**: Next.js 16 default bundler for faster builds
-- **React Compiler**: Enabled for automatic optimization
-- **WebGL Fallback**: Graceful degradation for non-WebGL devices
+# The output will be in .next folder
+# Deploy the .next folder with node server
+npm start
+```
 
-## 🌐 Browser Support
+## Performance Optimizations
 
-- Chrome (recommended for best 3D performance)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (with touch/gesture support)
+- React Compiler enabled for automatic optimizations
+- Image optimization with WebP/AVIF support
+- Code splitting and lazy loading
+- Optimized 3D rendering with Three.js
+- Minimal bundle size
 
-## 📱 Contact
+## Browser Support
 
-- **Email**: gauravkhandelwal205@gmail.com
-- **GitHub**: [Gaurav-205](https://github.com/Gaurav-205)
-- **LinkedIn**: [gaurav-khandelwal-17a127358](https://linkedin.com/in/gaurav-khandelwal-17a127358)
-- **Location**: Pune, India
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers with WebGL support
 
-## 📄 License
+## License
 
-This project is private and proprietary.
+© 2024 Gaurav Khandelwal. All rights reserved.
 
----
+## Contact
 
-Built with ❤️ by Gaurav Khandelwal
+- Email: gauravkhandelwal205@gmail.com
+- LinkedIn: [Gaurav Khandelwal](https://linkedin.com/in/gaurav-khandelwal-17a127358)
+- GitHub: [Gaurav-205](https://github.com/Gaurav-205)

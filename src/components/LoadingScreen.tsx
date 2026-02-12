@@ -1,9 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { memo, useCallback, useState, useEffect } from 'react';
-import CountUp from './ui/CountUp';
-import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
+import { memo, useState, useEffect, useRef } from 'react';
+import { ANIMATION_DELAYS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
 
 interface LoadingScreenProps {
@@ -13,22 +12,56 @@ interface LoadingScreenProps {
 
 const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) => {
   const [isComplete, setIsComplete] = useState(false);
-  const [canComplete, setCanComplete] = useState(false);
+  const [count, setCount] = useState(0);
+  const animationFrameRef = useRef<number | undefined>(undefined);
+  const startTimeRef = useRef<number | undefined>(undefined);
 
-  // Allow completion only when images are loaded
   useEffect(() => {
-    if (imagesLoaded) {
-      setCanComplete(true);
-    }
-  }, [imagesLoaded]);
-
-  const handleCountComplete = useCallback(() => {
-    // Only complete if images are loaded
-    if (canComplete) {
-      setIsComplete(true);
-      setTimeout(onComplete, ANIMATION_DELAYS.LOADING_COMPLETE);
-    }
-  }, [onComplete, canComplete]);
+    startTimeRef.current = Date.now();
+    
+    const animate = () => {
+      const now = Date.now();
+      const elapsed = now - (startTimeRef.current || now);
+      
+      // Base speed: reach 90 in about 1.2 seconds
+      const baseProgress = Math.min((elapsed / 1200) * 90, 90);
+      
+      // If images are loaded, speed up to 100
+      let targetCount = baseProgress;
+      if (imagesLoaded) {
+        // Smoothly transition from current to 100
+        const remainingDistance = 100 - count;
+        targetCount = count + remainingDistance * 0.15; // Fast catch-up
+        
+        if (targetCount >= 99.5) {
+          targetCount = 100;
+        }
+      } else if (baseProgress >= 85) {
+        // Slow down significantly after 85 if images not loaded
+        const slowProgress = 85 + (baseProgress - 85) * 0.3;
+        targetCount = Math.min(slowProgress, 95); // Cap at 95 until loaded
+      }
+      
+      setCount(targetCount);
+      
+      // Complete when we reach 100
+      if (targetCount >= 100) {
+        setIsComplete(true);
+        setTimeout(onComplete, ANIMATION_DELAYS.LOADING_COMPLETE);
+        return;
+      }
+      
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationFrameRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [imagesLoaded, count, onComplete]);
 
   return (
     <motion.div
@@ -37,19 +70,14 @@ const LoadingScreen = memo(({ onComplete, imagesLoaded }: LoadingScreenProps) =>
       initial={{ opacity: 1 }}
       animate={{ opacity: isComplete ? 0 : 1 }}
       transition={{ 
-        duration: ANIMATION_DURATIONS.LOADING_FADE,
+        duration: 0.2,
         ease: 'easeInOut'
       }}
     >
       <div className="text-center">
-        <CountUp
-          from={0}
-          to={100}
-          duration={ANIMATION_DURATIONS.LOADING_COUNT + 1}
-          className="text-2xl md:text-4xl font-light text-white tracking-wider"
-          onEnd={handleCountComplete}
-          pauseAtEnd={!canComplete}
-        />
+        <span className="text-2xl md:text-4xl font-light text-white tracking-wider">
+          {Math.floor(count)}
+        </span>
       </div>
     </motion.div>
   );
