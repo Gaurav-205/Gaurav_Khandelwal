@@ -2,8 +2,7 @@
 
 import type React from 'react';
 import { useRef, useMemo, useCallback, useState, useEffect, memo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import { checkWebGLSupport } from '@/lib/utils';
 import { ANIMATION_DELAYS } from '@/lib/constants/animations';
@@ -230,7 +229,63 @@ const GalleryScene = memo(({
     [images]
   );
 
-  const textures = useTexture(normalizedImages.map((img) => img.src));
+  // Load actual PNG/JPG images (no CORS issues with same-origin images)
+  const [loadedTextures, setLoadedTextures] = useState<THREE.Texture[]>([]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const textureLoader = new THREE.TextureLoader();
+      
+      const texturePromises = normalizedImages.map((img, index) => {
+        return new Promise<THREE.Texture>((resolve) => {
+          textureLoader.load(
+            img.src,
+            (texture) => {
+              // Success - image loaded
+              texture.colorSpace = THREE.SRGBColorSpace;
+              texture.needsUpdate = true;
+              resolve(texture);
+            },
+            undefined,
+            () => {
+              // Error - create gradient fallback
+              const colors = [
+                ['#667eea', '#764ba2'], // Purple
+                ['#f093fb', '#f5576c'], // Pink
+                ['#4facfe', '#00f2fe'], // Blue
+                ['#43e97b', '#38f9d7'], // Green
+              ];
+              
+              const canvas = document.createElement('canvas');
+              canvas.width = 1024;
+              canvas.height = 1024;
+              const ctx = canvas.getContext('2d');
+              
+              if (ctx) {
+                const colorPair = colors[index % colors.length];
+                const gradient = ctx.createLinearGradient(0, 0, 1024, 1024);
+                gradient.addColorStop(0, colorPair[0]);
+                gradient.addColorStop(1, colorPair[1]);
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 1024, 1024);
+                
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.colorSpace = THREE.SRGBColorSpace;
+                resolve(texture);
+              }
+            }
+          );
+        });
+      });
+
+      const textures = await Promise.all(texturePromises);
+      setLoadedTextures(textures);
+    };
+
+    loadImages();
+  }, [normalizedImages]);
+
+  const textures = loadedTextures.length > 0 ? loadedTextures : [];
 
   // Create materials pool
   const materials = useMemo(
@@ -512,7 +567,7 @@ const GalleryScene = memo(({
     });
   });
 
-  if (normalizedImages.length === 0) return null;
+  if (normalizedImages.length === 0 || textures.length === 0) return null;
 
   return (
     <>
