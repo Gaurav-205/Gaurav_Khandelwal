@@ -41,14 +41,14 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
       
       {/* Navigation instructions */}
       <div 
-        className="text-center fixed bottom-10 left-0 right-0 font-mono uppercase text-[11px] font-semibold text-white px-4"
+        className="text-center fixed bottom-6 md:bottom-10 left-0 right-0 font-mono uppercase text-[10px] md:text-[11px] font-semibold text-white px-4"
         style={{ zIndex: Z_INDEX.GALLERY_OVERLAY }}
         role="status"
         aria-live="polite"
       >
         <p className="hidden md:block">Use mouse wheel, arrow keys to navigate • Click images or press Enter/Space to view projects</p>
-        <p className="block md:hidden">Swipe, pinch to zoom, or tap images to navigate</p>
-        <p className="opacity-60">Auto-play resumes after 3 seconds of inactivity</p>
+        <p className="block md:hidden text-[9px] leading-tight">Swipe or tap images to navigate</p>
+        <p className="opacity-60 text-[9px] md:text-[11px] mt-1">Auto-play resumes after 3s</p>
       </div>
     </main>
   );
