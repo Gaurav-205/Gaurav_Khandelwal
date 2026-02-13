@@ -22,6 +22,32 @@
     color: white;
   }
 
+  /* Custom text selection styling */
+  ::selection {
+    background-color: rgba(255, 255, 255, 0.99);
+    color: #000000;
+    text-shadow: none;
+  }
+
+  ::-moz-selection {
+    background-color: rgba(255, 255, 255, 0.99);
+    color: #000000;
+    text-shadow: none;
+  }
+
+  /* Custom selection for links and interactive elements */
+  a::selection,
+  button::selection {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #000000;
+  }
+
+  a::-moz-selection,
+  button::-moz-selection {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #000000;
+  }
+
   /* Only apply custom cursor on desktop devices (768px and up) */
   @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
     body {
