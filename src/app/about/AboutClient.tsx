@@ -148,7 +148,6 @@ export default function AboutClient() {
             >
               Contact
             </button>
-            <span className="text-white/60 hover:text-white/80 transition-colors cursor-pointer">Credits</span>
           </div>
         </div>
       </motion.div>
@@ -423,14 +422,14 @@ export default function AboutClient() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.9 }}
       >
-        <div className="flex items-center space-x-4 font-montserrat text-sm text-white/60">
+        <div className="flex items-center space-x-4 font-montserrat text-sm text-white/80">
           <div>
             <p>GMT+5:30</p>
             <p>Available</p>
           </div>
           <div>
-            <p>Kota, Rajasthan</p>
-            <p>MIT ADT Pune</p>
+            <p>Pune, Maharashtra</p>
+            <p>MIT ADT University</p>
           </div>
         </div>
       </motion.div>
