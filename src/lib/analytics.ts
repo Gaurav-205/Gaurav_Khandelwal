@@ -44,18 +44,22 @@ class Analytics {
   track(event: string, data?: Record<string, string | number>): void {
     if (typeof window === 'undefined') return;
 
-    const analyticsEvent: AnalyticsEvent = {
-      event,
-      timestamp: Date.now(),
-      data,
-    };
+    try {
+      const analyticsEvent: AnalyticsEvent = {
+        event,
+        timestamp: Date.now(),
+        data,
+      };
 
-    this.events.push(analyticsEvent);
-    this.saveEvents();
+      this.events.push(analyticsEvent);
+      this.saveEvents();
 
-    // Log in development
-    if (process.env.NODE_ENV === 'development') {
-      console.log('📊 Analytics:', event, data);
+      // Log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📊 Analytics:', event, data);
+      }
+    } catch (error) {
+      console.error('Failed to track analytics event:', error);
     }
   }
 

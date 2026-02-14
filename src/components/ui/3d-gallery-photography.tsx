@@ -720,6 +720,9 @@ const InfiniteGallery = memo(({
         }}
         dpr={[1, 2]}
         performance={{ min: 0.5 }}
+        role="img"
+        aria-label="Interactive 3D project gallery. Use arrow keys to navigate, Enter or Space to view project details."
+        tabIndex={0}
       >
         <GalleryScene
           images={images}

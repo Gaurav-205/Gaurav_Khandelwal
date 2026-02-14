@@ -18,7 +18,14 @@ interface ProjectClientProps {
 export default function ProjectClient({ params }: ProjectClientProps) {
   const router = useRouter();
   const resolvedParams = use(params);
+  
+  // Validate slug against actual project data
   const project = PROJECT_DATA.find(p => p.slug === resolvedParams?.slug);
+  
+  // If slug is invalid, redirect to 404
+  if (resolvedParams?.slug && !project) {
+    router.push('/not-found');
+  }
 
   useEffect(() => {
     // Track page view

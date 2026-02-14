@@ -1,0 +1,25 @@
+# Open Graph Image Placeholder
+
+You need to create an Open Graph image at: /public/og-image.png
+
+Recommended specifications:
+- Size: 1200x630 pixels
+- Format: PNG or JPG
+- Content: Your name, title, and a visual representation of your portfolio
+- Text should be readable when scaled down
+- Keep important content in the center (safe zone)
+
+Design tips:
+- Use your brand colors (black/white theme)
+- Include your name prominently
+- Add your title: "Full-Stack Developer & Designer"
+- Consider adding a subtle background pattern or gradient
+- Make sure text is high contrast and readable
+
+Tools you can use:
+- Figma (recommended)
+- Canva
+- Photoshop
+- Online OG image generators
+
+Once created, save it as: /public/og-image.png

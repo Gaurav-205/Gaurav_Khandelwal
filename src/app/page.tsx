@@ -58,7 +58,9 @@ export default function Home() {
     <FadeTransition>
       <div className="min-h-screen bg-black md:cursor-none overflow-hidden">
         <Navigation />
-        <Hero onImagesLoaded={handleImagesLoaded} />
+        <main id="main-content">
+          <Hero onImagesLoaded={handleImagesLoaded} />
+        </main>
       </div>
     </FadeTransition>
   );

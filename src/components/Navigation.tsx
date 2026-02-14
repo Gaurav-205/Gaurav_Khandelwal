@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
 
@@ -30,6 +31,8 @@ const baseClasses = `fixed text-white font-montserrat font-normal tracking-wide 
 const linkClasses = `cursor-pointer hover:text-white/70`;
 
 const Navigation = memo(() => {
+  const pathname = usePathname();
+
   return (
     <>
       {/* Top left logo and profession - responsive positioning */}
@@ -41,7 +44,11 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <Link href="/" className={`text-lg md:text-xl tracking-[0.2em] ${linkClasses} hover:text-white/70 block`}>
+        <Link 
+          href="/" 
+          className={`text-lg md:text-xl tracking-[0.2em] ${linkClasses} hover:text-white/70 block`}
+          aria-current={pathname === '/' ? 'page' : undefined}
+        >
           GK
         </Link>
         {/* Profession line - visible on mobile below name, hidden on desktop */}
@@ -71,8 +78,22 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <Link href="/projects" className={linkClasses} prefetch={true}>Projects</Link>
-        <Link href="/about" className={linkClasses} prefetch={true}>About</Link>
+        <Link 
+          href="/projects" 
+          className={linkClasses} 
+          prefetch={true}
+          aria-current={pathname === '/projects' ? 'page' : undefined}
+        >
+          Projects
+        </Link>
+        <Link 
+          href="/about" 
+          className={linkClasses} 
+          prefetch={true}
+          aria-current={pathname === '/about' ? 'page' : undefined}
+        >
+          About
+        </Link>
       </motion.div>
 
       {/* Bottom right social links - hidden on mobile */}
