@@ -404,21 +404,13 @@ const GalleryScene = memo(({
         setAutoPlay(false);
         lastInteraction.current = Date.now();
       } else if (event.key === 'Enter' || event.key === ' ') {
-        // Find the most centered/visible image and trigger click
-        const centerPlane = planesData.current.find(plane => {
-          const normalizedPosition = plane.z / depthRange;
-          return normalizedPosition >= 0.4 && normalizedPosition <= 0.6;
-        });
-        if (centerPlane && onImageClick) {
-          const currentImage = normalizedImages[centerPlane.imageIndex];
-          if (currentImage?.slug) {
-            event.preventDefault();
-            onImageClick(currentImage.slug);
-          }
-        }
+        // Toggle auto-play pause/resume
+        event.preventDefault();
+        setAutoPlay((prev) => !prev);
+        lastInteraction.current = Date.now();
       }
     },
-    [speed, onImageClick, normalizedImages, depthRange]
+    [speed]
   );
 
   // Calculate distance between two touches
@@ -765,7 +757,7 @@ const InfiniteGallery = memo(({
         dpr={[1, 2]}
         performance={{ min: 0.5 }}
         role="img"
-        aria-label="Interactive 3D project gallery. Use arrow keys to navigate, Enter or Space to view project details."
+        aria-label="Interactive 3D project gallery. Use arrow keys to navigate, Enter or Space to pause/resume auto-play."
         tabIndex={0}
       >
         <GalleryScene

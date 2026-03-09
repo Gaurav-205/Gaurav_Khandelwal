@@ -46,7 +46,7 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
 
   const shortcuts = [
     { key: '↑ ↓ ← →', description: 'Navigate gallery' },
-    { key: 'Enter / Space', description: 'View project' },
+    { key: 'Enter / Space', description: 'Pause/Resume auto-play' },
     { key: 'ESC', description: 'Go back' },
     { key: 'Mouse Wheel', description: 'Scroll gallery' },
     { key: '?', description: 'Show this help' },
@@ -82,18 +82,6 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
         </div>
       </div>
       
-      {/* Navigation instructions */}
-      <div 
-        className="text-center fixed bottom-6 md:bottom-10 left-0 right-0 font-mono uppercase text-[11px] md:text-[11px] font-semibold text-white px-4"
-        style={{ zIndex: Z_INDEX.GALLERY_OVERLAY }}
-        role="status"
-        aria-live="polite"
-      >
-        <p className="hidden md:block">Use mouse wheel, arrow keys to navigate • Click images or press Enter/Space to view projects</p>
-        <p className="block md:hidden text-[11px] leading-tight">Swipe or tap images to navigate</p>
-        <p className="opacity-60 text-[11px] mt-1">Auto-play resumes after 2s</p>
-      </div>
-
       {/* Keyboard Hint - Desktop only, first time visitors */}
       {!hasSeenHint && showHint && (
         <div className="hidden md:block">
