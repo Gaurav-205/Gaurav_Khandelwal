@@ -48,7 +48,7 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
       >
         <p className="hidden md:block">Use mouse wheel, arrow keys to navigate • Click images or press Enter/Space to view projects</p>
         <p className="block md:hidden text-[9px] leading-tight">Swipe or tap images to navigate</p>
-        <p className="opacity-60 text-[9px] md:text-[11px] mt-1">Auto-play resumes after 3s</p>
+        <p className="opacity-60 text-[9px] md:text-[11px] mt-1">Auto-play resumes after 2s</p>
       </div>
     </main>
   );

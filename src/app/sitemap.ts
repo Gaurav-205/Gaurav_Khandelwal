@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { PROJECT_DATA } from '@/lib/constants'
+import { ENV } from '@/lib/env'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://gauravkhandelwal.com'
+  const baseUrl = ENV.BASE_URL
 
   // Static pages
   const staticPages = [

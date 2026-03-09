@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { trackPageView, trackExternalLink, trackCTAClick } from '@/lib/analytics';
+import { getGmailComposeUrl } from '@/lib/utils';
 
 export default function AboutClient() {
   const [activeSection, setActiveSection] = useState('informations');
@@ -82,6 +83,7 @@ export default function AboutClient() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  
   return (
     <FadeTransition>
       <div className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar" style={{ scrollbarWidth: 'none' } as React.CSSProperties}>
@@ -383,7 +385,12 @@ export default function AboutClient() {
               transition={{ duration: 1, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <a href="mailto:gauravkhandelwal205@gmail.com" className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors">
+              <a 
+                href={getGmailComposeUrl('gauravkhandelwal205@gmail.com', 'Hello Gaurav')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors"
+              >
                 gauravkhandelwal205@gmail.com
               </a>
               
@@ -394,7 +401,9 @@ export default function AboutClient() {
 
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
-                  href="mailto:gauravkhandelwal205@gmail.com"
+                  href={getGmailComposeUrl('gauravkhandelwal205@gmail.com', 'Hello Gaurav')}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => trackCTAClick('Send Email', 'About Contact Section')}
                   className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
                 >

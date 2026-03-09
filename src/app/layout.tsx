@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SmoothCursor } from "@/components/ui/SmoothCursor";
+import { ENV } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Gaurav Khandelwal - Full-Stack Developer & Designer",
   description: "Portfolio of Gaurav Khandelwal from Kota, Rajasthan. B.Tech in Computer Science & Engineering (Product Software Engineering) at MIT ADT University, Pune. Full-Stack Developer and UI/UX Designer passionate about creating innovative solutions.",
   keywords: ["Full-Stack Developer", "UI/UX Designer", "Portfolio", "Web Development", "React", "Next.js", "TypeScript", "Gaurav Khandelwal", "MIT ADT University", "Pune", "Kota", "Rajasthan"],
   authors: [{ name: "Gaurav Khandelwal" }],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://gauravkhandelwal.com'),
+  metadataBase: new URL(ENV.BASE_URL),
   openGraph: {
     title: "Gaurav Khandelwal - Full-Stack Developer & Designer",
     description: "B.Tech student at MIT ADT University, Pune. Portfolio showcasing innovative web applications and design solutions.",
@@ -48,8 +49,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Gaurav Khandelwal',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://gauravkhandelwal.com',
-    image: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://gauravkhandelwal.com'}/og-image.png`,
+    url: ENV.BASE_URL,
+    image: `${ENV.BASE_URL}/og-image.png`,
     jobTitle: 'Full-Stack Developer & UI/UX Designer',
     worksFor: {
       '@type': 'EducationalOrganization',

@@ -25,7 +25,10 @@ class Analytics {
         this.events = JSON.parse(stored);
       }
     } catch (error) {
-      console.error('Failed to load analytics:', error);
+      // Silent fail - analytics is not critical
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to load analytics:', error);
+      }
     }
   }
 
@@ -37,7 +40,10 @@ class Analytics {
       }
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.events));
     } catch (error) {
-      console.error('Failed to save analytics:', error);
+      // Silent fail - analytics is not critical
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to save analytics:', error);
+      }
     }
   }
 
@@ -54,12 +60,15 @@ class Analytics {
       this.events.push(analyticsEvent);
       this.saveEvents();
 
-      // Log in development
+      // Log in development only
       if (process.env.NODE_ENV === 'development') {
         console.log('📊 Analytics:', event, data);
       }
     } catch (error) {
-      console.error('Failed to track analytics event:', error);
+      // Silent fail - analytics is not critical
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to track analytics event:', error);
+      }
     }
   }
 

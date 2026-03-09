@@ -21,13 +21,14 @@ export default function ProjectClient({ params }: ProjectClientProps) {
   
   // Validate slug against actual project data
   const project = PROJECT_DATA.find(p => p.slug === resolvedParams?.slug);
-  
-  // If slug is invalid, redirect to 404
-  if (resolvedParams?.slug && !project) {
-    router.push('/not-found');
-  }
 
   useEffect(() => {
+    // If project not found, redirect to 404
+    if (resolvedParams?.slug && !project) {
+      router.push('/not-found');
+      return;
+    }
+
     // Track page view
     if (project) {
       trackPageView(`/project/${project.slug}`);
@@ -55,7 +56,7 @@ export default function ProjectClient({ params }: ProjectClientProps) {
       document.documentElement.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [router, project]);
+  }, [router, project, resolvedParams]);
 
   if (!project) {
     return (

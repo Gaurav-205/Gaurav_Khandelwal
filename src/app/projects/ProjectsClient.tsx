@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { PROJECT_DATA } from '@/lib/constants/projects';
 import Image from 'next/image';
 import { trackPageView, trackProjectClick, trackCTAClick } from '@/lib/analytics';
+import { getGmailComposeUrl } from '@/lib/utils';
 
 export default function ProjectsClient() {
   const router = useRouter();
@@ -236,7 +237,9 @@ export default function ProjectsClient() {
                   Get in touch →
                 </Link>
                 <a
-                  href="mailto:gauravkhandelwal205@gmail.com"
+                  href={getGmailComposeUrl('gauravkhandelwal205@gmail.com', 'Project Inquiry')}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => trackCTAClick('Send Email', 'Projects Page')}
                   className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
                 >

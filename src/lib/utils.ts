@@ -63,10 +63,22 @@ export function formatNumber(
 export function getDecimalPlaces(num: number): number {
   const str = num.toString();
   if (str.includes('.')) {
-    const decimals = str.split('.')[1];
-    if (parseInt(decimals) !== 0) {
-      return decimals.length;
+    const parts = str.split('.');
+    if (parts.length > 1 && parts[1]) {
+      const decimals = parts[1];
+      if (parseInt(decimals) !== 0) {
+        return decimals.length;
+      }
     }
   }
   return 0;
+}
+
+// Generate Gmail compose URL
+export function getGmailComposeUrl(email: string, subject?: string, body?: string): string {
+  const params = new URLSearchParams();
+  params.append('to', email);
+  if (subject) params.append('su', subject);
+  if (body) params.append('body', body);
+  return `https://mail.google.com/mail/?view=cm&fs=1&${params.toString()}`;
 }

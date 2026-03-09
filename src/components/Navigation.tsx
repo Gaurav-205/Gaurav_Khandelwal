@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
+import { getGmailComposeUrl } from '@/lib/utils';
 
 const transitionConfig = {
   duration: ANIMATION_DURATIONS.NAVIGATION_SLIDE,
@@ -106,7 +107,9 @@ const Navigation = memo(() => {
         transition={transitionConfig}
       >
         <a 
-          href="mailto:gauravkhandelwal205@gmail.com" 
+          href={getGmailComposeUrl('gauravkhandelwal205@gmail.com')}
+          target="_blank"
+          rel="noopener noreferrer"
           className={linkClasses}
           aria-label="Send email to Gaurav Khandelwal"
         >
@@ -117,7 +120,7 @@ const Navigation = memo(() => {
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
-          aria-label="Visit Gaurav&apos;s GitHub profile (opens in new tab)"
+          aria-label="Visit Gaurav's GitHub profile (opens in new tab)"
         >
           GitHub
         </a>
@@ -126,7 +129,7 @@ const Navigation = memo(() => {
           target="_blank" 
           rel="noopener noreferrer" 
           className={linkClasses}
-          aria-label="Visit Gaurav&apos;s LinkedIn profile (opens in new tab)"
+          aria-label="Visit Gaurav's LinkedIn profile (opens in new tab)"
         >
           LinkedIn
         </a>

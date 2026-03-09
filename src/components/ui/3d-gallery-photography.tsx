@@ -174,7 +174,7 @@ const ImagePlane = memo(({
 
   const handlePointerEnter = useCallback(() => setIsHovered(true), []);
   const handlePointerLeave = useCallback(() => setIsHovered(false), []);
-  const handleClick = useCallback((event: any) => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     onClick?.();
   }, [onClick]);
@@ -233,8 +233,11 @@ const GalleryScene = memo(({
 
   // Load actual PNG/JPG images (no CORS issues with same-origin images)
   const [loadedTextures, setLoadedTextures] = useState<THREE.Texture[]>([]);
+  const [loadingError, setLoadingError] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+    
     const loadImages = async () => {
       const textureLoader = new THREE.TextureLoader();
       
@@ -265,31 +268,56 @@ const GalleryScene = memo(({
               
               if (ctx) {
                 const colorPair = colors[index % colors.length];
-                const gradient = ctx.createLinearGradient(0, 0, 1024, 1024);
-                gradient.addColorStop(0, colorPair[0]);
-                gradient.addColorStop(1, colorPair[1]);
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, 1024, 1024);
-                
-                const texture = new THREE.CanvasTexture(canvas);
-                texture.colorSpace = THREE.SRGBColorSpace;
-                resolve(texture);
+                if (colorPair && colorPair[0] && colorPair[1]) {
+                  const gradient = ctx.createLinearGradient(0, 0, 1024, 1024);
+                  gradient.addColorStop(0, colorPair[0]);
+                  gradient.addColorStop(1, colorPair[1]);
+                  ctx.fillStyle = gradient;
+                  ctx.fillRect(0, 0, 1024, 1024);
+                  
+                  const texture = new THREE.CanvasTexture(canvas);
+                  texture.colorSpace = THREE.SRGBColorSpace;
+                  resolve(texture);
+                } else {
+                  // Fallback to solid color if color pair is invalid
+                  ctx.fillStyle = '#667eea';
+                  ctx.fillRect(0, 0, 1024, 1024);
+                  
+                  const texture = new THREE.CanvasTexture(canvas);
+                  texture.colorSpace = THREE.SRGBColorSpace;
+                  resolve(texture);
+                }
               }
             }
           );
         });
       });
 
-      const textures = await Promise.all(texturePromises);
-      setLoadedTextures(textures);
-      
-      // Notify parent that images are loaded
-      if (onImagesLoaded) {
-        onImagesLoaded();
+      try {
+        const textures = await Promise.all(texturePromises);
+        if (isMounted) {
+          setLoadedTextures(textures);
+          
+          // Notify parent that images are loaded
+          if (onImagesLoaded) {
+            onImagesLoaded();
+          }
+        }
+      } catch (error) {
+        if (isMounted) {
+          setLoadingError(true);
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Error loading textures:', error);
+          }
+        }
       }
     };
 
     loadImages();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [normalizedImages, onImagesLoaded]);
 
   const textures = loadedTextures.length > 0 ? loadedTextures : [];
@@ -299,6 +327,15 @@ const GalleryScene = memo(({
     () => Array.from({ length: visibleCount }, () => createClothMaterial()),
     [visibleCount]
   );
+
+  // Cleanup materials on unmount
+  useEffect(() => {
+    return () => {
+      materials.forEach(material => {
+        material.dispose();
+      });
+    };
+  }, [materials]);
 
   const spatialPositions = useMemo(() => {
     const positions: { x: number; y: number }[] = [];
@@ -396,7 +433,7 @@ const GalleryScene = memo(({
     const touches = Array.from(event.touches);
     touchState.current.touches = touches;
     
-    if (touches.length === 2) {
+    if (touches.length === 2 && touches[0] && touches[1]) {
       touchState.current.isMultiTouch = true;
       touchState.current.initialDistance = getTouchDistance(touches[0], touches[1]);
       touchState.current.lastDistance = touchState.current.initialDistance;
@@ -412,7 +449,7 @@ const GalleryScene = memo(({
     event.preventDefault();
     const touches = Array.from(event.touches);
     
-    if (touches.length === 2 && touchState.current.isMultiTouch) {
+    if (touches.length === 2 && touches[0] && touches[1] && touchState.current.isMultiTouch) {
       const currentDistance = getTouchDistance(touches[0], touches[1]);
       const distanceDelta = currentDistance - touchState.current.lastDistance;
       
@@ -423,7 +460,7 @@ const GalleryScene = memo(({
       
       touchState.current.lastDistance = currentDistance;
       lastInteraction.current = Date.now();
-    } else if (touches.length === 1 && !touchState.current.isMultiTouch) {
+    } else if (touches.length === 1 && touches[0] && !touchState.current.isMultiTouch) {
       // Single touch swipe for mobile
       const touch = touches[0];
       const lastTouch = touchState.current.touches[0];
@@ -469,6 +506,8 @@ const GalleryScene = memo(({
         document.removeEventListener('keydown', handleKeyDown);
       };
     }
+    
+    return undefined;
   }, [handleWheel, handleKeyDown, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   // Auto-play logic
@@ -600,7 +639,12 @@ const GalleryScene = memo(({
     });
   });
 
-  if (normalizedImages.length === 0 || textures.length === 0) return null;
+  if (normalizedImages.length === 0 || textures.length === 0) {
+    if (loadingError) {
+      return null;
+    }
+    return null;
+  }
 
   return (
     <>
