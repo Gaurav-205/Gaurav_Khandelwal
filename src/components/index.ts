@@ -5,3 +5,6 @@ export { SmoothCursor } from './ui/SmoothCursor';
 export { default as InfiniteGallery } from './ui/3d-gallery-photography';
 export { default as FadeTransition } from './ui/FadeTransition';
 export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as Tooltip } from './ui/Tooltip';
+export { default as KeyboardHint } from './ui/KeyboardHint';
+export { default as HelpButton } from './ui/HelpButton';

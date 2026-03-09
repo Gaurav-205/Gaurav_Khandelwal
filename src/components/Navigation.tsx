@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { ANIMATION_DELAYS, ANIMATION_DURATIONS } from '@/lib/constants/animations';
 import { Z_INDEX } from '@/lib/constants/zIndex';
 import { getGmailComposeUrl } from '@/lib/utils';
+import Tooltip from '@/components/ui/Tooltip';
 
 const transitionConfig = {
   duration: ANIMATION_DURATIONS.NAVIGATION_SLIDE,
@@ -79,22 +80,26 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <Link 
-          href="/projects" 
-          className={linkClasses} 
-          prefetch={true}
-          aria-current={pathname === '/projects' ? 'page' : undefined}
-        >
-          Projects
-        </Link>
-        <Link 
-          href="/about" 
-          className={linkClasses} 
-          prefetch={true}
-          aria-current={pathname === '/about' ? 'page' : undefined}
-        >
-          About
-        </Link>
+        <Tooltip content="View all projects" position="bottom">
+          <Link 
+            href="/projects" 
+            className={linkClasses} 
+            prefetch={true}
+            aria-current={pathname === '/projects' ? 'page' : undefined}
+          >
+            Projects
+          </Link>
+        </Tooltip>
+        <Tooltip content="Learn more about me" position="bottom">
+          <Link 
+            href="/about" 
+            className={linkClasses} 
+            prefetch={true}
+            aria-current={pathname === '/about' ? 'page' : undefined}
+          >
+            About
+          </Link>
+        </Tooltip>
       </motion.div>
 
       {/* Bottom right social links - hidden on mobile */}
@@ -106,33 +111,39 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        <a 
-          href={getGmailComposeUrl('gauravkhandelwal205@gmail.com')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={linkClasses}
-          aria-label="Send email to Gaurav Khandelwal"
-        >
-          E-mail
-        </a>
-        <a 
-          href="https://github.com/Gaurav-205" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className={linkClasses}
-          aria-label="Visit Gaurav's GitHub profile (opens in new tab)"
-        >
-          GitHub
-        </a>
-        <a 
-          href="https://linkedin.com/in/gaurav-khandelwal-17a127358" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className={linkClasses}
-          aria-label="Visit Gaurav's LinkedIn profile (opens in new tab)"
-        >
-          LinkedIn
-        </a>
+        <Tooltip content="Send me an email" position="left">
+          <a 
+            href={getGmailComposeUrl('gauravkhandelwal205@gmail.com')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkClasses}
+            aria-label="Send email to Gaurav Khandelwal"
+          >
+            E-mail
+          </a>
+        </Tooltip>
+        <Tooltip content="View my code" position="left">
+          <a 
+            href="https://github.com/Gaurav-205" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={linkClasses}
+            aria-label="Visit Gaurav's GitHub profile (opens in new tab)"
+          >
+            GitHub
+          </a>
+        </Tooltip>
+        <Tooltip content="Connect with me" position="left">
+          <a 
+            href="https://linkedin.com/in/gaurav-khandelwal-17a127358" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={linkClasses}
+            aria-label="Visit Gaurav's LinkedIn profile (opens in new tab)"
+          >
+            LinkedIn
+          </a>
+        </Tooltip>
       </motion.div>
     </>
   );

@@ -139,16 +139,17 @@ export default function ProjectsClient() {
                 >
                   <Link href={`/project/${project.slug}`}>
                     <div 
-                      className="relative aspect-[4/3] w-full overflow-hidden rounded-lg mb-6 bg-gray-900 border border-white/10"
+                      className="relative aspect-[16/10] w-full overflow-hidden rounded-lg mb-6 bg-gray-900 border border-white/10"
                       onClick={() => handleProjectClick(project.slug, project.title)}
                     >
                       <Image
                         src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-all duration-500 group-hover:brightness-110 group-hover:contrast-105"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                       />
-                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                     
                     <div className="space-y-3">

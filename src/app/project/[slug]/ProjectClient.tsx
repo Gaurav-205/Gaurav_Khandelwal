@@ -223,13 +223,14 @@ export default function ProjectClient({ params }: ProjectClientProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.1 }}
             >
-              <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-white/10">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   className="object-cover"
                   priority
+                  sizes="(max-width: 1200px) 100vw, 1200px"
                 />
               </div>
             </motion.div>
