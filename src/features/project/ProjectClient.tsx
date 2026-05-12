@@ -3,14 +3,19 @@
 import { motion } from 'framer-motion';
 import FadeTransition from '@/components/ui/FadeTransition';
 import Link from 'next/link';
-import ProjectsInteractions from './ProjectsInteractions';
-import ProjectsContent from './ProjectsContent';
+import { ProjectData, PROJECT_DATA } from '@/lib/constants/projects';
+import ProjectInteractions from './ProjectInteractions';
+import ProjectContent from './ProjectContent';
 
-export default function ProjectsClient() {
+interface ProjectClientProps {
+  project: ProjectData;
+}
+
+export default function ProjectClient({ project }: ProjectClientProps) {
   return (
     <FadeTransition>
       {/* Behaviour-only island */}
-      <ProjectsInteractions />
+      <ProjectInteractions slug={project.slug} />
 
       {/* Back button — framer-motion entry animation */}
       <motion.div
@@ -27,7 +32,7 @@ export default function ProjectsClient() {
         </Link>
       </motion.div>
 
-      {/* Header — framer-motion entry animation */}
+      {/* Project nav label — framer-motion entry animation */}
       <motion.div
         className="fixed top-4 left-4 md:left-6 z-50"
         initial={{ opacity: 0, x: -20 }}
@@ -35,13 +40,14 @@ export default function ProjectsClient() {
         transition={{ duration: 0.6, delay: 0.3 }}
       >
         <div className="font-montserrat">
-          <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">Projects</h2>
-          <p className="text-white/60 text-xs">All Projects</p>
+          <p className="text-white/60 text-xs mb-1">
+            Project {project.id} of {PROJECT_DATA.length}
+          </p>
+          <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">{project.title}</h2>
         </div>
       </motion.div>
 
-      {/* Static content — server-rendered */}
-      <ProjectsContent />
+      <ProjectContent project={project} />
     </FadeTransition>
   );
 }

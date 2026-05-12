@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from 'next/navigation';
-import { PROJECT_DATA } from '@/lib/constants/projects';
-import ProjectClient from './ProjectClient';
+import { PROJECT_DATA, ProjectClient } from '@/features/project';
 
 interface ProjectPageProps {
   params: Promise<{

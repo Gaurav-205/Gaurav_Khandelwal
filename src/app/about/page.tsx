@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AboutClient from './AboutClient';
+import { AboutClient } from '@/features/about';
 
 export const metadata: Metadata = {
   title: "About - Gaurav Khandelwal",

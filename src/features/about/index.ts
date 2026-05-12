@@ -1,4 +1,4 @@
-export { default as AboutContent } from '@/app/about/AboutContent';
-export { default as AboutClient } from '@/app/about/AboutClient';
-export { default as AboutInteractions } from '@/app/about/AboutInteractions';
+export { default as AboutContent } from './AboutContent';
+export { default as AboutClient } from './AboutClient';
+export { default as AboutInteractions } from './AboutInteractions';
 export { default as ContactForm } from '@/components/ContactForm';

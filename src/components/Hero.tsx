@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import GalleryCanvas from './ui/gallery/GalleryCanvas';
+import { GalleryCanvas } from '@/features/gallery';
 import { SAMPLE_IMAGES } from '@/lib/constants/projects';
 import { GALLERY_CONFIG } from '@/lib/constants/gallery';
 import KeyboardHint from './ui/KeyboardHint';

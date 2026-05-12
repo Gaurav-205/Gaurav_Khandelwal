@@ -10,8 +10,7 @@
  */
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import ProjectContent from '../app/project/[slug]/ProjectContent';
-import { PROJECT_DATA } from '../lib/constants/projects';
+import { PROJECT_DATA, ProjectContent } from '@/features/project';
 
 // Mock next/link
 vi.mock('next/link', () => ({

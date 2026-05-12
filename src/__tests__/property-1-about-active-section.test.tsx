@@ -9,7 +9,7 @@
  */
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import AboutContent from '../app/about/AboutContent';
+import { AboutContent } from '@/features/about';
 
 // Mock next/link — renders a plain <a> in tests
 vi.mock('next/link', () => ({

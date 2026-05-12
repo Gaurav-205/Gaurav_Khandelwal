@@ -5,10 +5,10 @@
  * Kept here so existing imports of '3d-gallery-photography' continue to work
  * without changes.
  */
-export { default } from './gallery/GalleryCanvas';
-export { default as GalleryCanvas } from './gallery/GalleryCanvas';
-export { default as GalleryScene } from './gallery/GalleryScene';
-export { default as ImagePlane } from './gallery/ImagePlane';
-export { useGalleryInput } from './gallery/useGalleryInput';
-export { useTextureLoader } from './gallery/useTextureLoader';
-export { createClothMaterial, sharedPlaneGeometry } from './gallery/shaderMaterials';
+export { default } from '@/features/gallery/GalleryCanvas';
+export { default as GalleryCanvas } from '@/features/gallery/GalleryCanvas';
+export { default as GalleryScene } from '@/features/gallery/GalleryScene';
+export { default as ImagePlane } from '@/features/gallery/ImagePlane';
+export { useGalleryInput } from '@/features/gallery/useGalleryInput';
+export { useTextureLoader } from '@/features/gallery/useTextureLoader';
+export { createClothMaterial, sharedPlaneGeometry } from '@/features/gallery/shaderMaterials';

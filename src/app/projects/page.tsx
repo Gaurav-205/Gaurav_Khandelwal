@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ProjectsClient from './ProjectsClient';
+import { ProjectsClient } from '@/features/projects';
 
 export const metadata: Metadata = {
   title: "Projects - Gaurav Khandelwal",

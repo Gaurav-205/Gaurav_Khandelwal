@@ -4,19 +4,23 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { trackPageView } from '@/lib/analytics';
 
+interface ProjectInteractionsProps {
+  slug: string;
+}
+
 /**
- * Client island — owns only browser-side side-effects for the Projects page:
+ * Client island — owns only browser-side side-effects for a project detail page:
  *   • page-view analytics
  *   • ESC key → navigate home
  *   • scrollbar hiding / restoring
  *
- * Renders nothing; all visible markup lives in ProjectsClient.
+ * Renders nothing; all visible markup lives in ProjectClient.
  */
-export default function ProjectsInteractions() {
+export default function ProjectInteractions({ slug }: ProjectInteractionsProps) {
   const router = useRouter();
 
   useEffect(() => {
-    trackPageView('/projects');
+    trackPageView(`/project/${slug}`);
 
     document.documentElement.classList.add('hide-scrollbar');
     document.body.classList.add('hide-scrollbar');
@@ -35,7 +39,7 @@ export default function ProjectsInteractions() {
       document.documentElement.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [router]);
+  }, [router, slug]);
 
   return null;
 }
