@@ -2,13 +2,37 @@
 
 import { memo, useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import InfiniteGallery from './ui/3d-gallery-photography';
+import GalleryCanvas from './ui/gallery/GalleryCanvas';
 import { SAMPLE_IMAGES } from '@/lib/constants/projects';
 import { GALLERY_CONFIG } from '@/lib/constants/gallery';
-import { Z_INDEX } from '@/lib/constants/zIndex';
 import KeyboardHint from './ui/KeyboardHint';
 import HelpButton from './ui/HelpButton';
+import HeroOverlay from './HeroOverlay';
 
+const SHORTCUTS = [
+  { key: '↑ ↓ ← →', description: 'Navigate gallery' },
+  { key: 'Enter / Space', description: 'Pause/Resume auto-play' },
+  { key: 'ESC', description: 'Go back' },
+  { key: 'Mouse Wheel', description: 'Scroll gallery' },
+  { key: '?', description: 'Show this help' },
+];
+
+/**
+ * Hero — `'use client'` boundary (intentional and minimal).
+ *
+ * This component calls `useRouter`, `useState`, `useEffect`, and reads
+ * `localStorage` — all browser-only APIs that are unavailable in React Server
+ * Components. The client boundary therefore cannot be pushed further up or
+ * further down without breaking these hook dependencies.
+ *
+ * Children rendered inside this client tree:
+ * - `HeroOverlay` — a React Server Component that renders the static title
+ *   overlay; it ships zero JavaScript to the browser.
+ * - `GalleryCanvas` — a WebGL client component that drives the 3-D gallery.
+ *
+ * No further static markup can be extracted into a Server Component without
+ * breaking the hook dependencies that live in this component.
+ */
 const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
   const router = useRouter();
   const [showHint, setShowHint] = useState(true);
@@ -16,18 +40,16 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
   const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
-    // Check if user has seen the hint before
     const seen = localStorage.getItem('hasSeenKeyboardHint');
     if (seen) {
       setShowHint(false);
       setHasSeenHint(true);
     }
 
-    // Listen for "?" key to toggle help
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         e.preventDefault();
-        setShowHelp(prev => !prev);
+        setShowHelp((prev) => !prev);
       }
     };
 
@@ -40,21 +62,17 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
     setHasSeenHint(true);
   }, []);
 
-  const handleImageClick = useCallback((slug: string) => {
-    router.push(`/project/${slug}`);
-  }, [router]);
-
-  const shortcuts = [
-    { key: '↑ ↓ ← →', description: 'Navigate gallery' },
-    { key: 'Enter / Space', description: 'Pause/Resume auto-play' },
-    { key: 'ESC', description: 'Go back' },
-    { key: 'Mouse Wheel', description: 'Scroll gallery' },
-    { key: '?', description: 'Show this help' },
-  ];
+  const handleImageClick = useCallback(
+    (slug: string) => {
+      router.push(`/project/${slug}`);
+    },
+    [router],
+  );
 
   return (
     <main className="min-h-screen h-full w-full">
-      <InfiniteGallery
+      {/* 3-D gallery — client-only, WebGL */}
+      <GalleryCanvas
         images={SAMPLE_IMAGES}
         speed={GALLERY_CONFIG.SPEED}
         zSpacing={GALLERY_CONFIG.Z_SPACING}
@@ -66,36 +84,28 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
         onImagesLoaded={onImagesLoaded}
         className="h-screen w-full rounded-lg overflow-hidden"
       />
-      
-      {/* Main title overlay - perfectly centered */}
-      <div 
-        className="h-screen inset-0 pointer-events-none fixed flex items-center justify-center mix-blend-exclusion text-white"
-        style={{ zIndex: Z_INDEX.GALLERY_OVERLAY }}
-      >
-        <div className="text-center">
-          <h1 className="font-serif text-4xl md:text-7xl tracking-tight">
-            <span className="italic">Gaurav Khandelwal</span>
-          </h1>
-          <p className="mt-4 text-white/60 font-montserrat text-sm tracking-widest">
-            {SAMPLE_IMAGES.length} PROJECTS
-          </p>
-        </div>
-      </div>
-      
-      {/* Keyboard Hint - Desktop only, first time visitors */}
+
+      {/* Static title overlay — server component, zero JS */}
+      <HeroOverlay />
+
+      {/* Keyboard hint — desktop, first-time visitors only */}
       {!hasSeenHint && showHint && (
         <div className="hidden md:block">
-          <KeyboardHint 
-            keys={['↑', '↓', '←', '→']} 
+          <KeyboardHint
+            keys={['↑', '↓', '←', '→']}
             description="Navigate with arrow keys"
             onDismiss={handleDismissHint}
           />
         </div>
       )}
 
-      {/* Help Button - Desktop only */}
+      {/* Help button — desktop only */}
       <div className="hidden md:block">
-        <HelpButton shortcuts={shortcuts} isOpen={showHelp} onToggle={() => setShowHelp(!showHelp)} />
+        <HelpButton
+          shortcuts={SHORTCUTS}
+          isOpen={showHelp}
+          onToggle={() => setShowHelp((p) => !p)}
+        />
       </div>
     </main>
   );

@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { PROJECT_DATA } from '@/lib/constants'
+import { PROJECT_DATA } from '@/lib/constants/projects'
 import { ENV } from '@/lib/env'
 
 export default function sitemap(): MetadataRoute.Sitemap {

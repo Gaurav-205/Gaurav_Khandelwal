@@ -32,6 +32,22 @@ const slideFromRight = {
 const baseClasses = `fixed text-white font-montserrat font-normal tracking-wide mix-blend-exclusion transition-colors duration-300`;
 const linkClasses = `cursor-pointer hover:text-white/70`;
 
+/**
+ * Navigation component — must remain a Client Component for two reasons:
+ *
+ * 1. **`usePathname()` hook** — this is a client-only hook that reads the
+ *    current URL from the browser's routing context. It is unavailable in
+ *    React Server Components and will throw if called outside a Client
+ *    Component boundary.
+ *
+ * 2. **framer-motion `AnimatePresence` / `motion.*` entry animations** —
+ *    framer-motion relies on the DOM being present to measure, mount, and
+ *    animate elements. These APIs require DOM hydration and therefore cannot
+ *    run during server-side rendering.
+ *
+ * Both of these dependencies prevent this component from being converted to
+ * a Server Component.
+ */
 const Navigation = memo(() => {
   const pathname = usePathname();
 
@@ -55,7 +71,7 @@ const Navigation = memo(() => {
         </Link>
         {/* Profession line - visible on mobile below name, hidden on desktop */}
         <div className="block md:hidden text-xs text-white/80 mt-1">
-          Full-Stack Developer & Designer
+          Full-Stack Developer
         </div>
       </motion.div>
 
@@ -68,7 +84,7 @@ const Navigation = memo(() => {
         animate="visible"
         transition={transitionConfig}
       >
-        Full-Stack Developer & Designer
+        Full-Stack Developer | MERN Stack | Flutter
       </motion.div>
 
       {/* Top right navigation links - responsive positioning */}

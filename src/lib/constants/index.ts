@@ -1,4 +1,5 @@
 // Central export for all constants
+export * from './about';
 export * from './animations';
 export * from './gallery';
 export * from './projects';

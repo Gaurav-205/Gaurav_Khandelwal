@@ -1,4 +1,6 @@
-// Project data with Gaurav Khandelwal's actual projects
+// Project data — Gaurav Khandelwal
+import { z } from 'zod';
+
 export interface ProjectData {
   id: number;
   slug: string;
@@ -20,63 +22,62 @@ export interface ProjectData {
 export const PROJECT_DATA: ProjectData[] = [
   {
     id: 1,
-    slug: 'prank-wizard',
-    title: 'Prank Wizard',
-    description: 'A fun, interactive web platform that helps people plan creative pranks. Live and serving real users with secure login, beautiful 3D animations, and an admin dashboard for managing everything.',
-    image: '/projects/prank-wizard.png',
-    role: 'Full-Stack Developer & DevOps Engineer',
-    year: '2025',
-    category: 'Production Full-Stack Application',
-    techStack: ['Next.js 16', 'React 19', 'Express.js', 'MongoDB Atlas', 'TypeScript', 'Tailwind CSS v4', 'Three.js', 'GSAP', 'Docker', 'GitHub Actions', 'Vibe Coding'],
-    liveUrl: 'https://prankwizard.netlify.app',
-    githubUrl: 'https://github.com/Gaurav-205/LetsSpiceUp',
-    sections: [
-      {
-        title: 'The Challenge',
-        content: 'Planning pranks was chaotic and unorganized. People needed a fun, secure way to coordinate their ideas without worrying about privacy or losing their plans. The goal was to create something that felt playful but worked like a professional application secure, fast, and always available.'
-      },
-      {
-        title: 'The Solution',
-        content: 'Built an engaging web app with a simple 4-step wizard that guides users through planning their perfect prank. Added a mesmerizing 3D background with floating spheres that respond to your mouse, making the experience feel alive and interactive. Users can sign in with email or Google, and admins get a powerful dashboard to manage everything. The interface is smooth, responsive, and works beautifully on any device.'
-      },
-      {
-        title: 'How It Works',
-        content: 'The platform uses modern web technologies to deliver a fast, secure experience. The frontend provides smooth animations and instant feedback, while the backend handles user accounts, data storage, and security. Multiple layers of protection keep user data safe, including encrypted passwords, login rate limits, and secure sessions. The entire system runs on cloud servers with automatic updates and monitoring to ensure it\'s always online and performing well.'
-      },
-      {
-        title: 'Real-World Impact',
-        content: 'Successfully launched and serving real users at prankwizard.netlify.app. The site loads in under 2 seconds, maintains 99.9% uptime, and has been deployed multiple times with zero downtime. Users enjoy the interactive 3D experience while admins can easily manage the platform. This project demonstrates the ability to build production-ready applications that are both fun and professionally engineered combining creative design with solid technical foundations.'
-      }
-    ]
-  },
-  {
-    id: 2,
     slug: 'kampus-kart',
     title: 'KampusKart',
-    description: 'A one-stop campus hub for MIT ADT University that brings together everything students need from finding classrooms to chatting with friends, checking event schedules to reporting issues. All in one place, always accessible.',
+    description: 'A full-stack campus portal for MIT ADT University serving 400+ users across maps, events, lost and found, complaints, facilities, clubs, profiles, admin workflows, and real-time chat.',
     image: '/projects/kampuskart.png',
     role: 'Full-Stack Developer',
     year: '2025',
     category: 'Campus Management Platform',
-    techStack: ['React 19', 'Vite', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'Google Maps API'],
+    techStack: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS', 'Material UI', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'JWT', 'Google Maps API', 'Jest', 'Vitest', 'GitHub Actions'],
     liveUrl: 'https://kampuskart.netlify.app',
     githubUrl: 'https://github.com/kalviumcommunity/S72_Gaurav_Capstone_KampusKart',
     sections: [
       {
         title: 'The Challenge',
-        content: 'Students at MIT ADT University had to juggle multiple apps and websites just to find basic information facility hours, event schedules, and campus locations. Important updates got lost, and there was no easy way to connect with the campus community or report issues.'
+        content: 'Students and faculty often depend on disconnected sources for campus navigation, events, announcements, lost and found, complaints, facilities, club recruitment, and communication. KampusKart was built to centralize these workflows into one practical campus platform for MIT ADT University.'
       },
       {
         title: 'The Solution',
-        content: 'Created a unified campus platform with 12 essential features: an interactive map to navigate campus, real-time chat to connect with everyone, a lost & found system, event calendar with easy RSVP, clubs directory, facility booking, feedback system, and a centralized news feed. Everything students need is now just a click away, with a clean interface that works perfectly on phones and computers.'
+        content: 'I developed a full-stack campus portal with modules for campus maps, news, events, lost and found, complaints, facilities, club recruitments, user profiles, authentication, admin workflows, and global chat. The platform supports search, filters, image uploads, status tracking, role-based access, and responsive layouts for both desktop and mobile users.'
       },
       {
-        title: 'How It Works',
-        content: 'The platform combines a fast, modern interface with a robust backend that handles thousands of users simultaneously. Real-time chat lets students message instantly with typing indicators and reactions. The interactive map uses Google Maps to help navigate campus buildings and facilities. Secure login keeps accounts safe, while automatic cloud backups ensure no data is ever lost. The system runs 24/7 with automatic monitoring to catch and fix any issues immediately.'
+        title: 'Technical Implementation',
+        content: 'The frontend uses React, TypeScript, Vite, Tailwind CSS, Material UI, feature-based modules, reusable components, and responsive UI patterns. The backend uses Express.js, MongoDB, Mongoose, JWT authentication, Google OAuth, Socket.IO, Cloudinary uploads, Nodemailer, validation middleware, rate limiting, and repository/service layers. Real-time chat supports messages, replies, emoji reactions, read receipts, file attachments, and search.'
       },
       {
-        title: 'Real-World Impact',
-        content: 'Currently live and serving students at MIT ADT University with lightning-fast load times under 3 seconds. The platform handles over 1,000 students online at once, with chat messages delivered in under 100 milliseconds. Successfully centralized all campus services into one easy-to-use hub, dramatically improving how students engage with campus life and access important information. Maintains 99.9% uptime, ensuring students can always access what they need.'
+        title: 'Outcome',
+        content: 'KampusKart demonstrates my ability to build and organize a larger product with 8 major workflows, 58 REST/API endpoints, 400+ users, and 157 test cases covering authentication, validation, models, CRUD routes, UI behavior, and smoke tests.'
+      }
+    ]
+  },
+  {
+    id: 2,
+    slug: 'sahara-pet-care',
+    title: 'Sahara Pet Care',
+    description: 'A Flutter and Firebase pet care app for caregiver discovery, service booking, pet profiles, adoption, shopping, orders, chat, live tracking, notifications, and cross-platform deployment.',
+    image: '/projects/coming-soon.png',
+    role: 'Flutter Developer',
+    year: '2026',
+    category: 'Cross-Platform Pet Care App',
+    techStack: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Firebase Messaging', 'Provider', 'Google Maps Flutter', 'Geolocator', 'Cloudinary'],
+    githubUrl: 'https://github.com/Gaurav-205/Sahara',
+    sections: [
+      {
+        title: 'The Challenge',
+        content: 'Pet owners need a single place to discover caregivers, manage pets, book services, shop for products, track orders, explore adoption options, and communicate with caregivers. Sahara was designed to bring these workflows into one cross-platform mobile experience.'
+      },
+      {
+        title: 'The Solution',
+        content: 'I built Sahara as a Flutter app backed by Firebase services. The app includes authentication, caregiver discovery, pet profiles, booking flows, favorites, adoption, shopping, cart and order workflows, chat models, notifications, and location-based features. The goal was to create a mobile-first product with clear user flows and maintainable state management.'
+      },
+      {
+        title: 'Technical Implementation',
+        content: 'The application uses Flutter, Dart, Material 3, Firebase Auth, Cloud Firestore, Firebase Messaging, Provider state management, Google Maps, geolocation, Cloudinary media handling, shared preferences, and modular screens, services, models, providers, widgets, and utility layers. State is organized across modules for authentication, bookings, pets, caregivers, favorites, location, and cart management.'
+      },
+      {
+        title: 'Outcome',
+        content: 'Sahara shows my ability to work beyond web development by building a cross-platform Flutter/Firebase application with 6 major workflows and a 5-stage booking lifecycle involving automation, active service tracking, geolocation, and Google Maps integration.'
       }
     ]
   },
@@ -84,47 +85,61 @@ export const PROJECT_DATA: ProjectData[] = [
     id: 3,
     slug: 'onam-festival-website',
     title: 'Onam Festival Website',
-    description: 'A vibrant festival platform for MIT ADT University\'s Onam celebrations that made registration effortless and merchandise shopping fun. Helped 400+ students participate and generated ₹25,000 in sales.',
+    description: 'A full-stack cultural event and commerce platform for MIT ADT University\'s Onam celebration, processing 105 orders and INR 40K+ in sales across a 7-day festival commerce workflow.',
     image: '/projects/onam-festival.png',
-    role: 'Full-Stack Developer & UI/UX Designer',
+    role: 'Full-Stack Developer and UI/UX Designer',
     year: '2025',
-    category: 'Event Management Platform',
-    techStack: ['React 18', 'Express.js', 'MongoDB', 'Node.js', 'Tailwind CSS 3', 'Vite 7', 'Nodemailer'],
+    category: 'Event Commerce Platform',
+    techStack: ['React 18', 'Vite 7', 'React Router', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'Nodemailer', 'express-validator', 'GitHub Actions', 'Netlify', 'Render'],
     liveUrl: 'https://onammitadt.netlify.app',
     githubUrl: 'https://github.com/Gaurav-205/Onam',
     sections: [
       {
         title: 'The Challenge',
-        content: 'Organizing MIT ADT University\'s Onam festival traditionally meant manual registrations, paper forms, and cash-only merchandise sales. This created long queues, tracking nightmares, and limited participation. The festival committee needed a modern solution that could handle hundreds of registrations while making the experience smooth and enjoyable.'
+        content: 'University festival operations can become difficult to manage when event information, merchandise orders, payment coordination, and communication are handled manually. The goal was to create a festive, responsive platform that could present Onam celebration content while supporting backend order workflows.'
       },
       {
         title: 'The Solution',
-        content: 'Built a beautiful, easy-to-use website where students could register for events like the Pookalam competition and Onasadya feast in just a few clicks. Added an online store for festival merchandise with a shopping cart that remembers items even if you close the browser. Automatic email confirmations kept everyone informed, and the responsive design worked perfectly on phones, tablets, and computers.'
+        content: 'I built a full-stack Onam festival portal with cultural landing sections, Sadya information, event highlights, a traditional shopping catalog, backend-powered order handling, email utilities, and safe production controls. The frontend focuses on clear navigation and festive visuals, while the backend supports order creation, retrieval, filtering, status updates, validation, and diagnostics.'
       },
       {
-        title: 'How It Works',
-        content: 'The platform features a step-by-step registration process that guides users through event selection and payment. The shopping cart saves items automatically, so students can browse and buy at their convenience. Email notifications are sent instantly after registration or purchase. The entire system is built to be accessible to everyone, following web accessibility standards, and runs smoothly on cloud servers with automatic backups to protect all registration data.'
+        title: 'Technical Implementation',
+        content: 'The frontend uses React, Vite, React Router, and Tailwind CSS. The backend uses Express.js, MongoDB, Mongoose, Nodemailer, express-validator, CORS controls, rate limiting, request IDs, structured logging, and health diagnostics. I implemented 4 order-management APIs for order creation, lookup, filtering, and status updates with MongoDB persistence and server-side total validation. The checkout flow is feature-flagged for controlled activation.'
       },
       {
-        title: 'Real-World Impact',
-        content: 'Successfully managed 400+ event registrations across multiple Onam celebrations, completely eliminating manual paperwork. The online store generated ₹25,000 in merchandise revenue through 75 transactions. Students rated the experience 4.7 out of 5 stars, and participation increased by 40% compared to previous years. The platform maintained perfect uptime throughout the festival period, ensuring no one missed out on registering or shopping.'
+        title: 'Outcome',
+        content: 'The platform supported a 7-day university festival commerce workflow, processing 105 orders and INR 40K+ in sales. It also introduced production controls such as checkout feature flags, CORS allowlists, rate limiting, request IDs, health diagnostics, and structured logging.'
       }
     ]
   },
   {
     id: 4,
-    slug: 'coming-soon',
-    title: 'Coming Soon',
-    description: 'Working on something exciting! A new project is currently in development. Stay tuned for updates.',
-    image: '/projects/coming-soon.png',
+    slug: 'prank-wizard',
+    title: 'Prank Wizard',
+    description: 'A full-stack prank planning platform with a 4-step persisted workflow, JWT and Google OAuth authentication, password reset, protected routes, admin management, and deployment-ready engineering.',
+    image: '/projects/prank-wizard.png',
     role: 'Full-Stack Developer',
-    year: '2025',
-    category: 'In Development',
-    techStack: ['React', 'Node.js', 'TypeScript'],
+    year: '2026',
+    category: 'Full-Stack Web Application',
+    techStack: ['Next.js 16', 'React 19', 'TypeScript', 'Express.js', 'MongoDB', 'JWT', 'Passport.js', 'Google OAuth', 'Tailwind CSS v4', 'Three.js', 'GSAP', 'Docker', 'GitHub Actions'],
+    liveUrl: 'https://prankwizard.netlify.app',
+    githubUrl: 'https://github.com/Gaurav-205/LetsSpiceUp',
     sections: [
       {
-        title: 'In Development',
-        content: 'This project is currently under development. Check back soon for updates on this exciting new addition to the portfolio!'
+        title: 'The Challenge',
+        content: 'The project needed to turn a playful idea into a structured product with secure accounts, persistent form progress, protected user flows, admin management, and production-ready deployment. The challenge was to keep the experience fun while still applying serious full-stack engineering practices.'
+      },
+      {
+        title: 'The Solution',
+        content: 'I built a prank planning platform with a 4-step persisted workflow, user registration, login, Google OAuth, password reset, protected routes, user dashboard, profile management, prank history, and an admin dashboard for managing users and prank submissions.'
+      },
+      {
+        title: 'Technical Implementation',
+        content: 'The frontend uses Next.js, React, TypeScript, Tailwind CSS, GSAP, and Three.js. The backend uses Express.js, MongoDB, Mongoose, JWT authentication, Passport.js Google OAuth, bcrypt password hashing, sessions, rate limiting, input sanitization, security headers, CORS configuration, environment validation, health checks, Docker support, and GitHub Actions.'
+      },
+      {
+        title: 'Outcome',
+        content: 'Prank Wizard demonstrates my ability to build a complete full-stack product with authentication, protected routes, persistent workflows, MongoDB-backed admin management, role-based access control, pagination, dashboard statistics, security headers, and deployment configuration.'
       }
     ]
   }
@@ -136,3 +151,30 @@ export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> = 
   alt: project.title,
   slug: project.slug
 }));
+
+// Runtime validation to fail fast if PROJECT_DATA shape changes unexpectedly
+const SectionSchema = z.object({ title: z.string(), content: z.string() });
+
+const ProjectSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  image: z.string(),
+  role: z.string(),
+  year: z.string(),
+  category: z.string(),
+  techStack: z.array(z.string()).optional(),
+  liveUrl: z.string().optional(),
+  githubUrl: z.string().optional(),
+  sections: z.array(SectionSchema).optional(),
+});
+
+const ProjectsArraySchema = z.array(ProjectSchema);
+
+const parsed = ProjectsArraySchema.safeParse(PROJECT_DATA);
+if (!parsed.success) {
+  // Log a helpful error during build/dev and throw to fail fast
+  console.error('PROJECT_DATA validation failed:', parsed.error.format());
+  throw new Error('Invalid PROJECT_DATA shape — see console for details');
+}

@@ -147,6 +147,3 @@ export const analytics = new Analytics();
 
 // Convenience functions
 export const trackPageView = (page: string) => analytics.trackPageView(page);
-export const trackProjectClick = (slug: string, title: string) => analytics.trackProjectClick(slug, title);
-export const trackExternalLink = (url: string, label: string) => analytics.trackExternalLink(url, label);
-export const trackCTAClick = (cta: string, location: string) => analytics.trackCTAClick(cta, location);

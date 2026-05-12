@@ -4,14 +4,14 @@ import { SmoothCursor } from "@/components/ui/SmoothCursor";
 import { ENV } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Gaurav Khandelwal - Full-Stack Developer & Designer",
-  description: "Portfolio of Gaurav Khandelwal from Kota, Rajasthan. B.Tech in Computer Science & Engineering (Product Software Engineering) at MIT ADT University, Pune. Full-Stack Developer and UI/UX Designer passionate about creating innovative solutions.",
-  keywords: ["Full-Stack Developer", "UI/UX Designer", "Portfolio", "Web Development", "React", "Next.js", "TypeScript", "Gaurav Khandelwal", "MIT ADT University", "Pune", "Kota", "Rajasthan"],
+  title: "Gaurav Khandelwal - Full-Stack Developer | MERN Stack | Flutter",
+  description: "Portfolio of Gaurav Khandelwal, a full-stack developer and Computer Science student at MIT ADT University. Built shipped projects across MERN, Flutter, Firebase, real-time chat, REST APIs, CI/CD, cloud deployment, and event commerce.",
+  keywords: ["Gaurav Khandelwal", "Full-Stack Developer", "MERN Stack Developer", "Flutter Developer", "React Developer", "Next.js Developer", "TypeScript", "Node.js", "Express.js", "MongoDB", "Firebase", "Socket.IO", "Portfolio", "MIT ADT University"],
   authors: [{ name: "Gaurav Khandelwal" }],
   metadataBase: new URL(ENV.BASE_URL),
   openGraph: {
-    title: "Gaurav Khandelwal - Full-Stack Developer & Designer",
-    description: "B.Tech student at MIT ADT University, Pune. Portfolio showcasing innovative web applications and design solutions.",
+    title: "Gaurav Khandelwal - Full-Stack Developer | MERN Stack | Flutter",
+    description: "Full-stack developer with shipped projects across MERN, Flutter, Firebase, and cloud deployment. Built a 400+ user campus portal, 58 REST/API endpoints, real-time chat, CI/CD workflows, and an event commerce platform with 105 orders and INR 40K+ sales.",
     type: "website",
     locale: "en_US",
     url: '/',
@@ -21,14 +21,14 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Gaurav Khandelwal - Full-Stack Developer & Designer Portfolio',
+        alt: 'Gaurav Khandelwal - Full-Stack Developer | MERN Stack | Flutter',
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gaurav Khandelwal - Full-Stack Developer & Designer",
-    description: "B.Tech student at MIT ADT University, Pune. Portfolio showcasing innovative web applications and design solutions.",
+    title: "Gaurav Khandelwal - Full-Stack Developer | MERN Stack | Flutter",
+    description: "Full-stack developer with shipped projects across MERN, Flutter, Firebase, and cloud deployment. Built a 400+ user campus portal, 58 REST/API endpoints, real-time chat, CI/CD workflows, and an event commerce platform with 105 orders and INR 40K+ sales.",
     images: ['/og-image.png'],
     creator: '@gaurav_dev',
   },
@@ -51,7 +51,7 @@ export default function RootLayout({
     name: 'Gaurav Khandelwal',
     url: ENV.BASE_URL,
     image: `${ENV.BASE_URL}/og-image.png`,
-    jobTitle: 'Full-Stack Developer & UI/UX Designer',
+    jobTitle: 'Full-Stack Developer | MERN Stack | Flutter',
     worksFor: {
       '@type': 'EducationalOrganization',
       name: 'MIT ADT University',

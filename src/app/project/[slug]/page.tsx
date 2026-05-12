@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from 'next/navigation';
 import { PROJECT_DATA } from '@/lib/constants/projects';
 import ProjectClient from './ProjectClient';
 
@@ -6,6 +7,10 @@ interface ProjectPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateStaticParams() {
+  return PROJECT_DATA.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
@@ -26,6 +31,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   };
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  return <ProjectClient params={params} />;
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const project = PROJECT_DATA.find((p) => p.slug === slug);
+  if (!project) notFound();
+  return <ProjectClient project={project} />;
 }
