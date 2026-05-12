@@ -14,11 +14,6 @@ interface UseGalleryInputResult {
   setAutoPlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-/**
- * Wires up wheel, keyboard, and touch/pinch input for the gallery.
- * Returns the current scroll velocity and autoPlay state so the render
- * loop can consume them without knowing about DOM events.
- */
 export function useGalleryInput({ speed }: UseGalleryInputOptions, canvasRef?: React.RefObject<HTMLCanvasElement | null>): UseGalleryInputResult {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);

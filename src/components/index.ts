@@ -9,10 +9,5 @@ export { default as Tooltip } from './ui/Tooltip';
 export { default as KeyboardHint } from './ui/KeyboardHint';
 export { default as HelpButton } from './ui/HelpButton';
 
-// Gallery — prefer importing from the sub-modules directly
-export { default as GalleryCanvas } from './ui/gallery/GalleryCanvas';
-export { default as GalleryScene } from './ui/gallery/GalleryScene';
-export { default as ImagePlane } from './ui/gallery/ImagePlane';
-export { useGalleryInput } from './ui/gallery/useGalleryInput';
-export { useTextureLoader } from './ui/gallery/useTextureLoader';
-export { createClothMaterial, sharedPlaneGeometry } from './ui/gallery/shaderMaterials';
+// Gallery — exported via feature barrel for gradual migration
+export { GalleryCanvas, GalleryScene, ImagePlane, useGalleryInput, useTextureLoader, createClothMaterial, sharedPlaneGeometry } from '@/features/gallery';

@@ -58,6 +58,7 @@ const GalleryCanvas = memo(
     ...sceneProps
   }: GalleryCanvasProps) => {
     const [webglSupported, setWebglSupported] = useState(true);
+
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
