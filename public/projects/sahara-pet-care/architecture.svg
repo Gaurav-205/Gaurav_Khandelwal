@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 400" width="920" height="400" role="img" aria-label="Sahara architecture: Flutter, Provider, Firebase">
+  <defs><style>.box{fill:#0f172a;stroke:#0ea5e9;stroke-width:2}.txt{fill:#e0f2fe;font:15px system-ui,sans-serif}.cap{fill:#7dd3fc;font:12px system-ui,sans-serif}.arr{fill:none;stroke:#38bdf8;stroke-width:2}</style></defs>
+  <rect width="920" height="400" fill="#020617"/>
+  <text x="460" y="36" text-anchor="middle" class="txt" font-size="18" font-weight="600">Sahara Pet Care  client &amp; backend services</text>
+  <rect class="box" x="60" y="110" width="220" height="200" rx="10"/><text x="170" y="148" text-anchor="middle" class="cap">FLUTTER APP</text><text x="170" y="182" text-anchor="middle" class="txt">Material 3 UI</text><text x="170" y="208" text-anchor="middle" class="txt">Provider state</text><text x="170" y="234" text-anchor="middle" class="txt">Maps · Geolocator</text><text x="170" y="260" text-anchor="middle" class="txt">Local persistence</text>
+  <rect class="box" x="360" y="120" width="160" height="72" rx="8"/><text x="440" y="150" text-anchor="middle" class="cap">AUTH</text><text x="440" y="176" text-anchor="middle" class="txt">Firebase Auth</text>
+  <rect class="box" x="360" y="220" width="160" height="90" rx="8"/><text x="440" y="250" text-anchor="middle" class="cap">DATA</text><text x="440" y="276" text-anchor="middle" class="txt">Cloud Firestore</text>
+  <rect class="box" x="560" y="120" width="160" height="72" rx="8"/><text x="640" y="150" text-anchor="middle" class="cap">PUSH</text><text x="640" y="176" text-anchor="middle" class="txt">FCM</text>
+  <rect class="box" x="560" y="220" width="160" height="90" rx="8"/><text x="640" y="250" text-anchor="middle" class="cap">MEDIA</text><text x="640" y="276" text-anchor="middle" class="txt">Cloudinary</text>
+  <path class="arr" d="M280 200 L360 156"/><path class="arr" d="M280 220 L360 265"/><path class="arr" d="M520 156 L560 156"/><path class="arr" d="M520 265 L560 265"/>
+</svg>

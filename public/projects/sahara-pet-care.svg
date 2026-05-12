@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Sahara Pet Care</title>
+  <desc id="desc">Stylized portfolio card for the Sahara Pet Care Flutter and Firebase app.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="55%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0c4a6e"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="1280" cy="220" r="140" fill="url(#sun)" opacity="0.9"/>
+  <ellipse cx="800" cy="1020" rx="980" ry="420" fill="#0369a1" opacity="0.35"/>
+  <path d="M0 720 Q400 620 800 680 T1600 640 L1600 1000 L0 1000 Z" fill="#0c4a6e" opacity="0.85"/>
+  <g fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" opacity="0.35">
+    <path d="M200 780 Q320 700 440 760"/>
+    <path d="M980 760 Q1120 680 1280 740"/>
+  </g>
+  <g transform="translate(420 320)">
+    <ellipse cx="380" cy="340" rx="220" ry="160" fill="#1e293b" stroke="#f8fafc" stroke-width="4" opacity="0.95"/>
+    <circle cx="320" cy="300" r="18" fill="#f8fafc"/>
+    <circle cx="440" cy="300" r="18" fill="#f8fafc"/>
+    <path d="M340 380 Q380 420 420 380" stroke="#f8fafc" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M260 200 Q380 120 500 200 L460 260 Q380 200 300 260 Z" fill="#334155"/>
+    <ellipse cx="380" cy="240" rx="140" ry="90" fill="#475569"/>
+  </g>
+  <text x="80" y="120" fill="#f8fafc" font-family="system-ui, Segoe UI, sans-serif" font-size="56" font-weight="600">Sahara Pet Care</text>
+  <text x="80" y="190" fill="#94a3b8" font-family="system-ui, Segoe UI, sans-serif" font-size="28">Flutter · Firebase · Maps</text>
+</svg>

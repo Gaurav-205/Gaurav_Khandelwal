@@ -62,7 +62,7 @@ interface AboutContentProps {
 
 export default function AboutContent({ activeSection }: AboutContentProps) {
   // Renders: sidebar nav items (with active/inactive classes driven by activeSection),
-  // section 01 Informations, section 02 Fields of Practice,
+  // section 01 Information, section 02 Fields of Practice,
   // section 03 Socials, section 04 Contact,
   // bottom-left timezone block.
   // No hooks. No framer-motion. No 'use client'.

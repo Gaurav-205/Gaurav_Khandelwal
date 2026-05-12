@@ -7,6 +7,8 @@ interface ProjectContentProps {
 }
 
 export default function ProjectContent({ project }: ProjectContentProps) {
+  const coverIsSvg = project.image.endsWith('.svg');
+
   return (
     <div className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar">
 
@@ -93,15 +95,15 @@ export default function ProjectContent({ project }: ProjectContentProps) {
           </div>
         </section>
 
-        {/* Project image */}
-        <section className="py-20 md:py-32">
+        {/* Cover image */}
+        <section className="py-20 md:py-32" aria-label="Project cover">
           <div className="max-w-6xl mx-auto">
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10">
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10 bg-zinc-950">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
-                className="object-cover"
+                className={coverIsSvg ? 'object-contain p-6 md:p-10' : 'object-cover'}
                 priority
                 sizes="(max-width: 1200px) 100vw, 1200px"
               />
@@ -109,9 +111,84 @@ export default function ProjectContent({ project }: ProjectContentProps) {
           </div>
         </section>
 
-        {/* Content sections */}
+        {/* Architecture */}
+        <section
+          className="py-20 md:py-32"
+          aria-labelledby={`${project.slug}-architecture-heading`}
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="text-white/40 font-montserrat text-sm tracking-widest">A1</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+            </div>
+            <h2
+              id={`${project.slug}-architecture-heading`}
+              className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl mb-4"
+            >
+              {project.architecture.title}
+            </h2>
+            <p className="text-white/75 font-montserrat font-light text-base md:text-lg leading-relaxed max-w-3xl mb-10">
+              {project.architecture.description}
+            </p>
+            <div className="relative w-full overflow-hidden rounded-lg border border-white/10 bg-zinc-950">
+              <div className="relative aspect-[16/9] w-full">
+                <Image
+                  src={project.architecture.diagramSrc}
+                  alt={`${project.title} architecture diagram`}
+                  fill
+                  className="object-contain p-4 md:p-8"
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Screenshot gallery */}
+        <section
+          className="py-20 md:py-32"
+          aria-labelledby={`${project.slug}-gallery-heading`}
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="text-white/40 font-montserrat text-sm tracking-widest">A2</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+            </div>
+            <h2
+              id={`${project.slug}-gallery-heading`}
+              className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl mb-4"
+            >
+              Product gallery
+            </h2>
+            <p className="text-white/60 font-montserrat text-sm md:text-base mb-12 max-w-3xl">
+              Illustrative frames below are placeholders so the layout ships cleanly. Drop in 16:10 PNG or WebP exports from each repo when you have them — paths live in{' '}
+              <code className="text-white/80">src/lib/constants/projectCaseStudy.ts</code>.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12">
+              {project.screenshots.map((shot, i) => (
+                <figure key={shot.src} className="space-y-4">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/10 bg-zinc-950">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      fill
+                      className="object-contain p-3 md:p-5"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      loading={i < 2 ? 'eager' : 'lazy'}
+                    />
+                  </div>
+                  <figcaption className="text-white/80 font-montserrat text-sm leading-relaxed">
+                    {shot.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Narrative sections */}
         {project.sections?.map((section, index) => (
-          <section key={index} className="py-20 md:py-32">
+          <section key={`${index}-${section.title}`} className="py-20 md:py-32">
             <div className="max-w-4xl mx-auto">
               <div className="mb-6 flex items-center gap-4">
                 <span className="text-white/40 font-montserrat text-sm tracking-widest">
@@ -128,6 +205,30 @@ export default function ProjectContent({ project }: ProjectContentProps) {
             </div>
           </section>
         ))}
+
+        {/* What I learned */}
+        <section
+          className="py-20 md:py-32"
+          aria-labelledby={`${project.slug}-learned-heading`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="text-white/40 font-montserrat text-sm tracking-widest">99</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+            </div>
+            <h2
+              id={`${project.slug}-learned-heading`}
+              className="text-white font-montserrat font-normal text-2xl md:text-3xl lg:text-4xl mb-8"
+            >
+              {project.whatILearned.title ?? 'What I learned'}
+            </h2>
+            <ul className="list-disc pl-6 space-y-4 text-white/80 font-montserrat font-light text-base md:text-lg leading-relaxed marker:text-white/40">
+              {project.whatILearned.bullets.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         {/* Divider */}
         <div className="max-w-6xl mx-auto">

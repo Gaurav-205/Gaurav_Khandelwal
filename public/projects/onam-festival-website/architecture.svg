@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 400" width="920" height="400" role="img" aria-label="Onam platform architecture: React SPA and Express API">
+  <defs><style>.box{fill:#1a0a12;stroke:#f472b6;stroke-width:2}.txt{fill:#fce7f3;font:15px system-ui,sans-serif}.cap{fill:#fbcfe8;font:12px system-ui,sans-serif}.arr{fill:none;stroke:#f9a8d4;stroke-width:2}</style></defs>
+  <rect width="920" height="400" fill="#020617"/>
+  <text x="460" y="36" text-anchor="middle" class="txt" font-size="18" font-weight="600">Onam Festival  web &amp; order services</text>
+  <rect class="box" x="70" y="130" width="200" height="100" rx="8"/><text x="170" y="168" text-anchor="middle" class="cap">FRONTEND</text><text x="170" y="198" text-anchor="middle" class="txt">React · Vite · Router</text><text x="170" y="220" text-anchor="middle" class="txt">Tailwind UI</text>
+  <rect class="box" x="360" y="110" width="220" height="140" rx="8"/><text x="470" y="148" text-anchor="middle" class="cap">BACKEND</text><text x="470" y="178" text-anchor="middle" class="txt">Express · REST</text><text x="470" y="202" text-anchor="middle" class="txt">Validators · rate limits</text><text x="470" y="226" text-anchor="middle" class="txt">Nodemailer · flags</text>
+  <rect class="box" x="660" y="130" width="200" height="100" rx="8"/><text x="760" y="168" text-anchor="middle" class="cap">PERSISTENCE</text><text x="760" y="198" text-anchor="middle" class="txt">MongoDB · Mongoose</text><text x="760" y="220" text-anchor="middle" class="txt">Orders &amp; catalog</text>
+  <path class="arr" d="M270 180 L360 180"/><path class="arr" d="M580 180 L660 180"/>
+</svg>

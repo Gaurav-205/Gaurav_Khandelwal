@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 400" width="920" height="400" role="img" aria-label="KampusKart architecture: React SPA, Express API, MongoDB, Socket.IO, Cloudinary">
+  <defs>
+    <style>.box{fill:#0f172a;stroke:#64748b;stroke-width:2}.txt{fill:#e2e8f0;font:15px system-ui,sans-serif}.cap{fill:#94a3b8;font:12px system-ui,sans-serif}.arr{fill:none;stroke:#94a3b8;stroke-width:2}</style>
+  </defs>
+  <rect width="920" height="400" fill="#020617"/>
+  <text x="460" y="36" text-anchor="middle" class="txt" font-size="18" font-weight="600">KampusKart  logical architecture</text>
+  <rect class="box" x="48" y="120" width="170" height="88" rx="8"/><text x="133" y="156" text-anchor="middle" class="cap">CLIENT</text><text x="133" y="186" text-anchor="middle" class="txt">React · Vite · MUI</text>
+  <rect class="box" x="300" y="100" width="200" height="128" rx="8"/><text x="400" y="136" text-anchor="middle" class="cap">API</text><text x="400" y="162" text-anchor="middle" class="txt">Express · JWT</text><text x="400" y="186" text-anchor="middle" class="txt">REST + validation</text><text x="400" y="210" text-anchor="middle" class="txt">Google OAuth</text>
+  <rect class="box" x="580" y="120" width="170" height="88" rx="8"/><text x="665" y="156" text-anchor="middle" class="cap">DATA</text><text x="665" y="186" text-anchor="middle" class="txt">MongoDB · Mongoose</text>
+  <rect class="box" x="300" y="260" width="200" height="88" rx="8"/><text x="400" y="296" text-anchor="middle" class="cap">REALTIME</text><text x="400" y="326" text-anchor="middle" class="txt">Socket.IO · chat rooms</text>
+  <rect class="box" x="580" y="260" width="170" height="88" rx="8"/><text x="665" y="296" text-anchor="middle" class="cap">MEDIA</text><text x="665" y="326" text-anchor="middle" class="txt">Cloudinary uploads</text>
+  <path class="arr" d="M218 164 L300 164"/>
+  <path class="arr" d="M500 164 L580 164"/>
+  <path class="arr" d="M400 228 L400 260"/>
+  <path class="arr" d="M500 304 L580 304"/>
+</svg>

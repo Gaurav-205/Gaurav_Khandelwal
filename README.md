@@ -35,14 +35,19 @@ A modern, high-performance portfolio website built with Next.js 16, React 19, an
 # Install dependencies
 npm install
 
-# Run development server
+# Development server
 npm run dev
 
-# Build for production
-npm run build
+# Unit tests (Vitest)
+npm run test
 
-# Start production server
+# Production build and local preview
+npm run build
 npm start
+
+# E2E smoke tests (Playwright; uses production server — run after build)
+npm run build
+npm run test:e2e
 ```
 
 ## Environment Variables
@@ -57,14 +62,14 @@ NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 
 ```
 src/
-├── app/              # Next.js app directory
-│   ├── about/        # About page
-│   ├── projects/     # Projects listing
-│   └── project/      # Individual project pages
-├── components/       # React components
-│   └── ui/          # UI components
-└── lib/             # Utilities and constants
+├── app/                 # Next.js App Router (routes, API, metadata)
+├── features/            # Route-scoped UI: about, projects, project, gallery
+├── components/          # Shared components (Hero, Navigation, forms, ui/)
+├── shared/              # Cross-cutting barrels (lib, ui)
+└── lib/                 # env, analytics, utils, constants
+e2e/                     # Playwright smoke tests
 ```
+
 
 ## Deployment
 

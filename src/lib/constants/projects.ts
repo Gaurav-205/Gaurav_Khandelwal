@@ -1,8 +1,26 @@
 // Project data — Gaurav Khandelwal
 import { z } from 'zod';
+import { PROJECT_CASE_STUDY, type ProjectCaseStudySlug } from './projectCaseStudy';
 
 // ProjectData runtime schema and exported type
 const SectionSchema = z.object({ title: z.string(), content: z.string() });
+
+const ScreenshotSchema = z.object({
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string(),
+});
+
+const ArchitectureSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  diagramSrc: z.string(),
+});
+
+const WhatILearnedSchema = z.object({
+  title: z.string().optional(),
+  bullets: z.array(z.string()).min(1),
+});
 
 const ProjectSchema = z.object({
   id: z.number(),
@@ -17,11 +35,14 @@ const ProjectSchema = z.object({
   liveUrl: z.string().optional(),
   githubUrl: z.string().optional(),
   sections: z.array(SectionSchema).optional(),
+  architecture: ArchitectureSchema,
+  screenshots: z.array(ScreenshotSchema).min(3).max(8),
+  whatILearned: WhatILearnedSchema,
 });
 
 export type ProjectData = z.infer<typeof ProjectSchema>;
 
-export const PROJECT_DATA: ProjectData[] = [
+const PROJECT_DATA_BASE: Array<Omit<ProjectData, 'architecture' | 'screenshots' | 'whatILearned'>> = [
   {
     id: 1,
     slug: 'kampus-kart',
@@ -58,7 +79,7 @@ export const PROJECT_DATA: ProjectData[] = [
     slug: 'sahara-pet-care',
     title: 'Sahara Pet Care',
     description: 'A Flutter and Firebase pet care app for caregiver discovery, service booking, pet profiles, adoption, shopping, orders, chat, live tracking, notifications, and cross-platform deployment.',
-    image: '/projects/coming-soon.png',
+    image: '/projects/sahara-pet-care.svg',
     role: 'Flutter Developer',
     year: '2026',
     category: 'Cross-Platform Pet Care App',
@@ -147,6 +168,18 @@ export const PROJECT_DATA: ProjectData[] = [
   }
 ];
 
+function mergeCaseStudy(
+  row: Omit<ProjectData, 'architecture' | 'screenshots' | 'whatILearned'>,
+): ProjectData {
+  const extra = PROJECT_CASE_STUDY[row.slug as ProjectCaseStudySlug];
+  if (!extra) {
+    throw new Error(`Missing PROJECT_CASE_STUDY entry for slug: ${row.slug}`);
+  }
+  return { ...row, ...extra };
+}
+
+export const PROJECT_DATA: ProjectData[] = PROJECT_DATA_BASE.map(mergeCaseStudy);
+
 // Extract images for the 3D gallery
 export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> = PROJECT_DATA.map(project => ({
   src: project.image,
@@ -155,7 +188,25 @@ export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> = 
 }));
 
 // Runtime validation to fail fast if PROJECT_DATA shape changes unexpectedly
-const ProjectsArraySchema = z.array(ProjectSchema);
+const ProjectsArraySchema = z.array(ProjectSchema).superRefine((items, ctx) => {
+  const slugToIndexes = new Map<string, number[]>();
+  items.forEach((p, i) => {
+    const arr = slugToIndexes.get(p.slug) ?? [];
+    arr.push(i);
+    slugToIndexes.set(p.slug, arr);
+  });
+  slugToIndexes.forEach((indexes, slug) => {
+    if (indexes.length > 1) {
+      for (const i of indexes) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Duplicate project slug: ${slug}`,
+          path: [i, 'slug'],
+        });
+      }
+    }
+  });
+});
 
 const parsed = ProjectsArraySchema.safeParse(PROJECT_DATA);
 if (!parsed.success) {

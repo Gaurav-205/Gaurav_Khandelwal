@@ -60,6 +60,17 @@ describe('Property 3 — ProjectContent: renders all fields for any project', ()
           });
         });
       }
+
+      it('renders architecture, gallery, and what I learned', () => {
+        const { getByRole, getByText } = render(<ProjectContent project={project} />);
+        expect(getByRole('heading', { name: project.architecture.title })).toBeTruthy();
+        expect(getByRole('heading', { name: 'Product gallery' })).toBeTruthy();
+        expect(
+          getByRole('heading', { name: project.whatILearned.title ?? 'What I learned' }),
+        ).toBeTruthy();
+        expect(getByText(project.screenshots[0]!.caption)).toBeTruthy();
+        expect(getByText(project.whatILearned.bullets[0]!)).toBeTruthy();
+      });
     });
   });
 });

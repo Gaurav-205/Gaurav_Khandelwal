@@ -70,8 +70,16 @@ const Navigation = memo(() => {
           GK
         </Link>
         {/* Profession line - visible on mobile below name, hidden on desktop */}
-        <div className="block md:hidden text-xs text-white/80 mt-1">
-          Full-Stack Developer
+        <div className="block md:hidden text-xs text-white/80 mt-1 space-y-1">
+          <div>Full-Stack Developer</div>
+          <a
+            href="/resume.pdf"
+            download="Gaurav_Khandelwal_resume.pdf"
+            className="inline-block text-white/90 underline underline-offset-2 hover:text-white"
+            aria-label="Download resume PDF"
+          >
+            Download résumé
+          </a>
         </div>
       </motion.div>
 
@@ -158,6 +166,16 @@ const Navigation = memo(() => {
             aria-label="Visit Gaurav's LinkedIn profile (opens in new tab)"
           >
             LinkedIn
+          </a>
+        </Tooltip>
+        <Tooltip content="Download resume (PDF)" position="left">
+          <a
+            href="/resume.pdf"
+            download="Gaurav_Khandelwal_resume.pdf"
+            className={linkClasses}
+            aria-label="Download resume as PDF"
+          >
+            Résumé
           </a>
         </Tooltip>
       </motion.div>
