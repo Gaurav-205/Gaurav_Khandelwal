@@ -1,23 +1,25 @@
 // Project data — Gaurav Khandelwal
 import { z } from 'zod';
 
-export interface ProjectData {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  image: string;
-  role: string;
-  year: string;
-  category: string;
-  techStack?: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  sections?: Array<{
-    title: string;
-    content: string;
-  }>;
-}
+// ProjectData runtime schema and exported type
+const SectionSchema = z.object({ title: z.string(), content: z.string() });
+
+const ProjectSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  image: z.string(),
+  role: z.string(),
+  year: z.string(),
+  category: z.string(),
+  techStack: z.array(z.string()).optional(),
+  liveUrl: z.string().optional(),
+  githubUrl: z.string().optional(),
+  sections: z.array(SectionSchema).optional(),
+});
+
+export type ProjectData = z.infer<typeof ProjectSchema>;
 
 export const PROJECT_DATA: ProjectData[] = [
   {
@@ -153,23 +155,6 @@ export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> = 
 }));
 
 // Runtime validation to fail fast if PROJECT_DATA shape changes unexpectedly
-const SectionSchema = z.object({ title: z.string(), content: z.string() });
-
-const ProjectSchema = z.object({
-  id: z.number(),
-  slug: z.string(),
-  title: z.string(),
-  description: z.string(),
-  image: z.string(),
-  role: z.string(),
-  year: z.string(),
-  category: z.string(),
-  techStack: z.array(z.string()).optional(),
-  liveUrl: z.string().optional(),
-  githubUrl: z.string().optional(),
-  sections: z.array(SectionSchema).optional(),
-});
-
 const ProjectsArraySchema = z.array(ProjectSchema);
 
 const parsed = ProjectsArraySchema.safeParse(PROJECT_DATA);

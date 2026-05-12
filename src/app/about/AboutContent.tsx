@@ -1,5 +1,6 @@
-import { getGmailComposeUrl } from '@/lib/utils';
+import { /*getGmailComposeUrl*/ } from '@/lib/utils';
 import { ABOUT_NAV_ITEMS, ABOUT_SECTION_LABELS } from '@/lib/constants';
+import ContactForm from '@/components/ContactForm';
 
 interface AboutContentProps {
   activeSection: 'informations' | 'fields' | 'socials' | 'contact' | string;
@@ -170,38 +171,34 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
             </div>
 
             <div className="space-y-8 md:space-y-10">
-              <a
-                href={getGmailComposeUrl('gauravkhandelwal205@gmail.com', 'Hello Gaurav')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-white font-montserrat font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-tight hover:text-white/70 transition-colors"
-              >
-                gauravkhandelwal205@gmail.com
-              </a>
-
               <p className="text-white font-montserrat font-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl">
                 I am available for internships, freelance projects, and collaborative opportunities in
                 full-stack development, Flutter development, frontend engineering, and UI/UX-focused
-                product work.
+                product work. You can also download my resume below or use the contact form to send a message directly.
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-wrap gap-4 pt-4 items-center">
                 <a
-                  href={getGmailComposeUrl('gauravkhandelwal205@gmail.com', 'Internship Opportunity')}
+                  href="/resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-3 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
+                  className="px-6 py-2 bg-white text-black font-montserrat text-sm tracking-wide hover:bg-white/90 transition-colors duration-300 rounded-full"
                 >
-                  Send Email →
+                  Download Resume
                 </a>
                 <a
                   href="https://linkedin.com/in/gaurav-khandelwal-17a127358"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-3 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
+                  className="px-6 py-2 border border-white/20 text-white font-montserrat text-sm tracking-wide hover:bg-white/5 transition-colors duration-300 rounded-full"
                 >
-                  Connect on LinkedIn
+                  LinkedIn
                 </a>
+              </div>
+
+              <div className="pt-8">
+                <h3 className="text-white font-montserrat text-xl mb-4">Contact</h3>
+                <ContactForm />
               </div>
             </div>
           </div>
