@@ -62,7 +62,7 @@ const GalleryFallback = memo(
                   className="group w-full rounded-lg border border-white/10 bg-zinc-900/60 text-left overflow-hidden transition-colors hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
                   aria-label={`View project: ${img.alt}`}
                 >
-                  <CardInner img={img} />
+                  <CardInner img={img} clickable />
                 </button>
               ) : (
                 <div className="w-full rounded-lg border border-white/10 bg-zinc-900/60 overflow-hidden">
@@ -80,7 +80,7 @@ const GalleryFallback = memo(
 GalleryFallback.displayName = 'GalleryFallback';
 
 /** Inner card content — shared between the clickable and non-clickable variants. */
-function CardInner({ img }: { img: NormalizedImage }) {
+function CardInner({ img, clickable = false }: { img: NormalizedImage; clickable?: boolean }) {
   return (
     <>
       <div className="relative aspect-[16/10] w-full">
@@ -88,11 +88,11 @@ function CardInner({ img }: { img: NormalizedImage }) {
           src={img.src || '/projects/coming-soon.png'}
           alt={img.alt || 'Project image'}
           fill
-          className="object-cover group-hover:brightness-110 transition-[filter] duration-300"
+          className={`object-cover transition-[filter] duration-300${clickable ? ' group-hover:brightness-110' : ''}`}
           sizes="(max-width: 640px) 100vw, 50vw"
         />
       </div>
-      <p className="px-4 py-3 font-montserrat text-sm text-white/80 group-hover:text-white transition-colors">
+      <p className={`px-4 py-3 font-montserrat text-sm transition-colors${clickable ? ' text-white/80 group-hover:text-white' : ' text-white/80'}`}>
         {img.alt}
       </p>
     </>

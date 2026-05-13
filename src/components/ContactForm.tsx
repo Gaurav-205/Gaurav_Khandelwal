@@ -3,24 +3,17 @@
 /**
  * ContactForm — client component.
  *
- * Submits to POST /api/contact. The API currently returns { ok: true } without
- * sending a real notification (see src/app/api/contact/route.ts for the TODO).
+ * Submits to POST /api/contact. The API dispatches via Resend when
+ * RESEND_API_KEY is set in the environment, and falls back to a no-op
+ * (dev logging only) otherwise.
  *
- * Until the API is wired to a real provider (Resend, SendGrid, Nodemailer, etc.),
- * the success state shows a note directing the user to email directly so no
- * leads are silently lost.
+ * Set NEXT_PUBLIC_CONTACT_API_LIVE=true in Vercel once the provider is
+ * configured — this controls the success message shown to users.
  */
 
 import { useState } from 'react';
-import { z } from 'zod';
+import { ContactSchema } from '@/server/contact/contactSchema';
 import { getGmailComposeUrl } from '@/lib/utils';
-
-const ContactSchema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email().max(254),
-  message: z.string().min(5).max(2000),
-  honeypot: z.string().optional(),
-});
 
 const GMAIL_URL = getGmailComposeUrl(
   'gauravkhandelwal205@gmail.com',
