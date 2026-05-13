@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { trackPageView } from '@/lib/analytics';
+import { throttle } from '@/lib/utils';
 
 /**
  * Client island — owns only the behaviours that require the browser:
@@ -36,7 +37,7 @@ export default function AboutInteractions({
 
     const SECTIONS = ['informations', 'fields', 'socials', 'contact'];
 
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       const mid = window.scrollY + window.innerHeight / 2;
       for (const id of SECTIONS) {
         const el = document.getElementById(id);
@@ -45,7 +46,7 @@ export default function AboutInteractions({
           break;
         }
       }
-    };
+    }, 100);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') router.push('/');

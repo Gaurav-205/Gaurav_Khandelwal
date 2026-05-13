@@ -1,149 +1,75 @@
-// Privacy-friendly analytics utility
-// Tracks user interactions without collecting personal data
+/**
+ * src/lib/analytics.ts — interaction tracking.
+ *
+ * What this does:
+ *   Tracks page views and interaction events. In production it forwards events
+ *   to Vercel Web Analytics (https://vercel.com/docs/analytics) via the
+ *   `window.va` function that Vercel injects when Analytics is enabled in the
+ *   project dashboard. No personal data is collected; Vercel Analytics is
+ *   privacy-friendly and GDPR-compliant by default.
+ *
+ * What this does NOT do:
+ *   - It does not store events in localStorage.
+ *   - It does not send data to any third-party service other than Vercel.
+ *   - It does not set cookies or fingerprint users.
+ *
+ * Local development:
+ *   `window.va` is not injected locally, so all calls are no-ops in dev.
+ *   Events are logged to the console in development so you can verify
+ *   instrumentation without needing a live Vercel deployment.
+ *
+ * To enable in production:
+ *   1. Go to your Vercel project → Analytics tab → Enable.
+ *   2. Deploy. Vercel injects the `va` script automatically.
+ *   No code changes are needed.
+ *
+ * To swap for a different provider (e.g. Plausible, Fathom):
+ *   Replace the `sendEvent` function below. The rest of the module is
+ *   provider-agnostic.
+ */
 
-interface AnalyticsEvent {
-  event: string;
-  timestamp: number;
-  data?: Record<string, string | number>;
-}
-
-class Analytics {
-  private events: AnalyticsEvent[] = [];
-  private readonly MAX_EVENTS = 100;
-  private readonly STORAGE_KEY = 'portfolio_analytics';
-
-  constructor() {
-    if (typeof window !== 'undefined') {
-      this.loadEvents();
-    }
-  }
-
-  private loadEvents(): void {
-    try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
-      if (stored) {
-        this.events = JSON.parse(stored);
-      }
-    } catch (error) {
-      // Silent fail - analytics is not critical
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to load analytics:', error);
-      }
-    }
-  }
-
-  private saveEvents(): void {
-    try {
-      // Keep only the most recent events
-      if (this.events.length > this.MAX_EVENTS) {
-        this.events = this.events.slice(-this.MAX_EVENTS);
-      }
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.events));
-    } catch (error) {
-      // Silent fail - analytics is not critical
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to save analytics:', error);
-      }
-    }
-  }
-
-  track(event: string, data?: Record<string, string | number>): void {
-    if (typeof window === 'undefined') return;
-
-    try {
-      const analyticsEvent: AnalyticsEvent = {
-        event,
-        timestamp: Date.now(),
-        data,
-      };
-
-      this.events.push(analyticsEvent);
-      this.saveEvents();
-
-      // Log in development only
-      if (process.env.NODE_ENV === 'development') {
-        console.log('📊 Analytics:', event, data);
-      }
-    } catch (error) {
-      // Silent fail - analytics is not critical
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to track analytics event:', error);
-      }
-    }
-  }
-
-  // Track page views
-  trackPageView(page: string): void {
-    this.track('page_view', { page });
-  }
-
-  // Track project clicks
-  trackProjectClick(projectSlug: string, projectTitle: string): void {
-    this.track('project_click', { 
-      slug: projectSlug, 
-      title: projectTitle 
-    });
-  }
-
-  // Track external link clicks
-  trackExternalLink(url: string, label: string): void {
-    this.track('external_link', { url, label });
-  }
-
-  // Track CTA clicks
-  trackCTAClick(cta: string, location: string): void {
-    this.track('cta_click', { cta, location });
-  }
-
-  // Get analytics summary
-  getSummary(): {
-    totalEvents: number;
-    pageViews: number;
-    projectClicks: number;
-    externalLinks: number;
-    ctaClicks: number;
-    topProjects: Array<{ slug: string; count: number }>;
-  } {
-    const pageViews = this.events.filter(e => e.event === 'page_view').length;
-    const projectClicks = this.events.filter(e => e.event === 'project_click').length;
-    const externalLinks = this.events.filter(e => e.event === 'external_link').length;
-    const ctaClicks = this.events.filter(e => e.event === 'cta_click').length;
-
-    // Calculate top projects
-    const projectCounts: Record<string, number> = {};
-    this.events
-      .filter(e => e.event === 'project_click' && e.data?.slug)
-      .forEach(e => {
-        const slug = e.data!.slug as string;
-        projectCounts[slug] = (projectCounts[slug] || 0) + 1;
-      });
-
-    const topProjects = Object.entries(projectCounts)
-      .map(([slug, count]) => ({ slug, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-
-    return {
-      totalEvents: this.events.length,
-      pageViews,
-      projectClicks,
-      externalLinks,
-      ctaClicks,
-      topProjects,
-    };
-  }
-
-  // Clear all analytics data
-  clear(): void {
-    this.events = [];
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem(this.STORAGE_KEY);
-    }
+declare global {
+  interface Window {
+    /** Injected by Vercel Analytics when enabled in the project dashboard. */
+    va?: (command: 'event', name: string, properties?: Record<string, string>) => void;
   }
 }
 
-// Export singleton instance
-export const analytics = new Analytics();
+const IS_DEV = process.env.NODE_ENV === 'development';
 
-// Convenience functions
-export const trackPageView = (page: string) => analytics.trackPageView(page);
+/**
+ * Low-level send. Calls `window.va` if available; logs to console in dev.
+ * Safe to call on the server — the `typeof window` guard prevents SSR errors.
+ */
+function sendEvent(name: string, properties?: Record<string, string>): void {
+  if (typeof window === 'undefined') return;
+
+  if (IS_DEV) {
+    console.log('[analytics]', name, properties ?? '');
+    return;
+  }
+
+  window.va?.('event', name, properties);
+}
+
+// ── Public API ───────────────────────────────────────────────────────────────
+
+/** Track a page view. Call once per route change. */
+export function trackPageView(page: string): void {
+  sendEvent('page_view', { page });
+}
+
+/** Track a click on a project card or detail page. */
+export function trackProjectClick(slug: string, title: string): void {
+  sendEvent('project_click', { slug, title });
+}
+
+/** Track a click on an external link (GitHub, LinkedIn, live site). */
+export function trackExternalLink(url: string, label: string): void {
+  sendEvent('external_link', { url, label });
+}
+
+/** Track a click on a call-to-action button (Get in touch, Send Email, etc.). */
+export function trackCTAClick(cta: string, location: string): void {
+  sendEvent('cta_click', { cta, location });
+}

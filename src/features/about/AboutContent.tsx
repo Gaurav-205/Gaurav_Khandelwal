@@ -1,4 +1,3 @@
-import { /*getGmailComposeUrl*/ } from '@/lib/utils';
 import { ABOUT_NAV_ITEMS, ABOUT_SECTION_LABELS } from '@/lib/constants';
 import ContactForm from '@/components/ContactForm';
 
