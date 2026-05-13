@@ -1,15 +1,14 @@
 import ContactForm from '@/components/ContactForm';
 
 interface AboutContentProps {
-  activeSection: 'informations' | 'fields' | 'socials' | 'contact' | string;
+  /** Passed by AboutClient shell. Reserved for future use (e.g. scroll-linked section highlighting). */
+  activeSection?: 'informations' | 'fields' | 'socials' | 'contact' | string;
 }
 
 /**
  * AboutContent — React Server Component.
  *
- * Renders all static markup for the About page. Receives `activeSection` as a
- * prop so the sidebar nav can reflect the current scroll position without any
- * client state in the content tree.
+ * Renders all static markup for the About page.
  *
  * No 'use client' directive. No React hooks. No framer-motion.
  *
@@ -18,7 +17,7 @@ interface AboutContentProps {
  * onClick handlers and the activeSection-driven active class. Rendering it here
  * too would produce a duplicate sidebar in the top-left corner.
  */
-export default function AboutContent({ activeSection }: AboutContentProps) {
+export default function AboutContent({ activeSection: _activeSection }: AboutContentProps) {
   return (
     <div
       className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar"
@@ -31,7 +30,7 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
         <section id="informations" className="py-20 md:py-32 px-4 md:px-6">
           <div className="max-w-4xl w-full mx-auto">
             <div className="mb-8 md:mb-12 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-xs tracking-widest">01</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-xs tracking-widest">01</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
               <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">Information</p>
             </div>
@@ -68,7 +67,7 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
         <section id="fields" className="py-20 md:py-32 px-4 md:px-6">
           <div className="max-w-4xl w-full mx-auto">
             <div className="mb-8 md:mb-12 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-xs tracking-widest">02</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-xs tracking-widest">02</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
               <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">Fields of Practice</p>
             </div>
@@ -111,7 +110,7 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
         <section id="socials" className="py-20 md:py-32 px-4 md:px-6">
           <div className="max-w-4xl w-full mx-auto">
             <div className="mb-8 md:mb-12 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-xs tracking-widest">03</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-xs tracking-widest">03</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
               <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">Socials</p>
             </div>
@@ -144,7 +143,7 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
         <section id="contact" className="py-20 md:py-32 px-4 md:px-6">
           <div className="max-w-4xl w-full mx-auto">
             <div className="mb-8 md:mb-12 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-xs tracking-widest">04</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-xs tracking-widest">04</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
               <p className="text-white/60 font-montserrat text-xs md:text-sm tracking-wide">Contact</p>
             </div>

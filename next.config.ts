@@ -45,9 +45,13 @@ const nextConfig: NextConfig = {
       { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
-      { key: 'X-XSS-Protection', value: '1; mode=block' },
+      // X-XSS-Protection is obsolete — modern browsers ignore or disable it.
+      // Rely on CSP, framework output escaping, and input validation instead.
       { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
       { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+      // CSP note: 'unsafe-inline' is required by Next.js for inline JSON-LD structured data
+      // and by Tailwind for style attributes. A nonce-based CSP would remove this requirement
+      // but needs Next.js middleware support. Track: https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy
       { key: 'Content-Security-Policy', value: contentSecurityPolicy() },
     ];
 

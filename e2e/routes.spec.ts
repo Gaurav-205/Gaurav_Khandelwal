@@ -33,11 +33,11 @@ test.describe('Home', () => {
 test.describe('Projects page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/projects');
-    await expect(page.getByRole('heading', { name: /Selected Works/i })).toBeVisible({ timeout: 60_000 });
+    await expect(page.getByRole('heading', { name: /Selected Projects/i })).toBeVisible({ timeout: 60_000 });
   });
 
-  test('shows the Selected Works heading', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /Selected Works/i })).toBeVisible();
+  test('shows the Selected Projects heading', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /Selected Projects/i })).toBeVisible();
   });
 
   test('shows every project title', async ({ page }) => {

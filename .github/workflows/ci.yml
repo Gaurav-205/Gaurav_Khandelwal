@@ -32,12 +32,38 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_URL: http://localhost:3000
 
+      # Audit level is set to "high" intentionally.
+      # There are 2 moderate advisories through Next.js/PostCSS (as of 2026-05).
+      # Do NOT run `npm audit fix --force` — it suggests a breaking Next.js downgrade.
+      # Track: https://github.com/advisories and upgrade Next.js when a patched
+      # stable version is available in the ^16 channel.
       - name: Audit (high and above only)
         run: npm audit --audit-level=high
 
-      - name: Install Playwright browser
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Start production server
+        run: npm start &
+        env:
+          PORT: 3000
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 --timeout 30000
+
       - name: E2E smoke
-        run: npm run test:e2e
+        run: npm run test:e2e:smoke
+
+      - name: E2E accessibility (axe)
+        run: npm run test:e2e:a11y
+
+      - name: Upload Playwright traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

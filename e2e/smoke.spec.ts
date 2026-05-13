@@ -8,7 +8,7 @@ test.describe('Smoke', () => {
 
   test('projects page shows heading', async ({ page }) => {
     await page.goto('/projects');
-    await expect(page.getByRole('heading', { name: /Selected Works/i })).toBeVisible({
+    await expect(page.getByRole('heading', { name: /Selected Projects/i })).toBeVisible({
       timeout: 60_000,
     });
   });

@@ -27,10 +27,11 @@ test.describe('Gallery fallback — WebGL disabled', () => {
     // Override getContext before any scripts run so checkWebGLSupport() returns false
     await page.addInitScript(() => {
       const original = HTMLCanvasElement.prototype.getContext;
-      HTMLCanvasElement.prototype.getContext = function (type: string, ...args: unknown[]) {
+      // Cast needed: this override runs in the browser via addInitScript,
+      // outside TypeScript's strict DOM overload signatures.
+      (HTMLCanvasElement.prototype as any).getContext = function (type: string, ...args: unknown[]) {
         if (type === 'webgl' || type === 'experimental-webgl') return null;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (original as any).call(this, type, ...args);
+        return (original as any).apply(this, [type, ...args]);
       };
     });
     await page.goto('/');

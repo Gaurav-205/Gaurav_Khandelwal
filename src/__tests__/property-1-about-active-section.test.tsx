@@ -38,13 +38,6 @@ vi.mock('@/components/ContactForm', () => ({
 
 const NAV_IDS = ['informations', 'fields', 'socials', 'contact'] as const;
 
-const SECTION_LABELS = {
-  informations: 'Information',
-  fields: 'Fields of Practice',
-  socials: 'Socials',
-  contact: 'Contact',
-} as const;
-
 describe('Property 1 — AboutContent: renders all sections for any activeSection', () => {
   NAV_IDS.forEach((activeId) => {
     it(`renders without error when activeSection="${activeId}"`, () => {

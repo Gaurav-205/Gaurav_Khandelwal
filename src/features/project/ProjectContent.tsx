@@ -119,7 +119,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
         >
           <div className="max-w-6xl mx-auto">
             <div className="mb-6 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-sm tracking-widest">A1</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-sm tracking-widest">A1</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
             </div>
             <h2
@@ -152,7 +152,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
         >
           <div className="max-w-6xl mx-auto">
             <div className="mb-6 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-sm tracking-widest">A2</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-sm tracking-widest">A2</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
             </div>
             <h2
@@ -192,7 +192,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
           <section key={`${index}-${section.title}`} className="py-20 md:py-32">
             <div className="max-w-4xl mx-auto">
               <div className="mb-6 flex items-center gap-4">
-                <span className="text-white/40 font-montserrat text-sm tracking-widest">
+                <span aria-hidden="true" className="text-white/40 font-montserrat text-sm tracking-widest">
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
@@ -214,7 +214,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
         >
           <div className="max-w-4xl mx-auto">
             <div className="mb-6 flex items-center gap-4">
-              <span className="text-white/40 font-montserrat text-sm tracking-widest">99</span>
+              <span aria-hidden="true" className="text-white/40 font-montserrat text-sm tracking-widest">99</span>
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
             </div>
             <h2
@@ -247,7 +247,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                 >
                   <span className="text-2xl group-hover:-translate-x-1 transition-transform duration-300">←</span>
                   <div>
-                    <div className="text-white/40 text-xs mb-1">PREVIOUS</div>
+                    <div className="text-white/60 text-xs mb-1">PREVIOUS</div>
                     <div>{prev.title}</div>
                   </div>
                 </Link>
@@ -261,7 +261,7 @@ export default function ProjectContent({ project }: ProjectContentProps) {
                   className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide text-right"
                 >
                   <div>
-                    <div className="text-white/40 text-xs mb-1">NEXT</div>
+                    <div className="text-white/60 text-xs mb-1">NEXT</div>
                     <div>{next.title}</div>
                   </div>
                   <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>

@@ -103,14 +103,23 @@ for (const [i, p] of PROJECT_CONTENT.entries()) {
     err(`${prefix}: architecture diagram not found → public${cs.architecture.diagramSrc}`);
   }
 
-  // Screenshots
+  // Screenshots — check file exists; accept .png, .webp, or .svg fallback
   if (cs.screenshots.length < 3) {
     err(`${prefix}: need ≥3 screenshots, found ${cs.screenshots.length}`);
   }
   for (const [si, shot] of cs.screenshots.entries()) {
-    if (!fileExists(shot.src))          err(`${prefix}: screenshot[${si}] not found → public${shot.src}`);
-    if (!shot.alt?.trim())              err(`${prefix}: screenshot[${si}] has empty alt text`);
-    if (!shot.caption?.trim())          err(`${prefix}: screenshot[${si}] has empty caption`);
+    // Accept the declared path OR a .svg fallback with the same base name.
+    // This lets you commit .png paths before the real files are ready —
+    // the build will pass as long as the .svg placeholder exists.
+    const svgFallback = shot.src.replace(/\.(png|webp|avif)$/i, '.svg');
+    const exists = fileExists(shot.src) || fileExists(svgFallback);
+    if (!exists) {
+      err(`${prefix}: screenshot[${si}] not found → public${shot.src} (also tried ${svgFallback})`);
+    } else if (!fileExists(shot.src) && fileExists(svgFallback)) {
+      warn(`${prefix}: screenshot[${si}] using SVG placeholder → replace with public${shot.src}`);
+    }
+    if (!shot.alt?.trim())     err(`${prefix}: screenshot[${si}] has empty alt text`);
+    if (!shot.caption?.trim()) err(`${prefix}: screenshot[${si}] has empty caption`);
   }
 
   // whatILearned

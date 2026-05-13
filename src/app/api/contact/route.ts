@@ -1,77 +1,67 @@
 /**
  * POST /api/contact
  *
- * Validates the contact form submission and forwards it to a notification
- * pipeline. Until a real provider is wired (see TODO below), the route
- * returns { ok: true } without logging personal data.
+ * Pipeline:
+ *   1. Parse JSON body
+ *   2. Validate with Zod (ContactSchema)
+ *   3. Silently discard honeypot submissions
+ *   4. Rate-limit by IP (3 req / 10 min via Upstash — skipped if not configured)
+ *   5. Dispatch via contactService (Resend in prod, no-op in dev)
+ *   6. Return { ok: true } or a generic error
  *
- * Security notes:
- *   - Honeypot field silently discards bot submissions.
- *   - Full message payloads are NOT logged in production to avoid collecting
- *     personal data in server logs.
- *   - TODO: Add rate limiting (e.g. Upstash Redis + @upstash/ratelimit) to
- *     prevent spam. One approach: 3 requests per IP per 10 minutes.
- *   - TODO: Add origin check (Referer / Origin header) if CSRF becomes a concern.
- *
- * TODO — wire one real delivery path before going live:
- *   Option A: Resend   → import { Resend } from 'resend'; resend.emails.send(...)
- *   Option B: SendGrid → @sendgrid/mail
- *   Option C: Nodemailer + SMTP (Gmail app password or Mailgun SMTP)
- *   Option D: Netlify Forms (no server code needed — add data-netlify="true" to the form)
- *   Option E: GitHub issue webhook (personal CRM via GitHub API)
+ * Security:
+ *   - No personal data is logged in production
+ *   - Generic error responses avoid leaking internal details
+ *   - Rate limiting prevents spam (requires Upstash env vars — see rateLimiter.ts)
+ *   - Honeypot silently accepts bot submissions so bots don't know they were blocked
  */
 
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from 'next/server';
+import { ContactSchema } from '@/server/contact/contactSchema';
+import { sendContactMessage } from '@/server/contact/contactService';
+import { checkRateLimit } from '@/server/contact/rateLimiter';
 
-const ContactSchema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email().max(254),
-  message: z.string().min(5).max(2000),
-  honeypot: z.string().optional(),
-});
-
-const IS_PROD = process.env.NODE_ENV === 'production';
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const parsed = ContactSchema.safeParse(body);
+    // ── 1. Parse ────────────────────────────────────────────────────────────
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
 
+    // ── 2. Validate ─────────────────────────────────────────────────────────
+    const parsed = ContactSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
-    // Honeypot — silently accept so bots don't know they were blocked
+    // ── 3. Honeypot ─────────────────────────────────────────────────────────
     if (parsed.data.honeypot) {
       return NextResponse.json({ ok: true });
     }
 
-    // In development, log a redacted summary so you can verify the form works
-    // without exposing personal data in production logs.
-    if (!IS_PROD) {
-      console.info('[contact] submission received', {
-        nameLength: parsed.data.name.length,
-        emailDomain: parsed.data.email.split('@')[1],
-        messageLength: parsed.data.message.length,
-      });
+    // ── 4. Rate limit ────────────────────────────────────────────────────────
+    const ip =
+      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+      req.headers.get('x-real-ip') ??
+      'unknown';
+
+    const allowed = await checkRateLimit(ip);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 },
+      );
     }
 
-    // ── TODO: replace this block with a real provider ──────────────────────
-    // Example (Resend):
-    //   const resend = new Resend(process.env.RESEND_API_KEY);
-    //   await resend.emails.send({
-    //     from: 'portfolio@yourdomain.com',
-    //     to: 'gauravkhandelwal205@gmail.com',
-    //     subject: `Portfolio contact from ${parsed.data.name}`,
-    //     text: parsed.data.message,
-    //     replyTo: parsed.data.email,
-    //   });
-    // ───────────────────────────────────────────────────────────────────────
+    // ── 5. Send ──────────────────────────────────────────────────────────────
+    await sendContactMessage(parsed.data);
 
+    // ── 6. Respond ───────────────────────────────────────────────────────────
     return NextResponse.json({ ok: true });
   } catch {
-    // Return a generic error — do not leak internal details
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

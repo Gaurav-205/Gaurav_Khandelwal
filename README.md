@@ -46,12 +46,11 @@ The entry animations use `AnimatePresence` for route transitions, which requires
 | `GalleryScene.tsx` | Infinite tunnel scene graph, per-frame `useFrame` loop |
 | `GalleryFallback.tsx` | Plain CSS grid — used for no-WebGL and reduced-motion |
 | `ImagePlane.tsx` | Single image quad, hover uniform, click handler |
-| `shaderMaterials.ts` | Cloth `ShaderMaterial` with ripple + flag-wave vertex shader |
+| `shaderMaterials.ts` | Cloth `ShaderMaterial` with ripple + flag-wave vertex shader; shared `PlaneGeometry` instance (one allocation for all planes) |
 | `useGalleryControls.ts` | Wheel, keyboard, touch, auto-play with idle resume |
 | `useGalleryCamera.ts` | Camera config extracted from canvas component |
 | `useReducedMotion.ts` | `prefers-reduced-motion` hook — no framer-motion dependency |
 | `useTextureLoader.ts` | `THREE.TextureLoader` with per-image gradient fallbacks |
-| `shaderMaterials.ts` | Shared `PlaneGeometry` instance (one allocation for all planes) |
 
 `src/components/ui/3d-gallery-photography.tsx` is a pure re-export shim kept for backward compatibility. It ships zero runtime code.
 
@@ -117,7 +116,7 @@ src/
 │   ├── constants/          about, animations, gallery, projects, projectCaseStudy, zIndex
 │   ├── env.ts              Environment variable validation
 │   └── utils.ts            cn, checkWebGLSupport, getGmailComposeUrl, throttle, debounce
-└── __tests__/              Vitest property tests (6 files, 33 assertions)
+└── __tests__/              Vitest unit + property tests (10 files, 99 assertions)
 
 scripts/
 └── validate-content.ts     Build-time content validation (images, URLs, slugs, alt text)
@@ -141,18 +140,30 @@ public/projects/            Cover images and per-project architecture + screensh
 ## Tests
 
 ```bash
-npm run test              # all 33 property tests
+npm run test              # 10 test files, 99 assertions (Vitest)
 npm run validate:content  # build-time content checks
 npm run type-check        # tsc --noEmit
+npm run test:e2e          # Playwright E2E (requires: npm run build && npm start)
+npm run test:e2e:a11y     # axe-core accessibility scan on all 4 routes
 ```
 
-Property tests cover:
-- Active section drives sidebar CSS class (4 assertions)
+Unit and property tests cover:
+- `PROJECT_DATA` field integrity — slugs, URLs, years, image paths, screenshot counts, alt text (18 assertions)
+- `getAdjacentProjects` navigation helper — first/last/middle/unknown/chain (5 assertions)
+- `cn`, `getGmailComposeUrl`, `throttle`, `debounce` utility functions (18 assertions)
+- `ProjectsContent` renders all project cards with correct links (5 assertions)
+- `ProjectContent` renders all fields, tech stack, CTAs, prev/next nav (14 assertions)
+- `GalleryFallback` renders cards, fires callbacks, SR-only labels (9 assertions)
+- `AboutContent` renders all sections, no duplicate sidebar (9 assertions)
 - All projects appear in the projects grid (5 assertions)
-- ProjectContent renders all fields for every project (12 assertions)
 - `generateStaticParams` is a bijection of `PROJECT_DATA` slugs (4 assertions)
 - Zero `3d-gallery-photography` shim imports in application source (3 assertions)
 - No duplicate project slugs (1 assertion)
+
+E2E tests cover:
+- Route navigation: home, projects, about, project detail, 404
+- Gallery fallback: WebGL-disabled path and reduced-motion path
+- Accessibility: axe-core WCAG 2.0 A/AA scan on all 4 routes
 
 ---
 

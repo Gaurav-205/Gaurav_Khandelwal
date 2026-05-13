@@ -21,11 +21,14 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "next": "^16.1.6",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "resend": "^6.12.3",
     "tailwind-merge": "^3.4.0",
     "three": "^0.182.0",
     "zod": "^3.25.76"
@@ -48,6 +51,7 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.6",
+    "wait-on": "^9.0.10"
   }
 }

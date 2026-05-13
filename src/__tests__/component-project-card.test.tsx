@@ -10,7 +10,7 @@
  *   - ProjectContent renders live/GitHub CTAs when URLs are present
  */
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ProjectsContent from '@/features/projects/ProjectsContent';
 import ProjectContent from '@/features/project/ProjectContent';
 import { PROJECT_DATA } from '@/lib/constants/projects';
