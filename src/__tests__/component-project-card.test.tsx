@@ -58,9 +58,9 @@ vi.mock('@/lib/utils', () => ({
 // ── ProjectsContent ───────────────────────────────────────────────────────────
 
 describe('ProjectsContent', () => {
-  it('renders the "Selected Works" heading', () => {
+  it('renders the "Selected Projects" heading', () => {
     render(<ProjectsContent />);
-    expect(screen.getByRole('heading', { name: /Selected Works/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Selected Projects/i })).toBeInTheDocument();
   });
 
   it('renders a card for every project in PROJECT_DATA', () => {

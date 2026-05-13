@@ -1,14 +1,34 @@
 "use client";
 
+/**
+ * ContactForm — client component.
+ *
+ * Submits to POST /api/contact. The API currently returns { ok: true } without
+ * sending a real notification (see src/app/api/contact/route.ts for the TODO).
+ *
+ * Until the API is wired to a real provider (Resend, SendGrid, Nodemailer, etc.),
+ * the success state shows a note directing the user to email directly so no
+ * leads are silently lost.
+ */
+
 import { useState } from 'react';
 import { z } from 'zod';
+import { getGmailComposeUrl } from '@/lib/utils';
 
 const ContactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  message: z.string().min(5),
+  name: z.string().min(2).max(100),
+  email: z.string().email().max(254),
+  message: z.string().min(5).max(2000),
   honeypot: z.string().optional(),
 });
+
+const GMAIL_URL = getGmailComposeUrl(
+  'gauravkhandelwal205@gmail.com',
+  'Portfolio Inquiry',
+);
+
+/** Whether the contact API is wired to a real email provider. */
+const API_IS_LIVE = process.env.NEXT_PUBLIC_CONTACT_API_LIVE === 'true';
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -31,7 +51,7 @@ export default function ContactForm() {
     const parsed = ContactSchema.safeParse(payload);
     if (!parsed.success) {
       setStatus('error');
-      setError('Please complete the form correctly.');
+      setError('Please complete all fields correctly.');
       return;
     }
 
@@ -41,37 +61,97 @@ export default function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(parsed.data),
       });
-      if (!res.ok) throw new Error('Failed to send');
+      if (!res.ok) throw new Error('Request failed');
       setStatus('success');
       form.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus('error');
-      setError(err?.message ?? 'Unknown error');
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl">
-      <input type="hidden" name="honeypot" />
-      <div className="mb-3">
-        <label className="block text-white mb-1">Name</label>
-        <input name="name" required className="w-full p-2 rounded bg-black/30 border border-white/10 text-white" />
+    <form onSubmit={handleSubmit} className="max-w-xl space-y-4">
+      {/* Honeypot — hidden from real users, filled by bots */}
+      <input type="text" name="honeypot" className="sr-only" tabIndex={-1} aria-hidden="true" />
+
+      <div>
+        <label htmlFor="contact-name" className="block text-white font-montserrat text-sm mb-1">
+          Name
+        </label>
+        <input
+          id="contact-name"
+          name="name"
+          required
+          minLength={2}
+          maxLength={100}
+          className="w-full p-2 rounded bg-black/30 border border-white/10 text-white font-montserrat text-sm focus:outline-none focus:border-white/40"
+        />
       </div>
-      <div className="mb-3">
-        <label className="block text-white mb-1">Email</label>
-        <input name="email" type="email" required className="w-full p-2 rounded bg-black/30 border border-white/10 text-white" />
+
+      <div>
+        <label htmlFor="contact-email" className="block text-white font-montserrat text-sm mb-1">
+          Email
+        </label>
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          required
+          maxLength={254}
+          className="w-full p-2 rounded bg-black/30 border border-white/10 text-white font-montserrat text-sm focus:outline-none focus:border-white/40"
+        />
       </div>
-      <div className="mb-3">
-        <label className="block text-white mb-1">Message</label>
-        <textarea name="message" rows={6} required className="w-full p-2 rounded bg-black/30 border border-white/10 text-white" />
+
+      <div>
+        <label htmlFor="contact-message" className="block text-white font-montserrat text-sm mb-1">
+          Message
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows={6}
+          required
+          minLength={5}
+          maxLength={2000}
+          className="w-full p-2 rounded bg-black/30 border border-white/10 text-white font-montserrat text-sm focus:outline-none focus:border-white/40 resize-y"
+        />
       </div>
-      <div className="flex items-center gap-3">
-        <button type="submit" disabled={status === 'sending'} className="px-6 py-2 bg-white text-black rounded-full">
+
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          disabled={status === 'sending'}
+          className="px-6 py-2 bg-white text-black font-montserrat text-sm tracking-wide rounded-full hover:bg-white/90 transition-colors disabled:opacity-50"
+        >
           {status === 'sending' ? 'Sending…' : 'Send Message'}
         </button>
-        {status === 'success' && <span className="text-green-400">Message sent — I will reply soon.</span>}
-        {status === 'error' && <span className="text-red-400">{error}</span>}
+
+        {status === 'success' && (
+          <span className="text-green-400 font-montserrat text-sm">
+            {API_IS_LIVE
+              ? 'Message sent — I will reply soon.'
+              : 'Received. To make sure I see it, you can also email me directly.'}
+          </span>
+        )}
+
+        {status === 'error' && (
+          <span className="text-red-400 font-montserrat text-sm">{error}</span>
+        )}
       </div>
+
+      {/* Direct email fallback — always visible so no lead is silently lost */}
+      <p className="text-white/50 font-montserrat text-xs pt-2">
+        Prefer email?{' '}
+        <a
+          href={GMAIL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-white/80 transition-colors"
+        >
+          gauravkhandelwal205@gmail.com
+        </a>
+      </p>
     </form>
   );
 }

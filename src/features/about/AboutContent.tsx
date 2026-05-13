@@ -1,4 +1,3 @@
-import { ABOUT_NAV_ITEMS, ABOUT_SECTION_LABELS } from '@/lib/constants';
 import ContactForm from '@/components/ContactForm';
 
 interface AboutContentProps {
@@ -13,6 +12,11 @@ interface AboutContentProps {
  * client state in the content tree.
  *
  * No 'use client' directive. No React hooks. No framer-motion.
+ *
+ * NOTE: The fixed desktop sidebar (section label + nav buttons) is intentionally
+ * NOT rendered here. It lives in AboutClient so it can own the smooth-scroll
+ * onClick handlers and the activeSection-driven active class. Rendering it here
+ * too would produce a duplicate sidebar in the top-left corner.
  */
 export default function AboutContent({ activeSection }: AboutContentProps) {
   return (
@@ -20,30 +24,6 @@ export default function AboutContent({ activeSection }: AboutContentProps) {
       className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar"
       style={{ scrollbarWidth: 'none' } as React.CSSProperties}
     >
-      {/* Sidebar nav — desktop only */}
-      <div className="fixed top-4 left-4 md:left-6 z-40 hidden md:block">
-        <div className="flex flex-col space-y-4 font-montserrat">
-          <h2 className="text-white font-normal text-base lg:text-lg tracking-wide">
-            {ABOUT_SECTION_LABELS[activeSection] ?? activeSection}
-          </h2>
-          <div className="flex flex-col space-y-2 text-xs lg:text-sm">
-            {ABOUT_NAV_ITEMS.map(({ id, label }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={`text-left transition-colors ${
-                  activeSection === id
-                    ? 'text-white'
-                    : 'text-white/40 hover:text-white/80'
-                }`}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── Main content ── */}
       <div className="pt-16 pb-16 md:pt-20 md:pb-20 px-4 md:px-0 md:ml-24">
 

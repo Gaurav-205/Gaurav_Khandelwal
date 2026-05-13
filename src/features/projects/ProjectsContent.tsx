@@ -17,12 +17,13 @@ export default function ProjectsContent() {
             </div>
 
             <h1 className="text-white font-montserrat font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8">
-              Selected Works
+              Selected Projects
             </h1>
 
             <p className="text-white/80 font-montserrat font-light text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-              Projects that show my work across full-stack web development, mobile app development,
-              real-time systems, Firebase, MongoDB, cloud deployment, and UI/UX-focused product thinking.
+              A focused collection of shipped web and mobile products built across MERN, Flutter,
+              Firebase, MongoDB, Socket.IO, CI/CD, and cloud deployment. Each project highlights a
+              real workflow, technical ownership, and measurable product outcome.
             </p>
           </div>
         </section>
