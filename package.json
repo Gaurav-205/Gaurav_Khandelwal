@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "dev:webpack": "next dev --turbopack=false",
-    "build": "next build",
+    "build": "npm run validate:content && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "type-check": "tsc --noEmit",
+    "validate:content": "tsx scripts/validate-content.ts",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
@@ -42,6 +43,7 @@
     "eslint-config-next": "^16.1.6",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.1.6"
   }

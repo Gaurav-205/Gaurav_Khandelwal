@@ -3,41 +3,26 @@
 import { memo, useState, useEffect, useMemo, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { checkWebGLSupport } from '@/lib/utils';
+import { useGalleryCamera } from './useGalleryCamera';
 import GalleryScene, { type GallerySceneProps } from './GalleryScene';
+import GalleryFallback from './GalleryFallback';
 import type { NormalizedImage } from './useTextureLoader';
-import Image from 'next/image';
 
 interface GalleryCanvasProps extends GallerySceneProps {
   className?: string;
   style?: React.CSSProperties;
 }
 
-/** Fallback grid shown when WebGL is unavailable. */
-const FallbackGallery = memo(({ images }: { images: NormalizedImage[] }) => (
-  <div className="flex flex-col items-center justify-center h-full bg-gray-900 p-4">
-    <p className="text-gray-300 mb-4">WebGL not supported. Showing image list:</p>
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-      {images.map((img, i) => (
-        <Image
-          key={i}
-          src={img.src || '/placeholder.svg'}
-          alt={img.alt || `Gallery image ${i + 1}`}
-          width={200}
-          height={128}
-          className="w-full h-32 object-cover rounded"
-          loading="lazy"
-        />
-      ))}
-    </div>
-  </div>
-));
-
-FallbackGallery.displayName = 'FallbackGallery';
-
 /**
  * Outermost gallery component.
- * Handles WebGL detection and owns the R3F <Canvas>.
- * All scene logic lives in GalleryScene.
+ *
+ * Responsibilities:
+ *   - Detect WebGL support after mount (server always renders the Canvas path;
+ *     the fallback swaps in on the client if WebGL is unavailable).
+ *   - Own the R3F <Canvas> and pass a canvasRef down for input listeners.
+ *   - Delegate all scene logic to GalleryScene.
+ *   - Render GalleryFallback when WebGL is unavailable, preserving full
+ *     click and loaded-callback behaviour.
  */
 const GalleryCanvas = memo(
   ({
@@ -58,14 +43,14 @@ const GalleryCanvas = memo(
     ...sceneProps
   }: GalleryCanvasProps) => {
     const [webglSupported, setWebglSupported] = useState(true);
-
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const camera = useGalleryCamera();
 
     useEffect(() => {
       setWebglSupported(checkWebGLSupport());
     }, []);
 
-    // Normalise image items once at this boundary
+    // Normalise image items once at this boundary.
     const normalizedImages: NormalizedImage[] = useMemo(
       () =>
         images.map((img) =>
@@ -77,7 +62,12 @@ const GalleryCanvas = memo(
     if (!webglSupported) {
       return (
         <div className={className} style={style}>
-          <FallbackGallery images={normalizedImages} />
+          <GalleryFallback
+            images={normalizedImages}
+            onImageClick={onImageClick}
+            onImagesLoaded={onImagesLoaded}
+            reason="no-webgl"
+          />
         </div>
       );
     }
@@ -86,7 +76,7 @@ const GalleryCanvas = memo(
       <div className={className} style={style}>
         <Canvas
           ref={canvasRef}
-          camera={{ position: [0, 0, 0], fov: 55 }}
+          camera={camera}
           gl={{
             antialias: true,
             alpha: true,

@@ -1,39 +1,79 @@
-// Project data — Gaurav Khandelwal
+/**
+ * src/lib/constants/projects.ts — project data infrastructure.
+ *
+ * Responsibilities:
+ *   1. Define the Zod schema and TypeScript type for a fully-merged project.
+ *   2. Merge content (src/content/projects.ts) with case-study data
+ *      (src/lib/constants/projectCaseStudy.ts).
+ *   3. Assign stable numeric `id` values from array position (1-indexed)
+ *      so reordering PROJECT_CONTENT never breaks prev/next navigation.
+ *   4. Validate the merged array at module load time and throw fast on errors.
+ *   5. Export PROJECT_DATA, SAMPLE_IMAGES, and navigation helpers.
+ *
+ * To add or reorder projects, edit src/content/projects.ts only.
+ */
+
 import { z } from 'zod';
 import { PROJECT_CASE_STUDY, type ProjectCaseStudySlug } from './projectCaseStudy';
+import { PROJECT_CONTENT } from '@/content/projects';
 
-// ProjectData runtime schema and exported type
+// ─── Zod schemas ────────────────────────────────────────────────────────────
+
 const SectionSchema = z.object({ title: z.string(), content: z.string() });
 
 const ScreenshotSchema = z.object({
-  src: z.string(),
-  alt: z.string(),
-  caption: z.string(),
+  src: z.string().min(1),
+  alt: z.string().min(1),
+  caption: z.string().min(1),
 });
 
 const ArchitectureSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  diagramSrc: z.string(),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  diagramSrc: z.string().startsWith('/'),
 });
 
 const WhatILearnedSchema = z.object({
   title: z.string().optional(),
-  bullets: z.array(z.string()).min(1),
+  bullets: z.array(z.string().min(1)).min(1),
 });
 
-const ProjectSchema = z.object({
-  id: z.number(),
-  slug: z.string(),
-  title: z.string(),
-  description: z.string(),
-  image: z.string(),
-  role: z.string(),
-  year: z.string(),
-  category: z.string(),
-  techStack: z.array(z.string()).optional(),
-  liveUrl: z.string().optional(),
-  githubUrl: z.string().optional(),
+/** Slug must be lowercase, hyphen-separated, no spaces or special chars. */
+const SlugSchema = z
+  .string()
+  .min(1)
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be lowercase-hyphenated (e.g. my-project)');
+
+/** URL must be https:// or a relative path starting with /. */
+const UrlSchema = z
+  .string()
+  .refine(
+    (v) => v.startsWith('https://') || v.startsWith('/'),
+    'URL must start with https:// or /',
+  );
+
+/** Image path must start with / and end with a supported extension. */
+const ImagePathSchema = z
+  .string()
+  .startsWith('/', 'Image path must be absolute (start with /)')
+  .regex(
+    /\.(png|jpg|jpeg|webp|svg|avif)$/i,
+    'Image must be .png, .jpg, .jpeg, .webp, .svg, or .avif',
+  );
+
+export const ProjectSchema = z.object({
+  /** 1-indexed position in PROJECT_CONTENT — derived at build time, not authored. */
+  id: z.number().int().positive(),
+  slug: SlugSchema,
+  title: z.string().min(1),
+  description: z.string().min(1),
+  image: ImagePathSchema,
+  role: z.string().min(1),
+  year: z.string().regex(/^\d{4}$/, 'Year must be a 4-digit string'),
+  category: z.string().min(1),
+  techStack: z.array(z.string().min(1)).optional(),
+  liveUrl: UrlSchema.optional(),
+  githubUrl: UrlSchema.optional(),
   sections: z.array(SectionSchema).optional(),
   architecture: ArchitectureSchema,
   screenshots: z.array(ScreenshotSchema).min(3).max(8),
@@ -42,175 +82,96 @@ const ProjectSchema = z.object({
 
 export type ProjectData = z.infer<typeof ProjectSchema>;
 
-const PROJECT_DATA_BASE: Array<Omit<ProjectData, 'architecture' | 'screenshots' | 'whatILearned'>> = [
-  {
-    id: 1,
-    slug: 'kampus-kart',
-    title: 'KampusKart',
-    description: 'A full-stack campus portal for MIT ADT University serving 400+ users across maps, events, lost and found, complaints, facilities, clubs, profiles, admin workflows, and real-time chat.',
-    image: '/projects/kampuskart.png',
-    role: 'Full-Stack Developer',
-    year: '2025',
-    category: 'Campus Management Platform',
-    techStack: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS', 'Material UI', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'JWT', 'Google Maps API', 'Jest', 'Vitest', 'GitHub Actions'],
-    liveUrl: 'https://kampuskart.netlify.app',
-    githubUrl: 'https://github.com/kalviumcommunity/S72_Gaurav_Capstone_KampusKart',
-    sections: [
-      {
-        title: 'The Challenge',
-        content: 'Students and faculty often depend on disconnected sources for campus navigation, events, announcements, lost and found, complaints, facilities, club recruitment, and communication. KampusKart was built to centralize these workflows into one practical campus platform for MIT ADT University.'
-      },
-      {
-        title: 'The Solution',
-        content: 'I developed a full-stack campus portal with modules for campus maps, news, events, lost and found, complaints, facilities, club recruitments, user profiles, authentication, admin workflows, and global chat. The platform supports search, filters, image uploads, status tracking, role-based access, and responsive layouts for both desktop and mobile users.'
-      },
-      {
-        title: 'Technical Implementation',
-        content: 'The frontend uses React, TypeScript, Vite, Tailwind CSS, Material UI, feature-based modules, reusable components, and responsive UI patterns. The backend uses Express.js, MongoDB, Mongoose, JWT authentication, Google OAuth, Socket.IO, Cloudinary uploads, Nodemailer, validation middleware, rate limiting, and repository/service layers. Real-time chat supports messages, replies, emoji reactions, read receipts, file attachments, and search.'
-      },
-      {
-        title: 'Outcome',
-        content: 'KampusKart demonstrates my ability to build and organize a larger product with 8 major workflows, 58 REST/API endpoints, 400+ users, and 157 test cases covering authentication, validation, models, CRUD routes, UI behavior, and smoke tests.'
-      }
-    ]
-  },
-  {
-    id: 2,
-    slug: 'sahara-pet-care',
-    title: 'Sahara Pet Care',
-    description: 'A Flutter and Firebase pet care app for caregiver discovery, service booking, pet profiles, adoption, shopping, orders, chat, live tracking, notifications, and cross-platform deployment.',
-    image: '/projects/sahara-pet-care.svg',
-    role: 'Flutter Developer',
-    year: '2026',
-    category: 'Cross-Platform Pet Care App',
-    techStack: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Firebase Messaging', 'Provider', 'Google Maps Flutter', 'Geolocator', 'Cloudinary'],
-    githubUrl: 'https://github.com/Gaurav-205/Sahara',
-    sections: [
-      {
-        title: 'The Challenge',
-        content: 'Pet owners need a single place to discover caregivers, manage pets, book services, shop for products, track orders, explore adoption options, and communicate with caregivers. Sahara was designed to bring these workflows into one cross-platform mobile experience.'
-      },
-      {
-        title: 'The Solution',
-        content: 'I built Sahara as a Flutter app backed by Firebase services. The app includes authentication, caregiver discovery, pet profiles, booking flows, favorites, adoption, shopping, cart and order workflows, chat models, notifications, and location-based features. The goal was to create a mobile-first product with clear user flows and maintainable state management.'
-      },
-      {
-        title: 'Technical Implementation',
-        content: 'The application uses Flutter, Dart, Material 3, Firebase Auth, Cloud Firestore, Firebase Messaging, Provider state management, Google Maps, geolocation, Cloudinary media handling, shared preferences, and modular screens, services, models, providers, widgets, and utility layers. State is organized across modules for authentication, bookings, pets, caregivers, favorites, location, and cart management.'
-      },
-      {
-        title: 'Outcome',
-        content: 'Sahara shows my ability to work beyond web development by building a cross-platform Flutter/Firebase application with 6 major workflows and a 5-stage booking lifecycle involving automation, active service tracking, geolocation, and Google Maps integration.'
-      }
-    ]
-  },
-  {
-    id: 3,
-    slug: 'onam-festival-website',
-    title: 'Onam Festival Website',
-    description: 'A full-stack cultural event and commerce platform for MIT ADT University\'s Onam celebration, processing 105 orders and INR 40K+ in sales across a 7-day festival commerce workflow.',
-    image: '/projects/onam-festival.png',
-    role: 'Full-Stack Developer and UI/UX Designer',
-    year: '2025',
-    category: 'Event Commerce Platform',
-    techStack: ['React 18', 'Vite 7', 'React Router', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'Nodemailer', 'express-validator', 'GitHub Actions', 'Netlify', 'Render'],
-    liveUrl: 'https://onammitadt.netlify.app',
-    githubUrl: 'https://github.com/Gaurav-205/Onam',
-    sections: [
-      {
-        title: 'The Challenge',
-        content: 'University festival operations can become difficult to manage when event information, merchandise orders, payment coordination, and communication are handled manually. The goal was to create a festive, responsive platform that could present Onam celebration content while supporting backend order workflows.'
-      },
-      {
-        title: 'The Solution',
-        content: 'I built a full-stack Onam festival portal with cultural landing sections, Sadya information, event highlights, a traditional shopping catalog, backend-powered order handling, email utilities, and safe production controls. The frontend focuses on clear navigation and festive visuals, while the backend supports order creation, retrieval, filtering, status updates, validation, and diagnostics.'
-      },
-      {
-        title: 'Technical Implementation',
-        content: 'The frontend uses React, Vite, React Router, and Tailwind CSS. The backend uses Express.js, MongoDB, Mongoose, Nodemailer, express-validator, CORS controls, rate limiting, request IDs, structured logging, and health diagnostics. I implemented 4 order-management APIs for order creation, lookup, filtering, and status updates with MongoDB persistence and server-side total validation. The checkout flow is feature-flagged for controlled activation.'
-      },
-      {
-        title: 'Outcome',
-        content: 'The platform supported a 7-day university festival commerce workflow, processing 105 orders and INR 40K+ in sales. It also introduced production controls such as checkout feature flags, CORS allowlists, rate limiting, request IDs, health diagnostics, and structured logging.'
-      }
-    ]
-  },
-  {
-    id: 4,
-    slug: 'prank-wizard',
-    title: 'Prank Wizard',
-    description: 'A full-stack prank planning platform with a 4-step persisted workflow, JWT and Google OAuth authentication, password reset, protected routes, admin management, and deployment-ready engineering.',
-    image: '/projects/prank-wizard.png',
-    role: 'Full-Stack Developer',
-    year: '2026',
-    category: 'Full-Stack Web Application',
-    techStack: ['Next.js 16', 'React 19', 'TypeScript', 'Express.js', 'MongoDB', 'JWT', 'Passport.js', 'Google OAuth', 'Tailwind CSS v4', 'Three.js', 'GSAP', 'Docker', 'GitHub Actions'],
-    liveUrl: 'https://prankwizard.netlify.app',
-    githubUrl: 'https://github.com/Gaurav-205/LetsSpiceUp',
-    sections: [
-      {
-        title: 'The Challenge',
-        content: 'The project needed to turn a playful idea into a structured product with secure accounts, persistent form progress, protected user flows, admin management, and production-ready deployment. The challenge was to keep the experience fun while still applying serious full-stack engineering practices.'
-      },
-      {
-        title: 'The Solution',
-        content: 'I built a prank planning platform with a 4-step persisted workflow, user registration, login, Google OAuth, password reset, protected routes, user dashboard, profile management, prank history, and an admin dashboard for managing users and prank submissions.'
-      },
-      {
-        title: 'Technical Implementation',
-        content: 'The frontend uses Next.js, React, TypeScript, Tailwind CSS, GSAP, and Three.js. The backend uses Express.js, MongoDB, Mongoose, JWT authentication, Passport.js Google OAuth, bcrypt password hashing, sessions, rate limiting, input sanitization, security headers, CORS configuration, environment validation, health checks, Docker support, and GitHub Actions.'
-      },
-      {
-        title: 'Outcome',
-        content: 'Prank Wizard demonstrates my ability to build a complete full-stack product with authentication, protected routes, persistent workflows, MongoDB-backed admin management, role-based access control, pagination, dashboard statistics, security headers, and deployment configuration.'
-      }
-    ]
-  }
-];
+// ─── Merge content + case-study + derived id ────────────────────────────────
 
-function mergeCaseStudy(
-  row: Omit<ProjectData, 'architecture' | 'screenshots' | 'whatILearned'>,
+function buildProject(
+  entry: (typeof PROJECT_CONTENT)[number],
+  index: number,
 ): ProjectData {
-  const extra = PROJECT_CASE_STUDY[row.slug as ProjectCaseStudySlug];
-  if (!extra) {
-    throw new Error(`Missing PROJECT_CASE_STUDY entry for slug: ${row.slug}`);
+  const caseStudy = PROJECT_CASE_STUDY[entry.slug as ProjectCaseStudySlug];
+  if (!caseStudy) {
+    throw new Error(
+      `Missing PROJECT_CASE_STUDY entry for slug: "${entry.slug}". ` +
+        `Add it to src/lib/constants/projectCaseStudy.ts.`,
+    );
   }
-  return { ...row, ...extra };
+  return {
+    ...entry,
+    ...caseStudy,
+    // id is derived from array position — never authored manually.
+    // This means reordering PROJECT_CONTENT is safe: prev/next navigation
+    // uses getAdjacentProjects() which works on array index, not id.
+    id: index + 1,
+  };
 }
 
-export const PROJECT_DATA: ProjectData[] = PROJECT_DATA_BASE.map(mergeCaseStudy);
+export const PROJECT_DATA: ProjectData[] = PROJECT_CONTENT.map(buildProject);
 
-// Extract images for the 3D gallery
-export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> = PROJECT_DATA.map(project => ({
-  src: project.image,
-  alt: project.title,
-  slug: project.slug
-}));
+// ─── Gallery images ──────────────────────────────────────────────────────────
 
-// Runtime validation to fail fast if PROJECT_DATA shape changes unexpectedly
-const ProjectsArraySchema = z.array(ProjectSchema).superRefine((items, ctx) => {
-  const slugToIndexes = new Map<string, number[]>();
-  items.forEach((p, i) => {
-    const arr = slugToIndexes.get(p.slug) ?? [];
-    arr.push(i);
-    slugToIndexes.set(p.slug, arr);
-  });
-  slugToIndexes.forEach((indexes, slug) => {
-    if (indexes.length > 1) {
-      for (const i of indexes) {
+/** Cover images for the 3-D gallery, in display order. */
+export const SAMPLE_IMAGES: Array<{ src: string; alt: string; slug: string }> =
+  PROJECT_DATA.map((p) => ({ src: p.image, alt: p.title, slug: p.slug }));
+
+// ─── Navigation helpers ──────────────────────────────────────────────────────
+
+/**
+ * Returns the previous and next projects relative to `slug` using array
+ * position, not the numeric `id` field.
+ *
+ * This means reordering PROJECT_CONTENT never produces broken nav links,
+ * because the lookup is always index-based.
+ */
+export function getAdjacentProjects(slug: string): {
+  prev: ProjectData | null;
+  next: ProjectData | null;
+} {
+  const index = PROJECT_DATA.findIndex((p) => p.slug === slug);
+  if (index === -1) return { prev: null, next: null };
+  return {
+    prev: index > 0 ? (PROJECT_DATA[index - 1] ?? null) : null,
+    next: index < PROJECT_DATA.length - 1 ? (PROJECT_DATA[index + 1] ?? null) : null,
+  };
+}
+
+// ─── Runtime validation ──────────────────────────────────────────────────────
+
+const ProjectsArraySchema = z
+  .array(ProjectSchema)
+  .min(1, 'PROJECT_DATA must contain at least one project')
+  .superRefine((items, ctx) => {
+    // Duplicate slug check
+    const seen = new Map<string, number>();
+    items.forEach((p, i) => {
+      const prev = seen.get(p.slug);
+      if (prev !== undefined) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: `Duplicate project slug: ${slug}`,
+          message: `Duplicate slug "${p.slug}" at positions ${prev} and ${i}`,
           path: [i, 'slug'],
         });
+      } else {
+        seen.set(p.slug, i);
       }
-    }
+    });
+
+    // id must equal array position + 1
+    items.forEach((p, i) => {
+      if (p.id !== i + 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Project at index ${i} has id=${p.id} but expected id=${i + 1}. Do not author id manually — it is derived from array position.`,
+          path: [i, 'id'],
+        });
+      }
+    });
   });
-});
 
 const parsed = ProjectsArraySchema.safeParse(PROJECT_DATA);
 if (!parsed.success) {
-  // Log a helpful error during build/dev and throw to fail fast
-  console.error('PROJECT_DATA validation failed:', parsed.error.format());
-  throw new Error('Invalid PROJECT_DATA shape — see console for details');
+  console.error('[projects] Validation failed:\n', parsed.error.format());
+  throw new Error(
+    '[projects] PROJECT_DATA is invalid — see console for details. ' +
+      'Run `npm run validate:content` for a full report.',
+  );
 }

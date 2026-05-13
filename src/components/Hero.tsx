@@ -2,11 +2,11 @@
 
 import { memo, useCallback, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from '@/features/gallery/useReducedMotion';
 import { SAMPLE_IMAGES } from '@/lib/constants/projects';
 import { GALLERY_CONFIG } from '@/lib/constants/gallery';
+import GalleryFallback from '@/features/gallery/GalleryFallback';
 import KeyboardHint from './ui/KeyboardHint';
 import HelpButton from './ui/HelpButton';
 import HeroOverlay from './HeroOverlay';
@@ -30,44 +30,6 @@ const SHORTCUTS = [
   { key: '?', description: 'Show this help' },
 ];
 
-function ReducedMotionGallery({
-  onImagesLoaded,
-  onImageClick,
-}: {
-  onImagesLoaded?: () => void;
-  onImageClick: (slug: string) => void;
-}) {
-  useEffect(() => {
-    onImagesLoaded?.();
-  }, [onImagesLoaded]);
-
-  return (
-    <div className="h-screen w-full overflow-y-auto bg-black px-4 py-24 md:py-28">
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-2">
-        {SAMPLE_IMAGES.map((img) => (
-          <button
-            key={img.slug}
-            type="button"
-            onClick={() => onImageClick(img.slug)}
-            className="group rounded-lg border border-white/10 bg-zinc-900/60 text-left overflow-hidden transition-colors hover:border-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-          >
-            <div className="relative aspect-[16/10] w-full">
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, 50vw"
-              />
-            </div>
-            <p className="px-4 py-3 font-montserrat text-sm text-white/80 group-hover:text-white">{img.alt}</p>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /**
  * Hero — `'use client'` boundary (intentional and minimal).
  *
@@ -80,18 +42,18 @@ function ReducedMotionGallery({
  * - `HeroOverlay` — a React Server Component that renders the static title
  *   overlay; it ships zero JavaScript to the browser.
  * - `GalleryCanvas` — a WebGL client component that drives the 3-D gallery.
+ * - `GalleryFallback` — a plain CSS/image grid shown when the user has
+ *   `prefers-reduced-motion: reduce` set. No Three.js, no framer-motion.
  *
- * No further static markup can be extracted into a Server Component without
- * breaking the hook dependencies that live in this component.
+ * The `'use client'` boundary is intentional and minimal. No further static
+ * markup can be extracted without breaking the hook dependencies.
  */
 const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
   const router = useRouter();
   const reducedMotion = useReducedMotion();
-  const [showHint, setShowHint] = useState(true);
   const [hasSeenHint, setHasSeenHint] = useState(false);
+  const [showHint, setShowHint] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
-
-  const useStaticGallery = reducedMotion === true;
 
   useEffect(() => {
     const seen = localStorage.getItem('hasSeenKeyboardHint');
@@ -117,17 +79,24 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
   }, []);
 
   const handleImageClick = useCallback(
-    (slug: string) => {
-      router.push(`/project/${slug}`);
-    },
+    (slug: string) => router.push(`/project/${slug}`),
     [router],
   );
 
   return (
     <main className="min-h-screen h-full w-full">
-      {useStaticGallery ? (
-        <ReducedMotionGallery onImagesLoaded={onImagesLoaded} onImageClick={handleImageClick} />
+      {reducedMotion ? (
+        // Reduced-motion path: plain static grid, no WebGL, no animation.
+        <GalleryFallback
+          images={SAMPLE_IMAGES}
+          onImageClick={handleImageClick}
+          onImagesLoaded={onImagesLoaded}
+          reason="reduced-motion"
+        />
       ) : (
+        // WebGL path: dynamically imported so Three.js is never bundled for
+        // users who never reach this branch. GalleryCanvas handles its own
+        // WebGL-unavailable fallback internally.
         <GalleryCanvasDynamic
           images={SAMPLE_IMAGES}
           speed={GALLERY_CONFIG.SPEED}
@@ -142,9 +111,11 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
         />
       )}
 
+      {/* Static title overlay — server component, zero JS */}
       <HeroOverlay />
 
-      {!useStaticGallery && !hasSeenHint && showHint && (
+      {/* Keyboard hint and help — only shown in the WebGL path */}
+      {!reducedMotion && !hasSeenHint && showHint && (
         <div className="hidden md:block">
           <KeyboardHint
             keys={['↑', '↓', '←', '→']}
@@ -154,7 +125,7 @@ const Hero = memo(({ onImagesLoaded }: { onImagesLoaded?: () => void }) => {
         </div>
       )}
 
-      {!useStaticGallery && (
+      {!reducedMotion && (
         <div className="hidden md:block">
           <HelpButton
             shortcuts={SHORTCUTS}

@@ -3,8 +3,8 @@ import { AboutClient } from '@/features/about';
 
 export const metadata: Metadata = {
   title: "About - Gaurav Khandelwal",
-  description: "Learn more about Gaurav Khandelwal from Kota, Rajasthan. B.Tech in Computer Science & Engineering (Product Software Engineering) at MIT ADT University, Pune. Full-Stack Developer and UI/UX Designer with a jack of all trades mindset.",
-  keywords: ["About", "Full-Stack Developer", "UI/UX Designer", "Gaurav Khandelwal", "MIT ADT University", "MIT School of Computing", "Pune", "Kota", "Rajasthan", "B.Tech", "Computer Science"],
+  description: "About Gaurav Khandelwal — full-stack developer and Software Product Engineering student at MIT ADT University, Pune. Built shipped projects across MERN, Flutter, Firebase, REST APIs, real-time chat, CI/CD, and cloud deployment.",
+  keywords: ["About", "Gaurav Khandelwal", "Full-Stack Developer", "MERN Stack", "Flutter Developer", "MIT ADT University", "Software Product Engineering", "React", "Node.js", "MongoDB", "Firebase"],
 };
 
 export default function AboutPage() {

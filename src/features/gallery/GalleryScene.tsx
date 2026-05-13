@@ -4,7 +4,7 @@ import { memo, useMemo, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { createClothMaterial } from './shaderMaterials';
 import { useTextureLoader, type NormalizedImage } from './useTextureLoader';
-import { useGalleryInput } from './useGalleryInput';
+import { useGalleryControls } from './useGalleryControls';
 import ImagePlane from './ImagePlane';
 
 interface FadeSettings {
@@ -66,7 +66,7 @@ const GalleryScene = memo(
     canvasRef,
   }: GallerySceneProps) => {
     const { textures, isLoaded } = useTextureLoader(images, onImagesLoaded);
-    const { scrollVelocity, setScrollVelocity, autoPlay } = useGalleryInput({ speed }, canvasRef);
+    const { scrollVelocity, setScrollVelocity, autoPlay } = useGalleryControls({ speed }, canvasRef);
 
     const totalImages = images.length;
 

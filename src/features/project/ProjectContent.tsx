@@ -1,4 +1,4 @@
-import { ProjectData, PROJECT_DATA } from '@/lib/constants/projects';
+import { ProjectData, PROJECT_DATA, getAdjacentProjects } from '@/lib/constants/projects';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -8,6 +8,7 @@ interface ProjectContentProps {
 
 export default function ProjectContent({ project }: ProjectContentProps) {
   const coverIsSvg = project.image.endsWith('.svg');
+  const { prev, next } = getAdjacentProjects(project.slug);
 
   return (
     <div className="min-h-screen bg-black text-white md:cursor-none hide-scrollbar">
@@ -239,29 +240,29 @@ export default function ProjectContent({ project }: ProjectContentProps) {
         <section className="py-20 md:py-32">
           <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center">
-              {project.id > 1 ? (
+              {prev ? (
                 <Link
-                  href={`/project/${PROJECT_DATA[project.id - 2]!.slug}`}
+                  href={`/project/${prev.slug}`}
                   className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide"
                 >
                   <span className="text-2xl group-hover:-translate-x-1 transition-transform duration-300">←</span>
                   <div>
                     <div className="text-white/40 text-xs mb-1">PREVIOUS</div>
-                    <div>{PROJECT_DATA[project.id - 2]!.title}</div>
+                    <div>{prev.title}</div>
                   </div>
                 </Link>
               ) : (
                 <div />
               )}
 
-              {project.id < PROJECT_DATA.length ? (
+              {next ? (
                 <Link
-                  href={`/project/${PROJECT_DATA[project.id]!.slug}`}
+                  href={`/project/${next.slug}`}
                   className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors font-montserrat text-sm tracking-wide text-right"
                 >
                   <div>
                     <div className="text-white/40 text-xs mb-1">NEXT</div>
-                    <div>{PROJECT_DATA[project.id]!.title}</div>
+                    <div>{next.title}</div>
                   </div>
                   <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
                 </Link>
